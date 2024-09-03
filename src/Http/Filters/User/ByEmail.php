@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Nusara\Hrm\Http\Filters\User;
+namespace Nusara\Pulse\Http\Filters\User;
 
 use Illuminate\Database\Eloquent\Builder;
 

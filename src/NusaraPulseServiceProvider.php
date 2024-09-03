@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Nusara\Hrm;
+namespace Nusara\Pulse;
 
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\ServiceProvider;

@@ -5,7 +5,7 @@
     "license": "MIT",
     "autoload": {
         "psr-4": {
-            "Nusara\\Hrm\\": "src/"
+            "Nusara\\Pulse\\": "src/"
         }
     },
     "authors": [
