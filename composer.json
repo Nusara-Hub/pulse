@@ -2,6 +2,7 @@
     "name": "nusara/pulse",
     "description": "HRM manages the pulse of human resources within the company, ensuring that all employee-related aspects, from recruitment to development, run smoothly.",
     "type": "library",
+    "license": "MIT",
     "autoload": {
         "psr-4": {
             "Nusara\\Hrm\\": "src/"
