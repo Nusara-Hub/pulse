@@ -1,0 +1,22 @@
+{
+    "name": "nusara/pulse",
+    "description": "HRM manages the pulse of human resources within the company, ensuring that all employee-related aspects, from recruitment to development, run smoothly.",
+    "type": "library",
+    "autoload": {
+        "psr-4": {
+            "Nusara\\Hrm\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "dayCod",
+            "email": "alayarahman07@gmail.com"
+        },
+        {
+            "name": "Tegar Kurniawan",
+            "email": "tegarkurniawan145@gmail.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {}
+}
