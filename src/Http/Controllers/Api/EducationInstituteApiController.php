@@ -6,6 +6,7 @@ namespace Nusara\Pulse\Http\Controllers\Api;
 
 use Nusara\Pulse\Http\Controllers\NusaraPulseBaseController;
 use App\Functions\ResponseJson;
+use App\Http\Resources\PaginationResource;
 use Illuminate\Http\Response;
 use Nusara\Pulse\Models\EducationInstitute;
 use Illuminate\Http\Request;
@@ -41,17 +42,11 @@ class EducationInstituteApiController extends NusaraPulseBaseController
             code: Response::HTTP_OK,
             message: 'Data Education Institute',
             data: $educationInstitutes->items(),
-            pagination: [
-                'total_data' => $totalData,
-                'total_filtered' => $totalFiltered,
-                //next page
-                'next_page' => $educationInstitutes->nextPageUrl() != null ? true : false,
-                //previous page
-                'previous_page' => $educationInstitutes->previousPageUrl() != null ? true : false,
-                'current_page' => $educationInstitutes->currentPage(),
-                'per_page' => $educationInstitutes->perPage(),
-                'total_pages' => $educationInstitutes->lastPage(),
-            ]
+            pagination: PaginationResource::build(
+                totalData: $totalData,
+                totalFiltered: $totalFiltered,
+                paginationCollection: $educationInstitutes
+            )
         );
     }
 
@@ -64,6 +59,7 @@ class EducationInstituteApiController extends NusaraPulseBaseController
     public function show(string $id): JsonResponse
     {
         $educationInstitute = EducationInstitute::find($id);
+
         return ResponseJson::success(
             ok: true,
             code: Response::HTTP_OK,
@@ -81,6 +77,7 @@ class EducationInstituteApiController extends NusaraPulseBaseController
     public function store(CreateRequest $request): JsonResponse
     {
         $educationInstitute = EducationInstitute::create($request->validated());
+
         return ResponseJson::success(
             ok: true,
             code: Response::HTTP_OK,
@@ -100,6 +97,7 @@ class EducationInstituteApiController extends NusaraPulseBaseController
     {
         $educationInstitute = EducationInstitute::find($id);
         $educationInstitute->update($request->validated());
+
         return ResponseJson::success(
             ok: true,
             code: Response::HTTP_OK,
@@ -117,12 +115,13 @@ class EducationInstituteApiController extends NusaraPulseBaseController
     public function delete(string $id): JsonResponse
     {
         $educationInstitute = EducationInstitute::find($id);
-        $educationInstitute->delete();
+        $deletedEductionInstitute = tap($educationInstitute)->delete();
+
         return ResponseJson::success(
             ok: true,
             code: Response::HTTP_OK,
             message: 'Data Education Institute',
-            data: $educationInstitute
+            data: $deletedEductionInstitute
         );
     }
 }

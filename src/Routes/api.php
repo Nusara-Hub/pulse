@@ -3,8 +3,9 @@
 declare(strict_types=1);
 
 use Illuminate\Support\Facades\Route;
-
 use Nusara\Pulse\Http\Controllers\Api\EducationInstituteApiController;
+use Nusara\Pulse\Models\EducationInstitute;
+
 Route::group(['prefix' => 'pulse', 'as' => 'pulse.'], function () {
     Route::group(['prefix' => 'education-institute', 'as' => 'institute.'], function () {
         Route::get('/', [EducationInstituteApiController::class, 'index'])->name('index');

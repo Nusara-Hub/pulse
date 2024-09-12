@@ -1,6 +1,7 @@
 import { React, useState } from 'react';
 import { Link } from '@inertiajs/react';
 import { DataTable } from '@/Components/DataTable';
+
 const Table = ({ title, data, onDelete, pagination, page, setPage, limit, search, handleSearchChange, handleLimitChange, handleNextPage, handlePreviousPage }) => {
     const header = ['No', 'Nama', 'Action'];
     const renderBody = (row, index, showConfirm) => (
@@ -23,7 +24,7 @@ const Table = ({ title, data, onDelete, pagination, page, setPage, limit, search
         <>
             <div className="container mx-auto py-4 px-5">
                 <h1>{title}</h1>
-                
+
                 <DataTable
                     data={data}
                     header={header}

@@ -16,7 +16,7 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('pulse.education_institute', function (Blueprint $table) {
+        Schema::create('pulse.education_institutes', function (Blueprint $table) {
             $table->uuid('id')->primary();
             $table->string('name')->nullable();
             $table->unsignedBigInteger('created_at');
@@ -32,6 +32,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('pulse.education_institute');
+        Schema::dropIfExists('pulse.education_institutes');
     }
 };
