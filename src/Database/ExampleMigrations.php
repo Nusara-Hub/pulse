@@ -16,7 +16,7 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('hrm.education_institute', function (Blueprint $table) {
+        Schema::create('exampleSchema.exampleTable', function (Blueprint $table) {
            //
         });
     }
@@ -28,6 +28,11 @@ return new class extends Migration
      */
     public function down()
     {
-        //
+        Schema::dropIfExists('exampleSchema.exampleTable');
+
+        // For Append Column to Specific table
+        // Schema::table('exampleSchema.exampleTable', function (Blueprint $table) {
+        //     $table->dropColumn('exampleColumnName');
+        // });
     }
 };
