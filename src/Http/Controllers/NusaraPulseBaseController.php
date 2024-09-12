@@ -6,7 +6,7 @@ namespace Nusara\Pulse\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 
-final class NusaraPulseBaseController extends Controller
+abstract class NusaraPulseBaseController extends Controller
 {
     //
 }

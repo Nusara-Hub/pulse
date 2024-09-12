@@ -18,5 +18,6 @@ class NusaraPulseServiceProvider extends ServiceProvider
         });
 
         $this->loadViewsFrom(__DIR__.'/Resources/Js/Pages', 'pulse');
+        $this->loadMigrationsFrom(__DIR__.'/Database/Migrations/');
     }
 }
