@@ -40,7 +40,7 @@ class EducationInstituteApiController extends NusaraPulseBaseController
         return ResponseJson::success(
             ok: true,
             code: Response::HTTP_OK,
-            message: 'Data Education Institute',
+            message: __('app.notification.flash.fetched', ['prop' => 'Education Institute']),
             data: $educationInstitutes->items(),
             pagination: PaginationResource::build(
                 totalData: $totalData,
@@ -58,12 +58,12 @@ class EducationInstituteApiController extends NusaraPulseBaseController
      */
     public function show(string $id): JsonResponse
     {
-        $educationInstitute = EducationInstitute::find($id);
+        $educationInstitute = EducationInstitute::findOrFail($id);
 
         return ResponseJson::success(
             ok: true,
             code: Response::HTTP_OK,
-            message: 'Data Education Institute',
+            message: __('app.notification.flash.fetched', ['prop' => 'Education Institute']),
             data: $educationInstitute
         );
     }
@@ -81,7 +81,7 @@ class EducationInstituteApiController extends NusaraPulseBaseController
         return ResponseJson::success(
             ok: true,
             code: Response::HTTP_OK,
-            message: 'Data Education Institute',
+            message: __('app.notification.flash.created', ['prop' => 'Education Institute']),
             data: $educationInstitute
         );
     }
@@ -95,13 +95,13 @@ class EducationInstituteApiController extends NusaraPulseBaseController
      */
     public function update(UpdateRequest $request, string $id): JsonResponse
     {
-        $educationInstitute = EducationInstitute::find($id);
+        $educationInstitute = EducationInstitute::findOrFail($id);
         $educationInstitute->update($request->validated());
 
         return ResponseJson::success(
             ok: true,
             code: Response::HTTP_OK,
-            message: 'Data Education Institute',
+            message: __('app.notification.flash.updated', ['prop' => 'Education Institute']),
             data: $educationInstitute
         );
     }
@@ -114,13 +114,13 @@ class EducationInstituteApiController extends NusaraPulseBaseController
      */
     public function delete(string $id): JsonResponse
     {
-        $educationInstitute = EducationInstitute::find($id);
+        $educationInstitute = EducationInstitute::findOrFail($id);
         $deletedEductionInstitute = tap($educationInstitute)->delete();
 
         return ResponseJson::success(
             ok: true,
             code: Response::HTTP_OK,
-            message: 'Data Education Institute',
+            message: __('app.notification.flash.deleted', ['prop' => 'Education Institute']),
             data: $deletedEductionInstitute
         );
     }
