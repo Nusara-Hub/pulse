@@ -5,7 +5,9 @@ declare(strict_types=1);
 use Illuminate\Support\Facades\Route;
 use Nusara\Pulse\Http\Controllers\Api\EducationInstituteApiController;
 use Nusara\Pulse\Http\Controllers\Api\EducationTitleApiController;
+            use Nusara\Pulse\Http\Controllers\Api\RegionApiController;
             //useRoutes
+        
 
 
 
@@ -29,7 +31,18 @@ Route::group(['prefix' => 'pulse', 'as' => 'pulse.'], function () {
                 Route::delete('/{id}', [EducationTitleApiController::class, 'delete'])->name('delete');
             });
 
+            
+            Route::group(['prefix' => 'region', 'as' => 'region.'], function () {
+                Route::get('/', [RegionApiController::class, 'index'])->name('index');
+                Route::get('/export', [RegionApiController::class, 'export'])->name('export');
+                Route::get('/{id}', [RegionApiController::class, 'show'])->name('show');
+                Route::post('/', [RegionApiController::class, 'store'])->name('store');
+                Route::put('/{id}', [RegionApiController::class, 'update'])->name('update');
+                Route::delete('/{id}', [RegionApiController::class, 'delete'])->name('delete');
+            });
+
             //replaceRoute
+        
 
 
 });

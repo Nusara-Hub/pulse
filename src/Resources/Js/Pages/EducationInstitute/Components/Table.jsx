@@ -14,10 +14,15 @@ const Table = ({ title, data, onDelete, pagination, page, setPage, limit, search
                 <td className="px-4 py-2">{displayIndex}</td>
                 <td className="px-4 py-2">{row.name}</td>
                 <td className="px-4 py-2">
-                    <Link href={`/pulse/education-institute/edit/${row.id}`}>Edit</Link>
+                    <button
+                        className="bg-emerald-500 text-white px-4 py-2 rounded"
+                        onClick={() => window.location.href = `/pulse/education-institute/edit/${row.id}`}
+                    >
+                        Edit
+                    </button>
                     <button
                         onClick={() => showConfirm(row.id)}
-                        className="text-red-500 ml-4"
+                        className="bg-red-500 text-white px-4 py-2 rounded ml-4"
                     >
                         Delete
                     </button>

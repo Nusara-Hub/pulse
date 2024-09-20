@@ -5,7 +5,7 @@ import { Head } from '@inertiajs/react'
 
 const Index = () => {
     const {
-        edu,
+        datas,
         loading,
         pagination,
         page,
@@ -18,13 +18,13 @@ const Index = () => {
         handleDelete,
         handleSearchChange,
         handleExport,
-        fetchEducation
+        fetch
     } = useEducationInstituteStore();
     // Fetch education data when component mounts
     useEffect(() => {
-        fetchEducation();
-    }, [fetchEducation]);
-    if (loading || !edu?.data) {
+        fetch();
+    }, [fetch]);
+    if (loading || !datas?.data) {
         return <p>Loading...</p>;  // Display loading while data is not ready
     }
 
@@ -33,7 +33,7 @@ const Index = () => {
         <>
             <Head title="Education Institute Page" />
 
-            <Table data={edu.data}
+            <Table data={datas.data}
                 onDelete={handleDelete}
                 pagination={pagination}
                 page={page}

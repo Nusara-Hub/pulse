@@ -2,7 +2,7 @@ import { create } from 'zustand';
 import { getData, createData, updateData, deleteData, showData, exportData } from '../Services/EducationInstituteService';
 
 export const useEducationInstituteStore = create((set, get) => ({
-    edu: [],
+    datas: [],
     detail: [],
     page: 1,
     limit: 10,
@@ -19,13 +19,13 @@ export const useEducationInstituteStore = create((set, get) => ({
     error: null,
 
     // Actions
-    fetchEducation: async () => {
+    fetch: async () => {
         const { page, limit, search } = get();
         set({ loading: true });
         try {
             const data = await getData(page, limit, search);
             set({
-                edu: data,
+                datas: data,
                 pagination: data.pagination,
                 loading: false
             });
@@ -48,7 +48,7 @@ export const useEducationInstituteStore = create((set, get) => ({
         if (newData) {
             try {
                 await createData(newData);
-                get().fetchEducation(); // Refresh data
+                get().fetch(); // Refresh data
             } catch (error) {
                 console.error('Error inserting data:', error);
                 throw error;
@@ -60,7 +60,7 @@ export const useEducationInstituteStore = create((set, get) => ({
         if (updateData) {
             try {
                 await updateData(id, updateData);
-                get().fetchEducation(); // Refresh data
+                get().fetch(); // Refresh data
             } catch (error) {
                 console.error('Error updating data:', error);
                 throw error;
@@ -72,7 +72,7 @@ export const useEducationInstituteStore = create((set, get) => ({
         if (id) {
             try {
                 await deleteData(id);
-                get().fetchEducation(); // Refresh data
+                get().fetch(); // Refresh data
             } catch (error) {
                 console.error('Error deleting data:', error);
                 throw error;
@@ -99,19 +99,19 @@ export const useEducationInstituteStore = create((set, get) => ({
     setLimit: (newLimit) => {
         console.log("Limit");
         set({ limit: newLimit, page: 1 }); // Reset to first page when limit changes
-        get().fetchEducation();
+        get().fetch();
     },
 
     setPage: (newPage) => {
         set({ page: newPage });
-        get().fetchEducation();
+        get().fetch();
     },
 
     handleNextPage: () => {
         const { page, pagination } = get();
         if (page < pagination.total_pages) {
             set({ page: page + 1 });
-            get().fetchEducation();
+            get().fetch();
         }
     },
 
@@ -119,12 +119,12 @@ export const useEducationInstituteStore = create((set, get) => ({
         const { page } = get();
         if (page > 1) {
             set({ page: page - 1 });
-            get().fetchEducation();
+            get().fetch();
         }
 
     },
     handleSearchChange(newSearch) {
         set({ search: newSearch, page: 1 });
-        get().fetchEducation(); // Trigger fetch after updating the state
+        get().fetch(); // Trigger fetch after updating the state
     }
 }));
