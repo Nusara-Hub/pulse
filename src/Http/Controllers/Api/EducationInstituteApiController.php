@@ -6,6 +6,7 @@ namespace Nusara\Pulse\Http\Controllers\Api;
 
 use Nusara\Pulse\Http\Controllers\NusaraPulseBaseController;
 use App\Functions\ResponseJson;
+use App\Http\Resources\PaginationResource;
 use Illuminate\Http\Response;
 use Nusara\Pulse\Models\EducationInstitute;
 use Illuminate\Http\Request;
@@ -41,19 +42,13 @@ class EducationInstituteApiController extends NusaraPulseBaseController
         return ResponseJson::success(
             ok: true,
             code: Response::HTTP_OK,
-            message: 'Data Education Institute',
+            message: __('app.notification.flash.fetched', ['prop' => 'Education Institute']),
             data: $educationInstitutes->items(),
-            pagination: [
-                'total_data' => $totalData,
-                'total_filtered' => $totalFiltered,
-                //next page
-                'next_page' => $educationInstitutes->nextPageUrl() != null ? true : false,
-                //previous page
-                'previous_page' => $educationInstitutes->previousPageUrl() != null ? true : false,
-                'current_page' => $educationInstitutes->currentPage(),
-                'per_page' => $educationInstitutes->perPage(),
-                'total_pages' => $educationInstitutes->lastPage(),
-            ]
+            pagination: PaginationResource::build(
+                totalData: $totalData,
+                totalFiltered: $totalFiltered,
+                paginationCollection: $educationInstitutes
+            )
         );
     }
 
@@ -65,11 +60,12 @@ class EducationInstituteApiController extends NusaraPulseBaseController
      */
     public function show(string $id): JsonResponse
     {
-        $educationInstitute = EducationInstitute::find($id);
+        $educationInstitute = EducationInstitute::findOrFail($id);
+
         return ResponseJson::success(
             ok: true,
             code: Response::HTTP_OK,
-            message: 'Data Education Institute',
+            message: __('app.notification.flash.fetched', ['prop' => 'Education Institute']),
             data: $educationInstitute
         );
     }
@@ -83,10 +79,11 @@ class EducationInstituteApiController extends NusaraPulseBaseController
     public function store(CreateRequest $request): JsonResponse
     {
         $educationInstitute = EducationInstitute::create($request->validated());
+
         return ResponseJson::success(
             ok: true,
             code: Response::HTTP_OK,
-            message: 'Data Education Institute',
+            message: __('app.notification.flash.created', ['prop' => 'Education Institute']),
             data: $educationInstitute
         );
     }
@@ -100,12 +97,13 @@ class EducationInstituteApiController extends NusaraPulseBaseController
      */
     public function update(UpdateRequest $request, string $id): JsonResponse
     {
-        $educationInstitute = EducationInstitute::find($id);
+        $educationInstitute = EducationInstitute::findOrFail($id);
         $educationInstitute->update($request->validated());
+
         return ResponseJson::success(
             ok: true,
             code: Response::HTTP_OK,
-            message: 'Data Education Institute',
+            message: __('app.notification.flash.updated', ['prop' => 'Education Institute']),
             data: $educationInstitute
         );
     }
@@ -118,13 +116,14 @@ class EducationInstituteApiController extends NusaraPulseBaseController
      */
     public function delete(string $id): JsonResponse
     {
-        $educationInstitute = EducationInstitute::find($id);
-        $educationInstitute->delete();
+        $educationInstitute = EducationInstitute::findOrFail($id);
+        $deletedEductionInstitute = tap($educationInstitute)->delete();
+
         return ResponseJson::success(
             ok: true,
             code: Response::HTTP_OK,
-            message: 'Data Education Institute',
-            data: $educationInstitute
+            message: __('app.notification.flash.deleted', ['prop' => 'Education Institute']),
+            data: $deletedEductionInstitute
         );
     }
 

@@ -1,7 +1,8 @@
 import { React, useState } from 'react';
 import { Link } from '@inertiajs/react';
 import { DataTable } from '@/Components/DataTable';
-const Table = ({ title, data, onDelete, pagination, page, setPage, limit, search, handleSearchChange, handleLimitChange, handleNextPage, handlePreviousPage, handleExport }) => {
+
+const Table = ({ title, data, onDelete, pagination, page, setPage, limit, search, handleSearchChange, handleLimitChange, handleNextPage, handlePreviousPage }) => {
     const header = ['No', 'Nama', 'Action'];
     const renderBody = (row, index, showConfirm) => (
         <>

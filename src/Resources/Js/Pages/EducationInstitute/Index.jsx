@@ -1,38 +1,18 @@
-import React, { useEffect } from 'react';
-import { useEducationInstituteStore } from './State/useEducationInstituteStore';
-import { Link } from '@inertiajs/react'
+import React from 'react';
+import { useEducationInstitute } from './State/useEducationInstitute';
 import Table from './Components/Table'
+import { Head } from '@inertiajs/react'
 
 const Index = () => {
-    const {
-        edu,
-        loading,
-        pagination,
-        page,
-        limit,
-        search,
-        setPage,
-        setLimit: handleLimitChange,
-        handleNextPage,
-        handlePreviousPage,
-        handleDelete,
-        handleSearchChange,
-        handleExport,
-        fetchEducation
-    } = useEducationInstituteStore();
+    const [edu, loading, pagination, page, setPage, limit, search, handleSearchChange, handleLimitChange, handleNextPage, handlePreviousPage, handleDelete] = useEducationInstitute({ read: true, delete: true })
 
-    // Fetch education data when component mounts
-    useEffect(() => {
-        fetchEducation();
-    }, [fetchEducation]);
-
-    if (loading || !edu?.data) {
-        return <p>Loading...</p>;  // Display loading while data is not ready
-    }
+    if (!edu || !edu.data) return <p>Loading...</p>
 
     return (
 
         <>
+            <Head title="Education Institute Page" />
+
             <Table data={edu.data}
                 onDelete={handleDelete}
                 pagination={pagination}
@@ -47,7 +27,6 @@ const Index = () => {
                 handleExport={handleExport}
             />
         </>
-
 
     );
 }

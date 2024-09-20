@@ -4,6 +4,19 @@ HRM manages the pulse of human resources within the company, ensuring that all e
 ## What is Nusara Pulse?
 Nusara Pulse is a Laravel-based HRM system that helps manage employee-related aspects within a company. It provides a comprehensive set of features to streamline HR processes, from recruitment to development.
 
+## Usefull Commands
+### Publishing Migration to core tenants:
+```
+php artisan vendor:publish --tag=pulse-migrations
+```
+
+### Execute Nusara Pulse Commands
+
+#### Seeder
+```
+php artisan nusara:pulse-exec --seed
+```
+
 ## Credits
 - [Rembon Karya Digital](https://github.com/rembonnn)
 - [DayCod](https://github.com/dayCod)

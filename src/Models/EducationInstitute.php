@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Nusara\Pulse\Models;
 
+use App\Traits\HandleTenantTransaction;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
@@ -17,7 +18,7 @@ final class EducationInstitute extends Model
      *
      * @var string
      */
-    protected $table = 'pulse.education_institute';
+    protected $table = 'pulse.education_institutes';
 
     /**
      * The storage format of the model's date columns.
