@@ -12,6 +12,13 @@ php artisan vendor:publish --tag=pulse-migrations
 
 ### Execute Nusara Pulse Commands
 
+#### Creating Pulse Migrations
+```
+<!-- Table name must be in plural and in lowercase -->
+<!-- adding _table as prefix will be the important thing -->
+php artisan nusara:pulse-exec --migration=create_examples_table
+```
+
 #### Seeder
 ```
 php artisan nusara:pulse-exec --seed
