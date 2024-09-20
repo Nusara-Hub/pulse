@@ -13,7 +13,9 @@ use Nusara\Pulse\Http\Requests\EducationInstitute\CreateRequest;
 use Nusara\Pulse\Http\Requests\EducationInstitute\UpdateRequest;
 use Illuminate\Support\Facades\Pipeline;
 use Illuminate\Http\JsonResponse;
-
+use Maatwebsite\Excel\Facades\Excel;
+use Nusara\Pulse\Http\Exports\EducationInstituteExport;
+use Symfony\Component\HttpFoundation\BinaryFileResponse;
 class EducationInstituteApiController extends NusaraPulseBaseController
 {
     /**
@@ -33,8 +35,8 @@ class EducationInstituteApiController extends NusaraPulseBaseController
                 \Nusara\Pulse\Http\Filters\EducationInstitute\ByName::class,
             ])
             ->thenReturn();
-        $totalFiltered = $educationInstitutes->count();
         $educationInstitutes = $educationInstitutes->paginate($limit, ['*'], 'page', $page);
+        $totalFiltered = $educationInstitutes->count();
 
         return ResponseJson::success(
             ok: true,
@@ -124,5 +126,15 @@ class EducationInstituteApiController extends NusaraPulseBaseController
             message: 'Data Education Institute',
             data: $educationInstitute
         );
+    }
+
+    /**
+     * Export education institute data to excel
+     *
+     * @return \Symfony\Component\HttpFoundation\BinaryFileResponse
+     */
+    public function export(): BinaryFileResponse
+    {
+        return Excel::download(new EducationInstituteExport, 'education-institute.xlsx');
     }
 }

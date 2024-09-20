@@ -1,15 +1,34 @@
-import React from 'react';
-import { useEducationInstitute } from './State/useEducationInstitute';
+import React, { useEffect } from 'react';
+import { useEducationInstituteStore } from './State/useEducationInstituteStore';
 import { Link } from '@inertiajs/react'
 import Table from './Components/Table'
 
 const Index = () => {
-    const [edu, loading, pagination, page, setPage, limit, search, handleSearchChange, handleLimitChange, handleNextPage, handlePreviousPage, handleDelete] = useEducationInstitute({ read: true, delete: true });
-    if (!edu || !edu.data) {
-        return <p>Loading...</p>;  // Tampilkan pesan loading saat data belum siap
+    const {
+        edu,
+        loading,
+        pagination,
+        page,
+        limit,
+        search,
+        setPage,
+        setLimit: handleLimitChange,
+        handleNextPage,
+        handlePreviousPage,
+        handleDelete,
+        handleSearchChange,
+        handleExport,
+        fetchEducation
+    } = useEducationInstituteStore();
+
+    // Fetch education data when component mounts
+    useEffect(() => {
+        fetchEducation();
+    }, [fetchEducation]);
+
+    if (loading || !edu?.data) {
+        return <p>Loading...</p>;  // Display loading while data is not ready
     }
-
-
 
     return (
 
@@ -25,6 +44,7 @@ const Index = () => {
                 handleLimitChange={handleLimitChange}
                 handleNextPage={handleNextPage}
                 handlePreviousPage={handlePreviousPage}
+                handleExport={handleExport}
             />
         </>
 

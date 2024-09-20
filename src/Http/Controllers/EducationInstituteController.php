@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Nusara\Pulse\Http\Controllers;
 
 use Nusara\Pulse\Http\Controllers\NusaraPulseBaseController;
-use App\Models\User;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Inertia\Response;
