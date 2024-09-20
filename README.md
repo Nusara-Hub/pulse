@@ -17,6 +17,16 @@ php artisan vendor:publish --tag=pulse-migrations
 php artisan nusara:pulse-exec --seed
 ```
 
+#### Execute Tenants Migrations
+```
+<!-- For Migrating Tenant -->
+php artisan tenants:migrate
+
+<!-- Drop all existing tenants table and migrate -->
+php artisan tenants:migrate-fresh
+
+```
+
 ## Credits
 - [Rembon Karya Digital](https://github.com/rembonnn)
 - [DayCod](https://github.com/dayCod)
