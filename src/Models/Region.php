@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 
-final class EducationInstitute extends Model
+final class Region extends Model
 {
     use HasUuids, SoftDeletes, HandleActionExecutedBy;
 
@@ -18,7 +18,7 @@ final class EducationInstitute extends Model
      *
      * @var string
      */
-    protected $table = 'pulse.education_institutes';
+    protected $table = 'pulse.regions';
 
     /**
      * The storage format of the model's date columns.

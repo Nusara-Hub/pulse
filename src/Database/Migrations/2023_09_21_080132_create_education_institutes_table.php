@@ -16,14 +16,14 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('pulse.city', function (Blueprint $table) {
+        Schema::create('pulse.education_institutes', function (Blueprint $table) {
             $table->uuid('id')->primary();
-            $table->string('code')->nullable();
             $table->string('name')->nullable();
-            $table->uuid('region_id')->forign()->references('id')->on('pulse.region');
+
             $table->string('created_by')->nullable();
             $table->string('updated_by')->nullable();
             $table->string('deleted_by')->nullable();
+
             $table->unsignedBigInteger('created_at');
             $table->unsignedBigInteger('updated_at');
             $table->unsignedBigInteger('deleted_at');
@@ -37,6 +37,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('pulse.city');
+        Schema::dropIfExists('pulse.education_institutes');
     }
 };

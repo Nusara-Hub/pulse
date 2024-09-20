@@ -16,16 +16,26 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('pulse.region', function (Blueprint $table) {
+        Schema::create('pulse.skill_groups', function (Blueprint $table) {
             $table->uuid('id')->primary();
-            $table->string('code')->nullable();
             $table->string('name')->nullable();
+
             $table->string('created_by')->nullable();
             $table->string('updated_by')->nullable();
             $table->string('deleted_by')->nullable();
+
             $table->unsignedBigInteger('created_at');
             $table->unsignedBigInteger('updated_at');
             $table->unsignedBigInteger('deleted_at');
+        });
+
+        Schema::table('pulse.skill_groups', function (Blueprint $table) {
+            $table->foreignUuid('parent_id')
+                ->nullable()
+                ->references('id')
+                ->on('pulse.skill_groups')
+                ->onUpdate('cascade')
+                ->onDelete('cascade');
         });
     }
 
@@ -36,6 +46,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('pulse.region');
+        Schema::dropIfExists('pulse.skill_groups');
     }
 };

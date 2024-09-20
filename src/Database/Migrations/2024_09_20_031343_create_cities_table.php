@@ -16,13 +16,21 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('pulse.education_title', function (Blueprint $table) {
+        Schema::create('pulse.cities', function (Blueprint $table) {
             $table->uuid('id')->primary();
-            $table->string('short_name')->nullable();
+            $table->string('code')->nullable();
             $table->string('name')->nullable();
+
+            $table->foreignUuid('region_id')
+                ->references('id')
+                ->on('pulse.regions')
+                ->onUpdate('cascade')
+                ->onDelete('cascade');
+
             $table->string('created_by')->nullable();
             $table->string('updated_by')->nullable();
             $table->string('deleted_by')->nullable();
+
             $table->unsignedBigInteger('created_at');
             $table->unsignedBigInteger('updated_at');
             $table->unsignedBigInteger('deleted_at');
@@ -36,6 +44,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('pulse.education_title');
+        Schema::dropIfExists('pulse.cities');
     }
 };
