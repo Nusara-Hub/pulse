@@ -4,20 +4,21 @@ declare(strict_types=1);
 
 namespace Nusara\Pulse\Models;
 
+use App\Traits\HandleActionExecutedBy;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 
-final class Example extends Model
+final class Company extends Model
 {
-    use HasUuids, SoftDeletes;
+    use HasUuids, SoftDeletes, HandleActionExecutedBy;
 
     /**
      * The database table associated with the model.
      *
      * @var string
      */
-    protected $table = '';
+    protected $table = 'pulse.companies';
 
     /**
      * The storage format of the model's date columns.

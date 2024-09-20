@@ -16,7 +16,7 @@ final class NusaraPulseConsole extends Command
      *
      * @var string
      */
-    protected $signature = 'nusara:pulse-exec {--seed : Run the nusara pulse seeder} {--migration= : Create a new migration file}';
+    protected $signature = 'nusara:pulse-exec {--seed : Run the nusara pulse seeder} {--migration= : Create a new migration file} {--model= : Create a new model file}';
 
     /**
      * The console command description.
@@ -59,6 +59,8 @@ final class NusaraPulseConsole extends Command
             $this->info('Nusara pulse fake data seeded successfully!');
         } elseif ($migrationName = $this->option('migration')) {
             $this->createMigration($migrationName);
+        } elseif ($modelName = $this->option('model')) {
+            $this->createModel($modelName);
         } else {
             $this->info('No action specified. Use --seed to run the seeder or --migration to create a migration.');
         }
@@ -91,6 +93,30 @@ final class NusaraPulseConsole extends Command
     }
 
     /**
+     * Create a new model file.
+     *
+     * @param string $modelName
+     * @return void
+     */
+    protected function createModel(string $modelName): void
+    {
+        $stubPath = __DIR__ . '/../../stubs/models.stub';
+        $modelPath = __DIR__ . "/../Models/{$modelName}.php";
+
+        if ($this->files->exists($modelPath)) {
+            $this->error("Model {$modelName} already exists.");
+            return;
+        }
+
+        $stubContent = $this->files->get($stubPath);
+        $modelContent = str_replace(['DummyClass', 'DummyTable'], [$modelName, Str::plural(Str::snake(Str::lower($modelName)))], $stubContent);
+
+        $this->files->put($modelPath, $modelContent);
+
+        $this->info("Model {$modelName} created successfully at {$modelPath}");
+    }
+
+    /**
      * Display help information.
      *
      * @return void
@@ -102,6 +128,7 @@ final class NusaraPulseConsole extends Command
         $this->info("\nOptions:");
         $this->info("--seed\t\tRun the nusara pulse seeder to seed dummy data.");
         $this->info("--migration\tCreate a new migration file with the given name.");
+        $this->info("--model\t\tCreate a new model file with the given name.");
         $this->info("--help\t\tDisplay this help message.");
     }
 
