@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Nusara\Pulse\Http\Controllers;
+namespace Nusara\Pulse\Http\Controllers\Master;
 
 use Nusara\Pulse\Http\Controllers\NusaraPulseBaseController;
 use Illuminate\Http\Request;

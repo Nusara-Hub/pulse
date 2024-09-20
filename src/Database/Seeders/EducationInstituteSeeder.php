@@ -16,8 +16,8 @@ final class EducationInstituteSeeder extends Seeder
     public function run(): void
     {
         Tenant::all()->runForEach(function ($tenant) {
-            if ($tenant->id == 'daycode') {
-                for ($i = 0; $i <= 10000; $i++) {
+            if ($tenant->id == 'tegar') {
+                for ($i = 0; $i <= 100000; $i++) {
                     EducationInstitute::create([
                         'name' => fake()->company()
                     ]);

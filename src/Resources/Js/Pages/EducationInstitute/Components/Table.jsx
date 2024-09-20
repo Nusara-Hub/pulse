@@ -4,21 +4,27 @@ import { DataTable } from '@/Components/DataTable';
 
 const Table = ({ title, data, onDelete, pagination, page, setPage, limit, search, handleSearchChange, handleLimitChange, handleNextPage, handlePreviousPage, handleExport }) => {
     const header = ['No', 'Nama', 'Action'];
-    const renderBody = (row, index, showConfirm) => (
-        <>
-            <td className="px-4 py-2">{index + 1}</td>
-            <td className="px-4 py-2">{row.name}</td>
-            <td className="px-4 py-2">
-                <Link href={`/pulse/education-institute/edit/${row.id}`}>Edit</Link>
-                <button
-                    onClick={() => showConfirm(row.id)}
-                    className="text-red-500 ml-4"
-                >
-                    Delete
-                </button>
-            </td>
-        </>
-    );
+    const renderBody = (row, index, showConfirm, pagination) => {
+        const currentPage = pagination.current_page || 1;
+        const limit = pagination.limit || 10;
+        const displayIndex = (currentPage - 1) * limit + (index + 1);
+
+        return (
+            <>
+                <td className="px-4 py-2">{displayIndex}</td>
+                <td className="px-4 py-2">{row.name}</td>
+                <td className="px-4 py-2">
+                    <Link href={`/pulse/education-institute/edit/${row.id}`}>Edit</Link>
+                    <button
+                        onClick={() => showConfirm(row.id)}
+                        className="text-red-500 ml-4"
+                    >
+                        Delete
+                    </button>
+                </td>
+            </>
+        );
+    };
 
     return (
         <>

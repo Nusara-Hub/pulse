@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 use Inertia\Inertia;
 use Illuminate\Support\Facades\Route;
-use Nusara\Pulse\Http\Controllers\EducationInstituteController;
+use Nusara\Pulse\Http\Controllers\Master\EducationInstituteController;
 
 Route::group(['prefix' => 'pulse', 'as' => 'pulse.'], function () {
     // ...
