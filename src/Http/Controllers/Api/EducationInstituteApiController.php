@@ -36,8 +36,9 @@ class EducationInstituteApiController extends NusaraPulseBaseController
                 \Nusara\Pulse\Http\Filters\EducationInstitute\ByName::class,
             ])
             ->thenReturn();
+            $totalFiltered = $educationInstitutes->count();
         $educationInstitutes = $educationInstitutes->paginate($limit, ['*'], 'page', $page);
-        $totalFiltered = $educationInstitutes->count();
+
 
         return ResponseJson::success(
             ok: true,

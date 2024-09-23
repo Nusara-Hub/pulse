@@ -1,6 +1,9 @@
 import { React, useState } from 'react';
-import { Link } from '@inertiajs/react';
 import { DataTable } from '@/Components/DataTable';
+import { Button } from "@/components/ui/button"
+import {
+    TableCell,
+} from "@/components/ui/table"
 
 const Table = ({ title, data, onDelete, pagination, page, setPage, limit, search, handleSearchChange, handleLimitChange, handleNextPage, handlePreviousPage, handleExport }) => {
     const header = ['No', 'Nama', 'Action'];
@@ -11,22 +14,22 @@ const Table = ({ title, data, onDelete, pagination, page, setPage, limit, search
 
         return (
             <>
-                <td className="px-4 py-2">{displayIndex}</td>
-                <td className="px-4 py-2">{row.name}</td>
-                <td className="px-4 py-2">
-                    <button
-                        className="bg-emerald-500 text-white px-4 py-2 rounded"
+                <TableCell>{displayIndex}</TableCell>
+                <TableCell>{row.name}</TableCell>
+                <TableCell className="flex gap-2">
+                    <Button
+                        variant="outline"
                         onClick={() => window.location.href = `/pulse/education-institute/edit/${row.id}`}
                     >
                         Edit
-                    </button>
-                    <button
+                    </Button>
+                    <Button
                         onClick={() => showConfirm(row.id)}
-                        className="bg-red-500 text-white px-4 py-2 rounded ml-4"
+                        variant="destructive"
                     >
                         Delete
-                    </button>
-                </td>
+                    </Button>
+                </TableCell>
             </>
         );
     };
@@ -34,8 +37,6 @@ const Table = ({ title, data, onDelete, pagination, page, setPage, limit, search
     return (
         <>
             <div className="container mx-auto py-4 px-5">
-                <h1>{title}</h1>
-
                 <DataTable
                     data={data}
                     linkCreate='/pulse/education-institute/create'

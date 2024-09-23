@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import { useEducationInstituteStore } from './State/useEducationInstituteStore';
 import Table from './Components/Table'
 import { Head } from '@inertiajs/react'
+import Shimmer from '@/Components/Shimmer';
 
 const Index = () => {
     const {
@@ -24,28 +25,29 @@ const Index = () => {
     useEffect(() => {
         fetch();
     }, [fetch]);
-    if (loading || !datas?.data) {
-        return <p>Loading...</p>;  // Display loading while data is not ready
-    }
+
 
     return (
 
         <>
             <Head title="Education Institute Page" />
-
-            <Table data={datas.data}
-                onDelete={handleDelete}
-                pagination={pagination}
-                page={page}
-                setPage={setPage}
-                limit={limit}
-                search={search}
-                handleSearchChange={handleSearchChange}
-                handleLimitChange={handleLimitChange}
-                handleNextPage={handleNextPage}
-                handlePreviousPage={handlePreviousPage}
-                handleExport={handleExport}
-            />
+            {loading || !datas?.data ? (
+                <Shimmer />  // Show shimmer while loading
+            ) : (
+                <Table data={datas.data}
+                    onDelete={handleDelete}
+                    pagination={pagination}
+                    page={page}
+                    setPage={setPage}
+                    limit={limit}
+                    search={search}
+                    handleSearchChange={handleSearchChange}
+                    handleLimitChange={handleLimitChange}
+                    handleNextPage={handleNextPage}
+                    handlePreviousPage={handlePreviousPage}
+                    handleExport={handleExport}
+                />
+            )};
         </>
 
     );
