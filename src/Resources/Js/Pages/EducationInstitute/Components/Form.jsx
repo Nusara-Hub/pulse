@@ -25,6 +25,10 @@ const Form = ({ id, onSubmit, initialData = {} }) => {
         reset(initialData.data);
     }, [id, reset, initialData]);
 
+    const handleCancel = () => {
+        window.history.back(); // Go back to the previous page
+    };
+
     return (
         <>
             <form className="bg-white  rounded px-8 pt-6 pb-8 mb-4" onSubmit={handleSubmit(onSubmit)}>
@@ -40,9 +44,14 @@ const Form = ({ id, onSubmit, initialData = {} }) => {
                     />
                     {errors.name && <p style={{ color: 'red' }}>{errors.name.message}</p>}
                 </div>
-                <Button type="submit">
-                    Submit
-                </Button>
+                <div className="flex gap-2">
+                    <Button type="button" variant="secondary" onClick={handleCancel}>
+                        Cancel
+                    </Button>
+                    <Button type="submit">
+                        {id ? 'Update' : 'Submit'}
+                    </Button>
+                </div>
 
             </form>
         </>
