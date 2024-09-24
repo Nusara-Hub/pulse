@@ -40,7 +40,7 @@ const Form = ({ id, onSubmit, initialData = {} }) => {
                     />
                     {errors.name && <p style={{ color: 'red' }}>{errors.name.message}</p>}
                 </div>
-                <Button variant="outline" type="submit">
+                <Button type="submit">
                     Submit
                 </Button>
 
