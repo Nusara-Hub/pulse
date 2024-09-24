@@ -3,7 +3,14 @@ import { useEducationInstituteStore } from './State/useEducationInstituteStore';
 import Table from './Components/Table'
 import { Head } from '@inertiajs/react'
 import Shimmer from '@/Components/Shimmer';
-
+import {
+    Card,
+    CardContent,
+    CardDescription,
+    CardFooter,
+    CardHeader,
+    CardTitle,
+} from "@/components/ui/card"
 const Index = () => {
     const {
         datas,
@@ -31,6 +38,10 @@ const Index = () => {
 
         <>
             <Head title="Education Institute Page" />
+            <CardHeader>
+                <CardTitle>Education Institute</CardTitle>
+                <CardDescription>Data education institute</CardDescription>
+            </CardHeader>
             {loading || !datas?.data ? (
                 <Shimmer />  // Show shimmer while loading
             ) : (
