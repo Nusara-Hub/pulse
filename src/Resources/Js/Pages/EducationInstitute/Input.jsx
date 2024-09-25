@@ -1,7 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import { useEducationInstituteStore } from './State/useEducationInstituteStore';
 import Form from './Components/Form';
-// Define Zod schema for validation
+import {
+    CardDescription,
+    CardHeader,
+    CardTitle,
+} from "@/components/ui/card"
+import { Head } from '@inertiajs/react'
+
 const Input = ({ id }) => {
     // Destructure handleInsert, handleUpdate, and showEducation from the hook
     const { show, detail, handleInsert, handleUpdate } = useEducationInstituteStore();
@@ -35,6 +41,11 @@ const Input = ({ id }) => {
 
     return (
         <>
+            <Head title="Education Institute Page" />
+            <CardHeader>
+                <CardTitle>Education Institute {id ? 'Update' : 'Create'}</CardTitle>
+                <CardDescription>{id ? 'Update' : 'Create'} education institute</CardDescription>
+            </CardHeader>
             <Form id={id} onSubmit={onSubmit} initialData={detail} />
         </>
     );

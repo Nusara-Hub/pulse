@@ -1,7 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { useEducationTitleStore } from './State/useEducationTitleStore';
 import Form from './Components/Form';
-
+import {
+    CardDescription,
+    CardHeader,
+    CardTitle,
+} from "@/components/ui/card"
+import { Head } from '@inertiajs/react'
 const Input = ({ id }) => {
     const { show, detail, handleInsert, handleUpdate } = useEducationTitleStore();
     const [loading, setLoading] = useState(true);
@@ -37,6 +42,11 @@ const Input = ({ id }) => {
 
     return (
         <>
+            <Head title="Education Title Page" />
+            <CardHeader>
+                <CardTitle>Education Title {id ? 'Update' : 'Create'}</CardTitle>
+                <CardDescription>{id ? 'Update' : 'Create'} education title</CardDescription>
+            </CardHeader>
             <Form id={id} onSubmit={onSubmit} initialData={detail} />
         </>
     );

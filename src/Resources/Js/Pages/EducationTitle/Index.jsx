@@ -1,16 +1,13 @@
 import React, { useEffect } from 'react';
 import { useEducationTitleStore } from './State/useEducationTitleStore';
 import Table from './Components/Table'
-import { Head } from '@inertiajs/react'
 import Shimmer from '@/Components/Shimmer';
 import {
-    Card,
-    CardContent,
     CardDescription,
-    CardFooter,
     CardHeader,
     CardTitle,
 } from "@/components/ui/card"
+import { Head } from '@inertiajs/react'
 const Index = () => {
     const {
         datas,

@@ -26,12 +26,12 @@ const Form = ({ id, onSubmit, initialData = {} }) => {
     }, [id, reset, initialData]);
 
     const handleCancel = () => {
-        window.history.back();
+        window.location.href = '/pulse/education-institute';
     };
 
     return (
         <>
-            <form className="bg-white  rounded px-8 pt-6 pb-8 mb-4" onSubmit={handleSubmit(onSubmit)}>
+            <form className="bg-white rounded-md border mx-4 px-8 pt-6 pb-8 mb-4" onSubmit={handleSubmit(onSubmit)}>
 
                 <div className='mb-4'>
                     <label className='block text-sm font-bold mb-2' htmlFor='short_name'>
