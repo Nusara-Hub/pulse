@@ -7,7 +7,8 @@ use Nusara\Pulse\Http\Controllers\Api\EducationInstituteApiController;
 use Nusara\Pulse\Http\Controllers\Api\EducationTitleApiController;
             use Nusara\Pulse\Http\Controllers\Api\RegionApiController;
             //useRoutes
-        
+
+
 
 
 
@@ -31,7 +32,7 @@ Route::group(['prefix' => 'pulse', 'as' => 'pulse.'], function () {
                 Route::delete('/{id}', [EducationTitleApiController::class, 'delete'])->name('delete');
             });
 
-            
+
             Route::group(['prefix' => 'region', 'as' => 'region.'], function () {
                 Route::get('/', [RegionApiController::class, 'index'])->name('index');
                 Route::get('/export', [RegionApiController::class, 'export'])->name('export');
@@ -42,7 +43,8 @@ Route::group(['prefix' => 'pulse', 'as' => 'pulse.'], function () {
             });
 
             //replaceRoute
-        
+
+
 
 
 });

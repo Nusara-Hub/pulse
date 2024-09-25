@@ -6,7 +6,8 @@ use Inertia\Inertia;
 use Illuminate\Support\Facades\Route;
 use Nusara\Pulse\Http\Controllers\Master\EducationInstituteController;
 use Nusara\Pulse\Http\Controllers\Master\EducationTitleController;
-
+use Nusara\Pulse\Http\Controllers\Master\RegionController;
+//useController
 
 
 
@@ -28,6 +29,12 @@ Route::group(['prefix' => 'pulse', 'as' => 'pulse.'], function () {
                 Route::get('/create', [EducationTitleController::class, 'create'])->name('create');
                 Route::get('/edit/{id}', [EducationTitleController::class, 'edit'])->name('edit');
             });
+            Route::group(['prefix' => 'region', 'as' => 'region.'], function () {
+                Route::get('/', [RegionController::class, 'index'])->name('index');
+                Route::get('/create', [RegionController::class, 'create'])->name('create');
+                Route::get('/edit/{id}', [RegionController::class, 'edit'])->name('edit');
+            });
+            //replaceRoute
 
 
 });

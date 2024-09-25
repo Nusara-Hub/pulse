@@ -28,6 +28,7 @@ final class UpdateRequest extends FormRequest
     public function rules(): array
     {
          return [
+    'code' => ['required', 'max:255'],
     'name' => ['required', 'max:255'],
 ];
     }
