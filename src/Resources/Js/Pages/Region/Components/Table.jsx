@@ -9,7 +9,7 @@ const Table = ({ title, data, onDelete, pagination, page, setPage, limit, search
     const header = ['No', 'Region Code', 'Region Name', 'Action'];;
     const renderBody = (row, index, showConfirm, pagination) => {
         const currentPage = pagination.current_page || 1;
-        const limit = pagination.limit || 10;
+        const limit = pagination.per_page || 10;
         const displayIndex = (currentPage - 1) * limit + (index + 1);
 
         return (

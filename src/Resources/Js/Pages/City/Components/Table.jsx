@@ -9,31 +9,31 @@ const Table = ({ title, data, onDelete, pagination, page, setPage, limit, search
     const header = ['No', 'Region Name', 'City Code', 'City Name', 'Action'];;
     const renderBody = (row, index, showConfirm, pagination) => {
         const currentPage = pagination.current_page || 1;
-        const limit = pagination.limit || 10;
+        const limit = pagination.per_page || 10;
         const displayIndex = (currentPage - 1) * limit + (index + 1);
 
         return (
             <>
-               <TableCell>{displayIndex}</TableCell>
-<TableCell>{row.region.name}</TableCell>
-<TableCell>{row.code}</TableCell>
-<TableCell>{row.name}</TableCell>
+                <TableCell>{displayIndex}</TableCell>
+                <TableCell>{row.region.name}</TableCell>
+                <TableCell>{row.code}</TableCell>
+                <TableCell>{row.name}</TableCell>
 
-            <TableCell className="flex gap-2">
-                <Button
-                    variant="outline"
-                    onClick={() => window.location.href = `/pulse/city/edit/${row.id}`}
-                >
-                    Edit
-                </Button>
-                <Button
-                    onClick={() => showConfirm(row.id)}
-                    variant="destructive"
-                >
-                    Delete
-                </Button>
-            </TableCell>
-        
+                <TableCell className="flex gap-2">
+                    <Button
+                        variant="outline"
+                        onClick={() => window.location.href = `/pulse/city/edit/${row.id}`}
+                    >
+                        Edit
+                    </Button>
+                    <Button
+                        onClick={() => showConfirm(row.id)}
+                        variant="destructive"
+                    >
+                        Delete
+                    </Button>
+                </TableCell>
+
             </>
         );
     };
