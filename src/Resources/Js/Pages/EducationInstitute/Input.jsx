@@ -1,30 +1,37 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useEducationInstituteStore } from './State/useEducationInstituteStore';
 import Form from './Components/Form';
 // Define Zod schema for validation
 const Input = ({ id }) => {
     // Destructure handleInsert, handleUpdate, and showEducation from the hook
-    const { showEducation, detail, handleInsert, handleUpdate } = useEducationInstituteStore();
+    const { show, detail, handleInsert, handleUpdate } = useEducationInstituteStore();
+    const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        showEducation(id);
-    })
-    // Handle form submission
+        if (id) {
+            setLoading(true);  // Set loading to true before fetching data
+            show(id).then(() => setLoading(false));  // Fetch data and set loading to false when done
+        } else {
+            setLoading(false);  // No id, so no need to fetch data, just disable loading
+        }
+    }, [id]); // Only run when `id` changes
+
     const onSubmit = async (data) => {
         try {
             if (id) {
-                // Update data if an ID exists (edit mode)
-                await handleUpdate(id, data);
+                await handleUpdate(id, data);  // Update existing entry
             } else {
-                // Insert data if no ID (create mode)
-                await handleInsert(data);
+                await handleInsert(data);  // Create new entry
             }
-            // Navigate back to the index page after success
-            window.location.href = '/pulse/education-institute';
+            window.location.href = '/pulse/education-institute';  // Redirect after success
         } catch (error) {
             console.error('Error submitting form:', error);
         }
     };
+
+    if (loading) {
+        return <div>Loading...</div>;  // Show a loading state while data is being fetched
+    }
 
     return (
         <>

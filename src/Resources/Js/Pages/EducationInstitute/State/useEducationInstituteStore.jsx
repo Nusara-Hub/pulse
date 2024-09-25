@@ -35,7 +35,7 @@ export const useEducationInstituteStore = create((set, get) => ({
         }
     },
 
-    showEducation: async (id) => {
+    show: async (id) => {
         try {
             const data = await showData(id);
             set({ detail: data });
@@ -56,10 +56,11 @@ export const useEducationInstituteStore = create((set, get) => ({
         }
     },
 
-    handleUpdate: async (id, updateData) => {
-        if (updateData) {
+    handleUpdate: async (id, data) => {
+        if (data) {
+            console.log(data);
             try {
-                await updateData(id, updateData);
+                await updateData(id, data);
                 get().fetch(); // Refresh data
             } catch (error) {
                 console.error('Error updating data:', error);

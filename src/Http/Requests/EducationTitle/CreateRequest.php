@@ -29,6 +29,7 @@ final class CreateRequest extends FormRequest
     {
          return [
     'name' => ['required', 'max:255'],
+    'short_name'=>['required', 'max:255'],
 ];
     }
 }
