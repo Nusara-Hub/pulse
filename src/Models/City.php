@@ -8,8 +8,8 @@ use App\Traits\HandleActionExecutedBy;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
-
-final class SkillGroup extends Model
+use Nusara\Pulse\Models\Region;
+final class City extends Model
 {
     use HasUuids, SoftDeletes, HandleActionExecutedBy;
 
@@ -18,7 +18,7 @@ final class SkillGroup extends Model
      *
      * @var string
      */
-    protected $table = 'pulse.skill_groups';
+    protected $table = 'pulse.cities';
 
     /**
      * The storage format of the model's date columns.
@@ -48,8 +48,10 @@ final class SkillGroup extends Model
         ];
     }
 
-    public function parent()
+    //relation to region
+
+    public function region()
     {
-        return $this->belongsTo(SkillGroup::class, 'parent_id');
+        return $this->belongsTo(Region::class, 'region_id');
     }
 }

@@ -4,13 +4,13 @@ declare(strict_types=1);
 
 namespace Nusara\Pulse\Http\Exports;
 
-use Nusara\Pulse\Models\EducationTitle;
+use Nusara\Pulse\Models\Skill;
 use Maatwebsite\Excel\Concerns\FromCollection;
 
-class EducationTitleExport implements FromCollection
+class SkillExport implements FromCollection
 {
     public function collection()
     {
-        return EducationTitle::all();
+        return Skill::all();
     }
 }

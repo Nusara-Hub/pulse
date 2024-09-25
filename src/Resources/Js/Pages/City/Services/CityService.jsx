@@ -2,8 +2,7 @@ import axios from 'axios';
 
 export async function getData(page, limit, search) {
     try {
-
-        const response = await axios.get('/api/pulse/skill-group', {
+        const response = await axios.get('/api/pulse/city', {
             params: {
                 page: page,
                 limit: limit,
@@ -20,7 +19,7 @@ export async function getData(page, limit, search) {
 
 export async function showData(id) {
     try {
-        const response = await axios.get('/api/pulse/skill-group/' + id);
+        const response = await axios.get('/api/pulse/city/' + id);
         return response.data;
     } catch (error) {
         console.error('Failed to show data', error);
@@ -32,7 +31,7 @@ export async function createData(data) {
 
     if (data) {
         try {
-            const response = await axios.post('/api/pulse/skill-group', data);
+            const response = await axios.post('/api/pulse/city', data);
             return response.data;
         } catch (error) {
             console.error('Failed to create data', error);
@@ -44,7 +43,7 @@ export async function createData(data) {
 export async function updateData(id, data) {
     if (data) {
         try {
-            const response = await axios.put(`/api/pulse/skill-group/${id}`, data);
+            const response = await axios.put(`/api/pulse/city/${id}`, data);
             return response.data;
         } catch (error) {
             console.error('Failed to update data', error);
@@ -55,7 +54,7 @@ export async function updateData(id, data) {
 
 export async function deleteData(id) {
     try {
-        const response = await axios.delete(`/api/pulse/skill-group/${id}`);
+        const response = await axios.delete(`/api/pulse/city/${id}`);
         return response.data;
     } catch (error) {
         console.error('Failed to delete data', error);
@@ -67,7 +66,7 @@ export async function deleteData(id) {
 
 export async function exportData() {
     try {
-        const response = await axios.get('/api/pulse/skill-group/export', {
+        const response = await axios.get('/api/pulse/city/export', {
             responseType: 'blob', // Ensures binary response
         });
 

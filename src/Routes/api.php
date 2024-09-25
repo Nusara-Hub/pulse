@@ -6,7 +6,13 @@ use Illuminate\Support\Facades\Route;
 use Nusara\Pulse\Http\Controllers\Api\EducationInstituteApiController;
 use Nusara\Pulse\Http\Controllers\Api\EducationTitleApiController;
             use Nusara\Pulse\Http\Controllers\Api\RegionApiController;
+            use Nusara\Pulse\Http\Controllers\Api\CityApiController;
+            use Nusara\Pulse\Http\Controllers\Api\SkillGroupApiController;
+            use Nusara\Pulse\Http\Controllers\Api\SkillApiController;
             //useRoutes
+        
+        
+        
 
 
 
@@ -42,7 +48,40 @@ Route::group(['prefix' => 'pulse', 'as' => 'pulse.'], function () {
                 Route::delete('/{id}', [RegionApiController::class, 'delete'])->name('delete');
             });
 
+            
+            Route::group(['prefix' => 'city', 'as' => 'city.'], function () {
+                Route::get('/', [CityApiController::class, 'index'])->name('index');
+                Route::get('/export', [CityApiController::class, 'export'])->name('export');
+                Route::get('/{id}', [CityApiController::class, 'show'])->name('show');
+                Route::post('/', [CityApiController::class, 'store'])->name('store');
+                Route::put('/{id}', [CityApiController::class, 'update'])->name('update');
+                Route::delete('/{id}', [CityApiController::class, 'delete'])->name('delete');
+            });
+
+            
+            Route::group(['prefix' => 'skill-group', 'as' => 'skill-group.'], function () {
+                Route::get('/', [SkillGroupApiController::class, 'index'])->name('index');
+                Route::get('/export', [SkillGroupApiController::class, 'export'])->name('export');
+                Route::get('/{id}', [SkillGroupApiController::class, 'show'])->name('show');
+                Route::post('/', [SkillGroupApiController::class, 'store'])->name('store');
+                Route::put('/{id}', [SkillGroupApiController::class, 'update'])->name('update');
+                Route::delete('/{id}', [SkillGroupApiController::class, 'delete'])->name('delete');
+            });
+
+            
+            Route::group(['prefix' => 'skill', 'as' => 'skill.'], function () {
+                Route::get('/', [SkillApiController::class, 'index'])->name('index');
+                Route::get('/export', [SkillApiController::class, 'export'])->name('export');
+                Route::get('/{id}', [SkillApiController::class, 'show'])->name('show');
+                Route::post('/', [SkillApiController::class, 'store'])->name('store');
+                Route::put('/{id}', [SkillApiController::class, 'update'])->name('update');
+                Route::delete('/{id}', [SkillApiController::class, 'delete'])->name('delete');
+            });
+
             //replaceRoute
+        
+        
+        
 
 
 

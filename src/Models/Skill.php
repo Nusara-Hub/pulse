@@ -47,4 +47,9 @@ final class Skill extends Model
             'deleted_at' => 'datetime:U',
         ];
     }
+
+    public function group()
+    {
+        return $this->belongsTo(SkillGroup::class, 'skill_group_id');
+    }
 }

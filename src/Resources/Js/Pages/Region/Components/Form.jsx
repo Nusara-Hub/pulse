@@ -26,7 +26,7 @@ const Form = ({ id, onSubmit, initialData = {} }) => {
     }, [id, reset, initialData]);
 
     const handleCancel = () => {
-        window.location.href = '//';
+        window.location.href = '/pulse/region/';
     };
 
     return (

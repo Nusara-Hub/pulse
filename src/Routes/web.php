@@ -7,7 +7,13 @@ use Illuminate\Support\Facades\Route;
 use Nusara\Pulse\Http\Controllers\Master\EducationInstituteController;
 use Nusara\Pulse\Http\Controllers\Master\EducationTitleController;
 use Nusara\Pulse\Http\Controllers\Master\RegionController;
-//useController
+use Nusara\Pulse\Http\Controllers\Master\CityController;
+            use Nusara\Pulse\Http\Controllers\Master\SkillGroupController;
+            use Nusara\Pulse\Http\Controllers\Master\SkillController;
+            //useController
+        
+        
+        
 
 
 
@@ -34,7 +40,28 @@ Route::group(['prefix' => 'pulse', 'as' => 'pulse.'], function () {
                 Route::get('/create', [RegionController::class, 'create'])->name('create');
                 Route::get('/edit/{id}', [RegionController::class, 'edit'])->name('edit');
             });
+            
+            Route::group(['prefix' => 'city', 'as' => 'city.'], function () {
+                Route::get('/', [CityController::class, 'index'])->name('index');
+                Route::get('/create', [CityController::class, 'create'])->name('create');
+                Route::get('/edit/{id}', [CityController::class, 'edit'])->name('edit');
+            });
+            
+            Route::group(['prefix' => 'skill-group', 'as' => 'skill-group.'], function () {
+                Route::get('/', [SkillGroupController::class, 'index'])->name('index');
+                Route::get('/create', [SkillGroupController::class, 'create'])->name('create');
+                Route::get('/edit/{id}', [SkillGroupController::class, 'edit'])->name('edit');
+            });
+            
+            Route::group(['prefix' => 'skill', 'as' => 'skill.'], function () {
+                Route::get('/', [SkillController::class, 'index'])->name('index');
+                Route::get('/create', [SkillController::class, 'create'])->name('create');
+                Route::get('/edit/{id}', [SkillController::class, 'edit'])->name('edit');
+            });
             //replaceRoute
+        
+        
+        
 
 
 });
