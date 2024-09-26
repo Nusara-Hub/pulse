@@ -11,16 +11,22 @@ use Nusara\Pulse\Http\Controllers\Api\Master\SkillGroupApiController;
 use Nusara\Pulse\Http\Controllers\Api\Master\SkillApiController;
 use Nusara\Pulse\Http\Controllers\Api\Master\HolidayApiController;
 use Nusara\Pulse\Http\Controllers\Api\Master\ContractApiController;
-//useRoutes
-
-
-
-
-
-
-
-
-
+use Nusara\Pulse\Http\Controllers\Api\Companies\DepartmentApiController;
+use Nusara\Pulse\Http\Controllers\Api\Companies\JobLevelApiController;
+            use Nusara\Pulse\Http\Controllers\Api\Companies\JobTitleApiController;
+            use Nusara\Pulse\Http\Controllers\Api\Employee\EmployeeApiController;
+            use Nusara\Pulse\Http\Controllers\Api\Employee\PlacementApiController;
+            use Nusara\Pulse\Http\Controllers\Api\Employee\MutationApiController;
+            use Nusara\Pulse\Http\Controllers\Api\Attendance\AbsentReasonApiController;
+            use Nusara\Pulse\Http\Controllers\Api\Attendance\ShiftmentApiController;
+            //useRoutes
+            
+            
+            
+            
+            
+            
+            
 
 Route::group(['prefix' => 'pulse', 'as' => 'pulse.'], function () {
     Route::group(['prefix' => 'education-institute', 'as' => 'institute.'], function () {
@@ -102,7 +108,95 @@ Route::group(['prefix' => 'pulse', 'as' => 'pulse.'], function () {
                 Route::delete('/{id}', [ContractApiController::class, 'delete'])->name('delete');
             });
 
+
+            Route::group(['prefix' => 'department', 'as' => 'department.'], function () {
+                Route::get('/', [DepartmentApiController::class, 'index'])->name('index');
+                Route::get('/export', [DepartmentApiController::class, 'export'])->name('export');
+                Route::get('/{id}', [DepartmentApiController::class, 'show'])->name('show');
+                Route::post('/', [DepartmentApiController::class, 'store'])->name('store');
+                Route::put('/{id}', [DepartmentApiController::class, 'update'])->name('update');
+                Route::delete('/{id}', [DepartmentApiController::class, 'delete'])->name('delete');
+            });
+
+            
+            Route::group(['prefix' => 'job-level', 'as' => 'job-level.'], function () {
+                Route::get('/', [JobLevelApiController::class, 'index'])->name('index');
+                Route::get('/export', [JobLevelApiController::class, 'export'])->name('export');
+                Route::get('/{id}', [JobLevelApiController::class, 'show'])->name('show');
+                Route::post('/', [JobLevelApiController::class, 'store'])->name('store');
+                Route::put('/{id}', [JobLevelApiController::class, 'update'])->name('update');
+                Route::delete('/{id}', [JobLevelApiController::class, 'delete'])->name('delete');
+            });
+
+            
+            Route::group(['prefix' => 'job-title', 'as' => 'job-title.'], function () {
+                Route::get('/', [JobTitleApiController::class, 'index'])->name('index');
+                Route::get('/export', [JobTitleApiController::class, 'export'])->name('export');
+                Route::get('/{id}', [JobTitleApiController::class, 'show'])->name('show');
+                Route::post('/', [JobTitleApiController::class, 'store'])->name('store');
+                Route::put('/{id}', [JobTitleApiController::class, 'update'])->name('update');
+                Route::delete('/{id}', [JobTitleApiController::class, 'delete'])->name('delete');
+            });
+
+            
+            Route::group(['prefix' => 'employee', 'as' => 'employee.'], function () {
+                Route::get('/', [EmployeeApiController::class, 'index'])->name('index');
+                Route::get('/export', [EmployeeApiController::class, 'export'])->name('export');
+                Route::get('/{id}', [EmployeeApiController::class, 'show'])->name('show');
+                Route::post('/', [EmployeeApiController::class, 'store'])->name('store');
+                Route::put('/{id}', [EmployeeApiController::class, 'update'])->name('update');
+                Route::delete('/{id}', [EmployeeApiController::class, 'delete'])->name('delete');
+            });
+
+            
+            Route::group(['prefix' => 'placement', 'as' => 'placement.'], function () {
+                Route::get('/', [PlacementApiController::class, 'index'])->name('index');
+                Route::get('/export', [PlacementApiController::class, 'export'])->name('export');
+                Route::get('/{id}', [PlacementApiController::class, 'show'])->name('show');
+                Route::post('/', [PlacementApiController::class, 'store'])->name('store');
+                Route::put('/{id}', [PlacementApiController::class, 'update'])->name('update');
+                Route::delete('/{id}', [PlacementApiController::class, 'delete'])->name('delete');
+            });
+
+            
+            Route::group(['prefix' => 'mutation', 'as' => 'mutation.'], function () {
+                Route::get('/', [MutationApiController::class, 'index'])->name('index');
+                Route::get('/export', [MutationApiController::class, 'export'])->name('export');
+                Route::get('/{id}', [MutationApiController::class, 'show'])->name('show');
+                Route::post('/', [MutationApiController::class, 'store'])->name('store');
+                Route::put('/{id}', [MutationApiController::class, 'update'])->name('update');
+                Route::delete('/{id}', [MutationApiController::class, 'delete'])->name('delete');
+            });
+
+            
+            Route::group(['prefix' => 'absent-reason', 'as' => 'absent-reason.'], function () {
+                Route::get('/', [AbsentReasonApiController::class, 'index'])->name('index');
+                Route::get('/export', [AbsentReasonApiController::class, 'export'])->name('export');
+                Route::get('/{id}', [AbsentReasonApiController::class, 'show'])->name('show');
+                Route::post('/', [AbsentReasonApiController::class, 'store'])->name('store');
+                Route::put('/{id}', [AbsentReasonApiController::class, 'update'])->name('update');
+                Route::delete('/{id}', [AbsentReasonApiController::class, 'delete'])->name('delete');
+            });
+
+            
+            Route::group(['prefix' => 'shiftment', 'as' => 'shiftment.'], function () {
+                Route::get('/', [ShiftmentApiController::class, 'index'])->name('index');
+                Route::get('/export', [ShiftmentApiController::class, 'export'])->name('export');
+                Route::get('/{id}', [ShiftmentApiController::class, 'show'])->name('show');
+                Route::post('/', [ShiftmentApiController::class, 'store'])->name('store');
+                Route::put('/{id}', [ShiftmentApiController::class, 'update'])->name('update');
+                Route::delete('/{id}', [ShiftmentApiController::class, 'delete'])->name('delete');
+            });
+
             //replaceRoute
+        
+        
+        
+        
+        
+        
+        
+
 
 
 
