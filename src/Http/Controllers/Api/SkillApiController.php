@@ -35,8 +35,9 @@ class SkillApiController extends NusaraPulseBaseController
                 \Nusara\Pulse\Http\Filters\Skill\BySearch::class,
             ])
             ->thenReturn();
-        $skills = $skills->paginate($limit, ['*'], 'page', $page);
         $totalFiltered = $skills->count();
+        $skills = $skills->orderBy('created_at','desc')->paginate($limit, ['*'], 'page', $page);
+
 
         return ResponseJson::success(
             ok: true,

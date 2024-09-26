@@ -7,9 +7,11 @@ import {
     CardTitle,
 } from "@/components/ui/card"
 import { Head } from '@inertiajs/react'
+import { useToast } from "@/hooks/use-toast";
 const Input = ({ id }) => {
     const { fetch, datas = [], loading, show, detail, handleInsert, handleUpdate } = useSkillGroupStore();
     const [loadings, setLoadings] = useState(true);
+    const { toast } = useToast();
 
     useEffect(() => {
         fetch();
@@ -24,15 +26,28 @@ const Input = ({ id }) => {
     const onSubmit = async (data) => {
         try {
             if (id) {
-
                 await handleUpdate(id, data);
+                toast({
+                    title: 'Success',
+                    description: 'Skill Group updated successfully!',
+                    className: 'bg-green-500 text-white',
+                });
             } else {
-
                 await handleInsert(data);
+                toast({
+                    title: 'Success',
+                    description: 'Skill Group created successfully!',
+                    className: 'bg-green-500 text-white',
+                });
             }
 
             window.location.href = '/pulse/skill-group';
         } catch (error) {
+            toast({
+                title: 'Error',
+                description: 'Error submitting form. Please try again.',
+                variant: 'destructive',
+            });
             console.error('Error submitting form:', error);
         }
     };

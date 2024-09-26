@@ -8,11 +8,12 @@ import {
 } from "@/components/ui/card"
 import { Head } from '@inertiajs/react'
 import { useRegionStore } from '../Region/State/useRegionStore';
-
+import { useToast } from "@/hooks/use-toast";
 const Input = ({ id }) => {
     const { show, detail, handleInsert, handleUpdate } = useCityStore();
     const { datas = [], loading, fetch } = useRegionStore(); // Ensure datas is an array
     const [loadings, setLoadings] = useState(true);
+    const { toast } = useToast();
 
     useEffect(() => {
         fetch(); // Fetch regions
@@ -27,12 +28,27 @@ const Input = ({ id }) => {
     const onSubmit = async (data) => {
         try {
             if (id) {
-                await handleUpdate(id, data); // Update if id is present
+                await handleUpdate(id, data);
+                toast({
+                    title: 'Success',
+                    description: 'City updated successfully!',
+                    className: 'bg-green-500 text-white',
+                });
             } else {
-                await handleInsert(data); // Insert if no id is present
+                await handleInsert(data);
+                toast({
+                    title: 'Success',
+                    description: 'City created successfully!',
+                    className: 'bg-green-500 text-white',
+                });
             }
-            window.location.href = '/pulse/city'; // Redirect after submission
+            window.location.href = '/pulse/city';
         } catch (error) {
+            toast({
+                title: 'Error',
+                description: 'Error submitting form. Please try again.',
+                variant: 'destructive',
+            });
             console.error('Error submitting form:', error);
         }
     };

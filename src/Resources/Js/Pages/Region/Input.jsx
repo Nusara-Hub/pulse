@@ -7,9 +7,11 @@ import {
     CardTitle,
 } from "@/components/ui/card"
 import { Head } from '@inertiajs/react'
+import { useToast } from "@/hooks/use-toast";
 const Input = ({ id }) => {
     const { show, detail, handleInsert, handleUpdate } = useRegionStore();
     const [loading, setLoading] = useState(true);
+    const { toast } = useToast();
 
     useEffect(() => {
         if (id) {
@@ -23,15 +25,28 @@ const Input = ({ id }) => {
     const onSubmit = async (data) => {
         try {
             if (id) {
-
                 await handleUpdate(id, data);
+                toast({
+                    title: 'Success',
+                    description: 'Region updated successfully!',
+                    className: 'bg-green-500 text-white',
+                });
             } else {
-
                 await handleInsert(data);
+                toast({
+                    title: 'Success',
+                    description: 'Region created successfully!',
+                    className: 'bg-green-500 text-white',
+                });
             }
 
             window.location.href = '/pulse/region';
         } catch (error) {
+            toast({
+                title: 'Error',
+                description: 'Error submitting form. Please try again.',
+                variant: 'destructive',
+            });
             console.error('Error submitting form:', error);
         }
     };

@@ -35,8 +35,9 @@ class SkillGroupApiController extends NusaraPulseBaseController
                 \Nusara\Pulse\Http\Filters\SkillGroup\BySearch::class,
             ])
             ->thenReturn();
-        $skillgroups = $skillgroups->paginate($limit, ['*'], 'page', $page);
         $totalFiltered = $skillgroups->count();
+        $skillgroups = $skillgroups->orderBy('created_at','desc')->paginate($limit, ['*'], 'page', $page);
+
 
         return ResponseJson::success(
             ok: true,

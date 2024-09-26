@@ -35,8 +35,9 @@ class RegionApiController extends NusaraPulseBaseController
                 \Nusara\Pulse\Http\Filters\Region\BySearch::class,
             ])
             ->thenReturn();
-        $regions = $regions->paginate($limit, ['*'], 'page', $page);
         $totalFiltered = $regions->count();
+        $regions = $regions->orderBy('created_at','desc')->paginate($limit, ['*'], 'page', $page);
+
 
         return ResponseJson::success(
             ok: true,

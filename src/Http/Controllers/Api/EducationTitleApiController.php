@@ -35,8 +35,9 @@ class EducationTitleApiController extends NusaraPulseBaseController
                 \Nusara\Pulse\Http\Filters\EducationTitle\BySearch::class,
             ])
             ->thenReturn();
-        $educationtitles = $educationtitles->paginate($limit, ['*'], 'page', $page);
         $totalFiltered = $educationtitles->count();
+        $educationtitles = $educationtitles->orderBy('created_at','desc')->paginate($limit, ['*'], 'page', $page);
+
 
         return ResponseJson::success(
             ok: true,

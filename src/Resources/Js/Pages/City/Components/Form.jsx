@@ -1,10 +1,11 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Button } from "@/Components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Select, SelectTrigger, SelectContent, SelectItem, SelectValue, SelectGroup, SelectLabel } from "@/components/ui/select";
+
 const schema = z.object({
     'region_id': z.string().nonempty(),
     'code': z.string().nonempty(),
@@ -17,14 +18,26 @@ const Form = ({ id, onSubmit, initialData = {}, region }) => {
         handleSubmit,
         reset,
         formState: { errors },
-        setValue, // Destructure setValue from useForm
+        setValue,
     } = useForm({
         resolver: zodResolver(schema),
     });
 
+    const [searchQuery, setSearchQuery] = useState(''); // Manage the search input
+    const [filteredRegions, setFilteredRegions] = useState(region); // Manage the filtered list of regions
+
     useEffect(() => {
         reset(initialData.data);
     }, [id, reset, initialData]);
+
+    useEffect(() => {
+        // Filter regions based on search query
+        setFilteredRegions(
+            region.filter(r =>
+                r.name.toLowerCase().includes(searchQuery.toLowerCase())
+            )
+        );
+    }, [searchQuery, region]);
 
     const handleCancel = () => {
         window.location.href = '/pulse/city';
@@ -38,7 +51,7 @@ const Form = ({ id, onSubmit, initialData = {}, region }) => {
                         Region
                     </label>
                     <Select
-                        onValueChange={(value) => setValue('region_id', value)} // Set the value on selection
+                        onValueChange={(value) => setValue('region_id', value)}
                         defaultValue={initialData.data?.region_id || ''}
                     >
                         <SelectTrigger className='input input-bordered w-full'>
@@ -47,11 +60,21 @@ const Form = ({ id, onSubmit, initialData = {}, region }) => {
                         <SelectContent>
                             <SelectGroup>
                                 <SelectLabel>Regions</SelectLabel>
-                                {region.map((r) => (
-                                    <SelectItem key={r.id} value={r.id}>
-                                        {r.name}
-                                    </SelectItem>
-                                ))}
+                                <Input
+                                    className='input input-bordered w-full mb-2'
+                                    placeholder='Search region...'
+                                    value={searchQuery}
+                                    onChange={(e) => setSearchQuery(e.target.value)}
+                                />
+                                {filteredRegions.length ? (
+                                    filteredRegions.map((r) => (
+                                        <SelectItem key={r.id} value={r.id}>
+                                            {r.name}
+                                        </SelectItem>
+                                    ))
+                                ) : (
+                                    <p className='text-gray-500 text-xs italic'>No regions found</p>
+                                )}
                             </SelectGroup>
                         </SelectContent>
                     </Select>
