@@ -2,22 +2,22 @@
 
 declare(strict_types=1);
 
-namespace Nusara\Pulse\Http\Controllers\Api;
+namespace Nusara\Pulse\Http\Controllers\Api\Master;
 
 use Nusara\Pulse\Http\Controllers\NusaraPulseBaseController;
 use App\Functions\ResponseJson;
 use App\Http\Resources\PaginationResource;
 use Illuminate\Http\Response;
-use Nusara\Pulse\Models\Skill;
+use Nusara\Pulse\Models\EducationInstitute;
 use Illuminate\Http\Request;
-use Nusara\Pulse\Http\Requests\Skill\CreateRequest;
-use Nusara\Pulse\Http\Requests\Skill\UpdateRequest;
+use Nusara\Pulse\Http\Requests\EducationInstitute\CreateRequest;
+use Nusara\Pulse\Http\Requests\EducationInstitute\UpdateRequest;
 use Illuminate\Support\Facades\Pipeline;
 use Illuminate\Http\JsonResponse;
 use Maatwebsite\Excel\Facades\Excel;
-use Nusara\Pulse\Http\Exports\SkillExport;
+use Nusara\Pulse\Http\Exports\EducationInstituteExport;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
-class SkillApiController extends NusaraPulseBaseController
+class EducationInstituteApiController extends NusaraPulseBaseController
 {
     /**
      * Get all education institute data.
@@ -29,44 +29,45 @@ class SkillApiController extends NusaraPulseBaseController
     {
         $limit = $request->input('limit', 10);
         $page = $request->input('page', 1);
-        $totalData = Skill::count();
-        $skills = Pipeline::send(Skill::query()->with('group'))
+        $totalData = EducationInstitute::count();
+        $educationInstitutes = Pipeline::send(EducationInstitute::query())
             ->through([
-                \Nusara\Pulse\Http\Filters\Skill\BySearch::class,
+                \Nusara\Pulse\Http\Filters\EducationInstitute\BySearch::class,
+                \Nusara\Pulse\Http\Filters\EducationInstitute\ByName::class,
             ])
             ->thenReturn();
-        $totalFiltered = $skills->count();
-        $skills = $skills->orderBy('created_at','desc')->paginate($limit, ['*'], 'page', $page);
+            $totalFiltered = $educationInstitutes->count();
+        $educationInstitutes = $educationInstitutes->orderBy('created_at','desc')->paginate($limit, ['*'], 'page', $page);
 
 
         return ResponseJson::success(
             ok: true,
             code: Response::HTTP_OK,
-            message: __('app.notification.flash.fetched', ['prop' => 'Skill']),
-            data: $skills->items(),
+            message: __('app.notification.flash.fetched', ['prop' => 'Education Institute']),
+            data: $educationInstitutes->items(),
             pagination: PaginationResource::build(
                 totalData: $totalData,
                 totalFiltered: $totalFiltered,
-                paginationCollection: $skills
+                paginationCollection: $educationInstitutes
             )
         );
     }
 
     /**
-     * Get a specific Skill data by id
+     * Get a specific education institute data by id
      *
      * @param string $id The id of education institute
      * @return \Illuminate\Http\JsonResponse
      */
     public function show(string $id): JsonResponse
     {
-        $skills = Skill::findOrFail($id);
+        $educationInstitute = EducationInstitute::findOrFail($id);
 
         return ResponseJson::success(
             ok: true,
             code: Response::HTTP_OK,
-            message: __('app.notification.flash.fetched', ['prop' => 'Skill']),
-            data: $skills
+            message: __('app.notification.flash.fetched', ['prop' => 'Education Institute']),
+            data: $educationInstitute
         );
     }
 
@@ -78,13 +79,13 @@ class SkillApiController extends NusaraPulseBaseController
      */
     public function store(CreateRequest $request): JsonResponse
     {
-        $skills = Skill::create($request->validated());
+        $educationInstitute = EducationInstitute::create($request->validated());
 
         return ResponseJson::success(
             ok: true,
             code: Response::HTTP_OK,
-            message: __('app.notification.flash.created', ['prop' => 'Skill']),
-            data: $skills
+            message: __('app.notification.flash.created', ['prop' => 'Education Institute']),
+            data: $educationInstitute
         );
     }
 
@@ -97,14 +98,14 @@ class SkillApiController extends NusaraPulseBaseController
      */
     public function update(UpdateRequest $request, string $id): JsonResponse
     {
-        $skills = Skill::findOrFail($id);
-        $skills->update($request->validated());
+        $educationInstitute = EducationInstitute::findOrFail($id);
+        $educationInstitute->update($request->validated());
 
         return ResponseJson::success(
             ok: true,
             code: Response::HTTP_OK,
-            message: __('app.notification.flash.updated', ['prop' => 'Skill']),
-            data: $skills
+            message: __('app.notification.flash.updated', ['prop' => 'Education Institute']),
+            data: $educationInstitute
         );
     }
 
@@ -116,24 +117,24 @@ class SkillApiController extends NusaraPulseBaseController
      */
     public function delete(string $id): JsonResponse
     {
-        $skills = Skill::findOrFail($id);
-        $deletedSkill = tap($skills)->delete();
+        $educationInstitute = EducationInstitute::findOrFail($id);
+        $deletedEductionInstitute = tap($educationInstitute)->delete();
 
         return ResponseJson::success(
             ok: true,
             code: Response::HTTP_OK,
-            message: __('app.notification.flash.deleted', ['prop' => 'Skill']),
-            data: $deletedSkill
+            message: __('app.notification.flash.deleted', ['prop' => 'Education Institute']),
+            data: $deletedEductionInstitute
         );
     }
 
     /**
-     * Export Skill data to excel
+     * Export education institute data to excel
      *
      * @return \Symfony\Component\HttpFoundation\BinaryFileResponse
      */
     public function export(): BinaryFileResponse
     {
-        return Excel::download(new SkillExport, 'skill.xlsx');
+        return Excel::download(new EducationInstituteExport, 'education-institute.xlsx');
     }
 }

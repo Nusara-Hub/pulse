@@ -2,22 +2,22 @@
 
 declare(strict_types=1);
 
-namespace Nusara\Pulse\Http\Controllers\Api;
+namespace Nusara\Pulse\Http\Controllers\Api\Master;
 
 use Nusara\Pulse\Http\Controllers\NusaraPulseBaseController;
 use App\Functions\ResponseJson;
 use App\Http\Resources\PaginationResource;
 use Illuminate\Http\Response;
-use Nusara\Pulse\Models\EducationTitle;
+use Nusara\Pulse\Models\Holiday;
 use Illuminate\Http\Request;
-use Nusara\Pulse\Http\Requests\EducationTitle\CreateRequest;
-use Nusara\Pulse\Http\Requests\EducationTitle\UpdateRequest;
+use Nusara\Pulse\Http\Requests\Holiday\CreateRequest;
+use Nusara\Pulse\Http\Requests\Holiday\UpdateRequest;
 use Illuminate\Support\Facades\Pipeline;
 use Illuminate\Http\JsonResponse;
 use Maatwebsite\Excel\Facades\Excel;
-use Nusara\Pulse\Http\Exports\EducationTitleExport;
+use Nusara\Pulse\Http\Exports\HolidayExport;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
-class EducationTitleApiController extends NusaraPulseBaseController
+class HolidayApiController extends NusaraPulseBaseController
 {
     /**
      * Get all education institute data.
@@ -29,44 +29,44 @@ class EducationTitleApiController extends NusaraPulseBaseController
     {
         $limit = $request->input('limit', 10);
         $page = $request->input('page', 1);
-        $totalData = EducationTitle::count();
-        $educationtitles = Pipeline::send(EducationTitle::query())
+        $totalData = Holiday::count();
+        $holidays = Pipeline::send(Holiday::query())
             ->through([
-                \Nusara\Pulse\Http\Filters\EducationTitle\BySearch::class,
+                \Nusara\Pulse\Http\Filters\Holiday\BySearch::class,
             ])
             ->thenReturn();
-        $totalFiltered = $educationtitles->count();
-        $educationtitles = $educationtitles->orderBy('created_at','desc')->paginate($limit, ['*'], 'page', $page);
+        $totalFiltered = $holidays->count();
+        $holidays = $holidays->orderBy('created_at','desc')->paginate($limit, ['*'], 'page', $page);
 
 
         return ResponseJson::success(
             ok: true,
             code: Response::HTTP_OK,
-            message: __('app.notification.flash.fetched', ['prop' => 'Education Title']),
-            data: $educationtitles->items(),
+            message: __('app.notification.flash.fetched', ['prop' => 'Holiday']),
+            data: $holidays->items(),
             pagination: PaginationResource::build(
                 totalData: $totalData,
                 totalFiltered: $totalFiltered,
-                paginationCollection: $educationtitles
+                paginationCollection: $holidays
             )
         );
     }
 
     /**
-     * Get a specific Education Title data by id
+     * Get a specific Holiday data by id
      *
      * @param string $id The id of education institute
      * @return \Illuminate\Http\JsonResponse
      */
     public function show(string $id): JsonResponse
     {
-        $educationtitles = EducationTitle::findOrFail($id);
+        $holidays = Holiday::findOrFail($id);
 
         return ResponseJson::success(
             ok: true,
             code: Response::HTTP_OK,
-            message: __('app.notification.flash.fetched', ['prop' => 'Education Title']),
-            data: $educationtitles
+            message: __('app.notification.flash.fetched', ['prop' => 'Holiday']),
+            data: $holidays
         );
     }
 
@@ -78,13 +78,13 @@ class EducationTitleApiController extends NusaraPulseBaseController
      */
     public function store(CreateRequest $request): JsonResponse
     {
-        $educationtitles = EducationTitle::create($request->validated());
+        $holidays = Holiday::create($request->validated());
 
         return ResponseJson::success(
             ok: true,
             code: Response::HTTP_OK,
-            message: __('app.notification.flash.created', ['prop' => 'Education Title']),
-            data: $educationtitles
+            message: __('app.notification.flash.created', ['prop' => 'Holiday']),
+            data: $holidays
         );
     }
 
@@ -97,14 +97,14 @@ class EducationTitleApiController extends NusaraPulseBaseController
      */
     public function update(UpdateRequest $request, string $id): JsonResponse
     {
-        $educationtitles = EducationTitle::findOrFail($id);
-        $educationtitles->update($request->validated());
+        $holidays = Holiday::findOrFail($id);
+        $holidays->update($request->validated());
 
         return ResponseJson::success(
             ok: true,
             code: Response::HTTP_OK,
-            message: __('app.notification.flash.updated', ['prop' => 'Education Title']),
-            data: $educationtitles
+            message: __('app.notification.flash.updated', ['prop' => 'Holiday']),
+            data: $holidays
         );
     }
 
@@ -116,24 +116,24 @@ class EducationTitleApiController extends NusaraPulseBaseController
      */
     public function delete(string $id): JsonResponse
     {
-        $educationtitles = EducationTitle::findOrFail($id);
-        $deletedEducationTitle = tap($educationtitles)->delete();
+        $holidays = Holiday::findOrFail($id);
+        $deletedHoliday = tap($holidays)->delete();
 
         return ResponseJson::success(
             ok: true,
             code: Response::HTTP_OK,
-            message: __('app.notification.flash.deleted', ['prop' => 'Education Title']),
-            data: $deletedEducationTitle
+            message: __('app.notification.flash.deleted', ['prop' => 'Holiday']),
+            data: $deletedHoliday
         );
     }
 
     /**
-     * Export Education Title data to excel
+     * Export Holiday data to excel
      *
      * @return \Symfony\Component\HttpFoundation\BinaryFileResponse
      */
     public function export(): BinaryFileResponse
     {
-        return Excel::download(new EducationTitleExport, 'education-title.xlsx');
+        return Excel::download(new HolidayExport, 'holiday.xlsx');
     }
 }

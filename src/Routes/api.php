@@ -3,16 +3,20 @@
 declare(strict_types=1);
 
 use Illuminate\Support\Facades\Route;
-use Nusara\Pulse\Http\Controllers\Api\EducationInstituteApiController;
-use Nusara\Pulse\Http\Controllers\Api\EducationTitleApiController;
-            use Nusara\Pulse\Http\Controllers\Api\RegionApiController;
-            use Nusara\Pulse\Http\Controllers\Api\CityApiController;
-            use Nusara\Pulse\Http\Controllers\Api\SkillGroupApiController;
-            use Nusara\Pulse\Http\Controllers\Api\SkillApiController;
-            //useRoutes
-        
-        
-        
+use Nusara\Pulse\Http\Controllers\Api\Master\EducationInstituteApiController;
+use Nusara\Pulse\Http\Controllers\Api\Master\EducationTitleApiController;
+use Nusara\Pulse\Http\Controllers\Api\Master\RegionApiController;
+use Nusara\Pulse\Http\Controllers\Api\Master\CityApiController;
+use Nusara\Pulse\Http\Controllers\Api\Master\SkillGroupApiController;
+use Nusara\Pulse\Http\Controllers\Api\Master\SkillApiController;
+use Nusara\Pulse\Http\Controllers\Api\Master\HolidayApiController;
+use Nusara\Pulse\Http\Controllers\Api\Master\ContractApiController;
+//useRoutes
+
+
+
+
+
 
 
 
@@ -48,7 +52,7 @@ Route::group(['prefix' => 'pulse', 'as' => 'pulse.'], function () {
                 Route::delete('/{id}', [RegionApiController::class, 'delete'])->name('delete');
             });
 
-            
+
             Route::group(['prefix' => 'city', 'as' => 'city.'], function () {
                 Route::get('/', [CityApiController::class, 'index'])->name('index');
                 Route::get('/export', [CityApiController::class, 'export'])->name('export');
@@ -58,7 +62,7 @@ Route::group(['prefix' => 'pulse', 'as' => 'pulse.'], function () {
                 Route::delete('/{id}', [CityApiController::class, 'delete'])->name('delete');
             });
 
-            
+
             Route::group(['prefix' => 'skill-group', 'as' => 'skill-group.'], function () {
                 Route::get('/', [SkillGroupApiController::class, 'index'])->name('index');
                 Route::get('/export', [SkillGroupApiController::class, 'export'])->name('export');
@@ -68,7 +72,7 @@ Route::group(['prefix' => 'pulse', 'as' => 'pulse.'], function () {
                 Route::delete('/{id}', [SkillGroupApiController::class, 'delete'])->name('delete');
             });
 
-            
+
             Route::group(['prefix' => 'skill', 'as' => 'skill.'], function () {
                 Route::get('/', [SkillApiController::class, 'index'])->name('index');
                 Route::get('/export', [SkillApiController::class, 'export'])->name('export');
@@ -78,10 +82,32 @@ Route::group(['prefix' => 'pulse', 'as' => 'pulse.'], function () {
                 Route::delete('/{id}', [SkillApiController::class, 'delete'])->name('delete');
             });
 
+
+            Route::group(['prefix' => 'holiday', 'as' => 'holiday.'], function () {
+                Route::get('/', [HolidayApiController::class, 'index'])->name('index');
+                Route::get('/export', [HolidayApiController::class, 'export'])->name('export');
+                Route::get('/{id}', [HolidayApiController::class, 'show'])->name('show');
+                Route::post('/', [HolidayApiController::class, 'store'])->name('store');
+                Route::put('/{id}', [HolidayApiController::class, 'update'])->name('update');
+                Route::delete('/{id}', [HolidayApiController::class, 'delete'])->name('delete');
+            });
+
+
+            Route::group(['prefix' => 'contract', 'as' => 'contract.'], function () {
+                Route::get('/', [ContractApiController::class, 'index'])->name('index');
+                Route::get('/export', [ContractApiController::class, 'export'])->name('export');
+                Route::get('/{id}', [ContractApiController::class, 'show'])->name('show');
+                Route::post('/', [ContractApiController::class, 'store'])->name('store');
+                Route::put('/{id}', [ContractApiController::class, 'update'])->name('update');
+                Route::delete('/{id}', [ContractApiController::class, 'delete'])->name('delete');
+            });
+
             //replaceRoute
-        
-        
-        
+
+
+
+
+
 
 
 
