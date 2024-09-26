@@ -7,10 +7,11 @@ import {
     CardTitle,
 } from "@/components/ui/card"
 import { Head } from '@inertiajs/react'
-
+import { useToast } from "@/hooks/use-toast";
 const Input = ({ id }) => {
     // Destructure handleInsert, handleUpdate, and showEducation from the hook
     const { show, detail, handleInsert, handleUpdate } = useEducationInstituteStore();
+    const { toast } = useToast();
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
@@ -26,11 +27,26 @@ const Input = ({ id }) => {
         try {
             if (id) {
                 await handleUpdate(id, data);  // Update existing entry
+                toast({
+                    title: 'Success',
+                    description: 'Education institute updated successfully!',
+                    className: 'bg-green-500 text-white',
+                });
             } else {
                 await handleInsert(data);  // Create new entry
+                toast({
+                    title: 'Success',
+                    description: 'Education institute created successfully!',
+                    className: 'bg-green-500 text-white',
+                });
             }
             window.location.href = '/pulse/education-institute';  // Redirect after success
         } catch (error) {
+            toast({
+                title: 'Error',
+                description: 'Error submitting form. Please try again.',
+                variant: 'destructive',
+            });
             console.error('Error submitting form:', error);
         }
     };

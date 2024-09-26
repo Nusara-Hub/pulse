@@ -35,7 +35,7 @@ class CityApiController extends NusaraPulseBaseController
                 \Nusara\Pulse\Http\Filters\City\BySearch::class,
             ])
             ->thenReturn();
-        $cities = $cities->paginate($limit, ['*'], 'page', $page);
+        $cities = $cities->orderBy('created_at','desc')->paginate($limit, ['*'], 'page', $page);
         $totalFiltered = $cities->count();
 
         return ResponseJson::success(

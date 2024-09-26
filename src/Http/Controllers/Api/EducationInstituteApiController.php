@@ -37,7 +37,7 @@ class EducationInstituteApiController extends NusaraPulseBaseController
             ])
             ->thenReturn();
             $totalFiltered = $educationInstitutes->count();
-        $educationInstitutes = $educationInstitutes->paginate($limit, ['*'], 'page', $page);
+        $educationInstitutes = $educationInstitutes->orderBy('created_at','desc')->paginate($limit, ['*'], 'page', $page);
 
 
         return ResponseJson::success(
