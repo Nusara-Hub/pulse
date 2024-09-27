@@ -1177,6 +1177,47 @@ return new class extends Migration
             $table->unsignedBigInteger('deleted_at')->nullable();
         });
         // End Pulse.Workshifts Table
+
+        // Pulse.Employee Address Table
+        Schema::create('pulse.employee_address', function (Blueprint $table) {
+            $table->uuid('id')->primary();
+
+            // Columns here
+            $table->foreignUuid('employee_id')
+                ->references('id')
+                ->on('pulse.employees')
+                ->onUpdate('cascade')
+                ->onDelete('cascade');
+
+            $table->foreignUuid('region_id')
+                ->references('id')
+                ->on('pulse.regions')
+                ->onUpdate('cascade')
+                ->onDelete('cascade');
+
+            $table->foreignUuid('city_id')
+                ->references('id')
+                ->on('pulse.cities')
+                ->onUpdate('cascade')
+                ->onDelete('cascade');
+
+            $table->string('address');
+            $table->string('postal_code', 50);
+            $table->string('phone_number', 20);
+            $table->string('fax_number', 50);
+
+            $table->boolean('is_default')->default(false);
+            // End of columns
+
+            $table->string('created_by')->nullable();
+            $table->string('updated_by')->nullable();
+            $table->string('deleted_by')->nullable();
+
+            $table->unsignedBigInteger('created_at')->nullable();
+            $table->unsignedBigInteger('updated_at')->nullable();
+            $table->unsignedBigInteger('deleted_at')->nullable();
+        });
+        // End Pulse.Employee Address Table
     }
 
     /**
@@ -1290,5 +1331,8 @@ return new class extends Migration
 
         // Pulse.Workshifts Table
         Schema::dropIfExists('pulse.workshifts');
+
+        // Pulse.Employee Address Table
+        Schema::dropIfExists('pulse.employee_address');
     }
 };
