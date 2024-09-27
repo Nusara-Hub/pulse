@@ -9,17 +9,16 @@ import {
 import { Head } from '@inertiajs/react'
 import { useToast } from "@/hooks/use-toast";
 const Input = ({ id }) => {
-    const { fetch, datas = [], loading, show, detail, handleInsert, handleUpdate } = useSkillGroupStore();
-    const [loadings, setLoadings] = useState(true);
+    const { show, detail, handleInsert, handleUpdate } = useSkillGroupStore();
+    const [loading, setLoading] = useState(true);
     const { toast } = useToast();
 
     useEffect(() => {
-        fetch();
         if (id) {
-            setLoadings(true);
-            show(id).then(() => setLoadings(false));
+            setLoading(true);
+            show(id).then(() => setLoading(false));
         } else {
-            setLoadings(false);
+            setLoading(false);
         }
     }, [id]);
 
@@ -52,7 +51,7 @@ const Input = ({ id }) => {
         }
     };
 
-    if (loading || loadings) {
+    if (loading) {
         return <div>Loading...</div>;
     }
 
@@ -63,7 +62,7 @@ const Input = ({ id }) => {
                 <CardTitle>Skill Group {id ? 'Update' : 'Create'}</CardTitle>
                 <CardDescription>{id ? 'Update' : 'Create'} Skill Group</CardDescription>
             </CardHeader>
-            <Form id={id} onSubmit={onSubmit} initialData={detail} parent={datas.data || []} />
+            <Form id={id} onSubmit={onSubmit} initialData={detail} />
         </>
     );
 };

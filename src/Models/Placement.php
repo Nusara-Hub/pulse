@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 
-final class JobTitle extends Model
+final class Placement extends Model
 {
     use HasUuids, SoftDeletes, HandleActionExecutedBy;
 
@@ -18,7 +18,7 @@ final class JobTitle extends Model
      *
      * @var string
      */
-    protected $table = 'pulse.job_titles';
+    protected $table = 'pulse.placements';
 
     /**
      * The storage format of the model's date columns.

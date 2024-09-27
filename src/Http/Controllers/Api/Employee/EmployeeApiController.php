@@ -8,16 +8,16 @@ use Nusara\Pulse\Http\Controllers\NusaraPulseBaseController;
 use App\Functions\ResponseJson;
 use App\Http\Resources\PaginationResource;
 use Illuminate\Http\Response;
-use Nusara\Pulse\Models\Region;
+use Nusara\Pulse\Models\Employee;
 use Illuminate\Http\Request;
-use Nusara\Pulse\Http\Requests\Region\CreateRequest;
-use Nusara\Pulse\Http\Requests\Region\UpdateRequest;
+use Nusara\Pulse\Http\Requests\Employee\CreateRequest;
+use Nusara\Pulse\Http\Requests\Employee\UpdateRequest;
 use Illuminate\Support\Facades\Pipeline;
 use Illuminate\Http\JsonResponse;
 use Maatwebsite\Excel\Facades\Excel;
-use Nusara\Pulse\Http\Exports\RegionExport;
+use Nusara\Pulse\Http\Exports\EmployeeExport;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
-class RegionApiController extends NusaraPulseBaseController
+class EmployeeApiController extends NusaraPulseBaseController
 {
     /**
      * Get all education institute data.
@@ -29,44 +29,44 @@ class RegionApiController extends NusaraPulseBaseController
     {
         $limit = $request->input('limit', 10);
         $page = $request->input('page', 1);
-        $totalData = Region::count();
-        $regions = Pipeline::send(Region::query())
+        $totalData = Employee::count();
+        $employees = Pipeline::send(Employee::query())
             ->through([
-                \Nusara\Pulse\Http\Filters\Region\BySearch::class,
+                \Nusara\Pulse\Http\Filters\Employee\BySearch::class,
             ])
             ->thenReturn();
-        $totalFiltered = $regions->count();
-        $regions = $regions->orderBy('created_at','desc')->paginate($limit, ['*'], 'page', $page);
+        $totalFiltered = $employees->count();
+        $employees = $employees->orderBy('created_at','desc')->paginate($limit, ['*'], 'page', $page);
 
 
         return ResponseJson::success(
             ok: true,
             code: Response::HTTP_OK,
-            message: __('app.notification.flash.fetched', ['prop' => 'Region']),
-            data: $regions->items(),
+            message: __('app.notification.flash.fetched', ['prop' => 'Employee']),
+            data: $employees->items(),
             pagination: PaginationResource::build(
                 totalData: $totalData,
                 totalFiltered: $totalFiltered,
-                paginationCollection: $regions
+                paginationCollection: $employees
             )
         );
     }
 
     /**
-     * Get a specific Region data by id
+     * Get a specific Employee data by id
      *
      * @param string $id The id of education institute
      * @return \Illuminate\Http\JsonResponse
      */
     public function show(string $id): JsonResponse
     {
-        $regions = Region::findOrFail($id);
+        $employees = Employee::findOrFail($id);
 
         return ResponseJson::success(
             ok: true,
             code: Response::HTTP_OK,
-            message: __('app.notification.flash.fetched', ['prop' => 'Region']),
-            data: $regions
+            message: __('app.notification.flash.fetched', ['prop' => 'Employee']),
+            data: $employees
         );
     }
 
@@ -78,13 +78,13 @@ class RegionApiController extends NusaraPulseBaseController
      */
     public function store(CreateRequest $request): JsonResponse
     {
-        $regions = Region::create($request->validated());
+        $employees = Employee::create($request->validated());
 
         return ResponseJson::success(
             ok: true,
             code: Response::HTTP_OK,
-            message: __('app.notification.flash.created', ['prop' => 'Region']),
-            data: $regions
+            message: __('app.notification.flash.created', ['prop' => 'Employee']),
+            data: $employees
         );
     }
 
@@ -97,14 +97,14 @@ class RegionApiController extends NusaraPulseBaseController
      */
     public function update(UpdateRequest $request, string $id): JsonResponse
     {
-        $regions = Region::findOrFail($id);
-        $regions->update($request->validated());
+        $employees = Employee::findOrFail($id);
+        $employees->update($request->validated());
 
         return ResponseJson::success(
             ok: true,
             code: Response::HTTP_OK,
-            message: __('app.notification.flash.updated', ['prop' => 'Region']),
-            data: $regions
+            message: __('app.notification.flash.updated', ['prop' => 'Employee']),
+            data: $employees
         );
     }
 
@@ -116,24 +116,24 @@ class RegionApiController extends NusaraPulseBaseController
      */
     public function delete(string $id): JsonResponse
     {
-        $regions = Region::findOrFail($id);
-        $deletedRegion = tap($regions)->delete();
+        $employees = Employee::findOrFail($id);
+        $deletedEmployee = tap($employees)->delete();
 
         return ResponseJson::success(
             ok: true,
             code: Response::HTTP_OK,
-            message: __('app.notification.flash.deleted', ['prop' => 'Region']),
-            data: $deletedRegion
+            message: __('app.notification.flash.deleted', ['prop' => 'Employee']),
+            data: $deletedEmployee
         );
     }
 
     /**
-     * Export Region data to excel
+     * Export Employee data to excel
      *
      * @return \Symfony\Component\HttpFoundation\BinaryFileResponse
      */
     public function export(): BinaryFileResponse
     {
-        return Excel::download(new RegionExport, 'region.xlsx');
+        return Excel::download(new EmployeeExport, 'employee.xlsx');
     }
 }

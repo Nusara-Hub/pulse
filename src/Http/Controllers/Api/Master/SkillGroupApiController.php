@@ -2,22 +2,22 @@
 
 declare(strict_types=1);
 
-namespace Nusara\Pulse\Http\Controllers\Api;
+namespace Nusara\Pulse\Http\Controllers\Api\Master;
 
 use Nusara\Pulse\Http\Controllers\NusaraPulseBaseController;
 use App\Functions\ResponseJson;
 use App\Http\Resources\PaginationResource;
 use Illuminate\Http\Response;
-use Nusara\Pulse\Models\Skill;
+use Nusara\Pulse\Models\SkillGroup;
 use Illuminate\Http\Request;
-use Nusara\Pulse\Http\Requests\Skill\CreateRequest;
-use Nusara\Pulse\Http\Requests\Skill\UpdateRequest;
+use Nusara\Pulse\Http\Requests\SkillGroup\CreateRequest;
+use Nusara\Pulse\Http\Requests\SkillGroup\UpdateRequest;
 use Illuminate\Support\Facades\Pipeline;
 use Illuminate\Http\JsonResponse;
 use Maatwebsite\Excel\Facades\Excel;
-use Nusara\Pulse\Http\Exports\SkillExport;
+use Nusara\Pulse\Http\Exports\SkillGroupExport;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
-class SkillApiController extends NusaraPulseBaseController
+class SkillGroupApiController extends NusaraPulseBaseController
 {
     /**
      * Get all education institute data.
@@ -29,44 +29,44 @@ class SkillApiController extends NusaraPulseBaseController
     {
         $limit = $request->input('limit', 10);
         $page = $request->input('page', 1);
-        $totalData = Skill::count();
-        $skills = Pipeline::send(Skill::query()->with('group'))
+        $totalData = SkillGroup::count();
+        $skillgroups = Pipeline::send(SkillGroup::query()->with('parent'))
             ->through([
-                \Nusara\Pulse\Http\Filters\Skill\BySearch::class,
+                \Nusara\Pulse\Http\Filters\SkillGroup\BySearch::class,
             ])
             ->thenReturn();
-        $totalFiltered = $skills->count();
-        $skills = $skills->orderBy('created_at','desc')->paginate($limit, ['*'], 'page', $page);
+        $totalFiltered = $skillgroups->count();
+        $skillgroups = $skillgroups->orderBy('created_at','desc')->paginate($limit, ['*'], 'page', $page);
 
 
         return ResponseJson::success(
             ok: true,
             code: Response::HTTP_OK,
-            message: __('app.notification.flash.fetched', ['prop' => 'Skill']),
-            data: $skills->items(),
+            message: __('app.notification.flash.fetched', ['prop' => 'Skill Group']),
+            data: $skillgroups->items(),
             pagination: PaginationResource::build(
                 totalData: $totalData,
                 totalFiltered: $totalFiltered,
-                paginationCollection: $skills
+                paginationCollection: $skillgroups
             )
         );
     }
 
     /**
-     * Get a specific Skill data by id
+     * Get a specific Skill Group data by id
      *
      * @param string $id The id of education institute
      * @return \Illuminate\Http\JsonResponse
      */
     public function show(string $id): JsonResponse
     {
-        $skills = Skill::findOrFail($id);
+        $skillgroups = SkillGroup::findOrFail($id);
 
         return ResponseJson::success(
             ok: true,
             code: Response::HTTP_OK,
-            message: __('app.notification.flash.fetched', ['prop' => 'Skill']),
-            data: $skills
+            message: __('app.notification.flash.fetched', ['prop' => 'Skill Group']),
+            data: $skillgroups
         );
     }
 
@@ -78,13 +78,13 @@ class SkillApiController extends NusaraPulseBaseController
      */
     public function store(CreateRequest $request): JsonResponse
     {
-        $skills = Skill::create($request->validated());
+        $skillgroups = SkillGroup::create($request->validated());
 
         return ResponseJson::success(
             ok: true,
             code: Response::HTTP_OK,
-            message: __('app.notification.flash.created', ['prop' => 'Skill']),
-            data: $skills
+            message: __('app.notification.flash.created', ['prop' => 'Skill Group']),
+            data: $skillgroups
         );
     }
 
@@ -97,14 +97,14 @@ class SkillApiController extends NusaraPulseBaseController
      */
     public function update(UpdateRequest $request, string $id): JsonResponse
     {
-        $skills = Skill::findOrFail($id);
-        $skills->update($request->validated());
+        $skillgroups = SkillGroup::findOrFail($id);
+        $skillgroups->update($request->validated());
 
         return ResponseJson::success(
             ok: true,
             code: Response::HTTP_OK,
-            message: __('app.notification.flash.updated', ['prop' => 'Skill']),
-            data: $skills
+            message: __('app.notification.flash.updated', ['prop' => 'Skill Group']),
+            data: $skillgroups
         );
     }
 
@@ -116,24 +116,24 @@ class SkillApiController extends NusaraPulseBaseController
      */
     public function delete(string $id): JsonResponse
     {
-        $skills = Skill::findOrFail($id);
-        $deletedSkill = tap($skills)->delete();
+        $skillgroups = SkillGroup::findOrFail($id);
+        $deletedSkillGroup = tap($skillgroups)->delete();
 
         return ResponseJson::success(
             ok: true,
             code: Response::HTTP_OK,
-            message: __('app.notification.flash.deleted', ['prop' => 'Skill']),
-            data: $deletedSkill
+            message: __('app.notification.flash.deleted', ['prop' => 'Skill Group']),
+            data: $deletedSkillGroup
         );
     }
 
     /**
-     * Export Skill data to excel
+     * Export Skill Group data to excel
      *
      * @return \Symfony\Component\HttpFoundation\BinaryFileResponse
      */
     public function export(): BinaryFileResponse
     {
-        return Excel::download(new SkillExport, 'skill.xlsx');
+        return Excel::download(new SkillGroupExport, 'skill-group.xlsx');
     }
 }

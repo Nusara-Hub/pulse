@@ -8,16 +8,16 @@ use Nusara\Pulse\Http\Controllers\NusaraPulseBaseController;
 use App\Functions\ResponseJson;
 use App\Http\Resources\PaginationResource;
 use Illuminate\Http\Response;
-use Nusara\Pulse\Models\EducationInstitute;
+use Nusara\Pulse\Models\Placement;
 use Illuminate\Http\Request;
-use Nusara\Pulse\Http\Requests\EducationInstitute\CreateRequest;
-use Nusara\Pulse\Http\Requests\EducationInstitute\UpdateRequest;
+use Nusara\Pulse\Http\Requests\Placement\CreateRequest;
+use Nusara\Pulse\Http\Requests\Placement\UpdateRequest;
 use Illuminate\Support\Facades\Pipeline;
 use Illuminate\Http\JsonResponse;
 use Maatwebsite\Excel\Facades\Excel;
-use Nusara\Pulse\Http\Exports\EducationInstituteExport;
+use Nusara\Pulse\Http\Exports\PlacementExport;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
-class EducationInstituteApiController extends NusaraPulseBaseController
+class PlacementApiController extends NusaraPulseBaseController
 {
     /**
      * Get all education institute data.
@@ -29,45 +29,44 @@ class EducationInstituteApiController extends NusaraPulseBaseController
     {
         $limit = $request->input('limit', 10);
         $page = $request->input('page', 1);
-        $totalData = EducationInstitute::count();
-        $educationInstitutes = Pipeline::send(EducationInstitute::query())
+        $totalData = Placement::count();
+        $placements = Pipeline::send(Placement::query())
             ->through([
-                \Nusara\Pulse\Http\Filters\EducationInstitute\BySearch::class,
-                \Nusara\Pulse\Http\Filters\EducationInstitute\ByName::class,
+                \Nusara\Pulse\Http\Filters\Placement\BySearch::class,
             ])
             ->thenReturn();
-            $totalFiltered = $educationInstitutes->count();
-        $educationInstitutes = $educationInstitutes->orderBy('created_at','desc')->paginate($limit, ['*'], 'page', $page);
+        $totalFiltered = $placements->count();
+        $placements = $placements->orderBy('created_at','desc')->paginate($limit, ['*'], 'page', $page);
 
 
         return ResponseJson::success(
             ok: true,
             code: Response::HTTP_OK,
-            message: __('app.notification.flash.fetched', ['prop' => 'Education Institute']),
-            data: $educationInstitutes->items(),
+            message: __('app.notification.flash.fetched', ['prop' => 'Placement']),
+            data: $placements->items(),
             pagination: PaginationResource::build(
                 totalData: $totalData,
                 totalFiltered: $totalFiltered,
-                paginationCollection: $educationInstitutes
+                paginationCollection: $placements
             )
         );
     }
 
     /**
-     * Get a specific education institute data by id
+     * Get a specific Placement data by id
      *
      * @param string $id The id of education institute
      * @return \Illuminate\Http\JsonResponse
      */
     public function show(string $id): JsonResponse
     {
-        $educationInstitute = EducationInstitute::findOrFail($id);
+        $placements = Placement::findOrFail($id);
 
         return ResponseJson::success(
             ok: true,
             code: Response::HTTP_OK,
-            message: __('app.notification.flash.fetched', ['prop' => 'Education Institute']),
-            data: $educationInstitute
+            message: __('app.notification.flash.fetched', ['prop' => 'Placement']),
+            data: $placements
         );
     }
 
@@ -79,13 +78,13 @@ class EducationInstituteApiController extends NusaraPulseBaseController
      */
     public function store(CreateRequest $request): JsonResponse
     {
-        $educationInstitute = EducationInstitute::create($request->validated());
+        $placements = Placement::create($request->validated());
 
         return ResponseJson::success(
             ok: true,
             code: Response::HTTP_OK,
-            message: __('app.notification.flash.created', ['prop' => 'Education Institute']),
-            data: $educationInstitute
+            message: __('app.notification.flash.created', ['prop' => 'Placement']),
+            data: $placements
         );
     }
 
@@ -98,14 +97,14 @@ class EducationInstituteApiController extends NusaraPulseBaseController
      */
     public function update(UpdateRequest $request, string $id): JsonResponse
     {
-        $educationInstitute = EducationInstitute::findOrFail($id);
-        $educationInstitute->update($request->validated());
+        $placements = Placement::findOrFail($id);
+        $placements->update($request->validated());
 
         return ResponseJson::success(
             ok: true,
             code: Response::HTTP_OK,
-            message: __('app.notification.flash.updated', ['prop' => 'Education Institute']),
-            data: $educationInstitute
+            message: __('app.notification.flash.updated', ['prop' => 'Placement']),
+            data: $placements
         );
     }
 
@@ -117,24 +116,24 @@ class EducationInstituteApiController extends NusaraPulseBaseController
      */
     public function delete(string $id): JsonResponse
     {
-        $educationInstitute = EducationInstitute::findOrFail($id);
-        $deletedEductionInstitute = tap($educationInstitute)->delete();
+        $placements = Placement::findOrFail($id);
+        $deletedPlacement = tap($placements)->delete();
 
         return ResponseJson::success(
             ok: true,
             code: Response::HTTP_OK,
-            message: __('app.notification.flash.deleted', ['prop' => 'Education Institute']),
-            data: $deletedEductionInstitute
+            message: __('app.notification.flash.deleted', ['prop' => 'Placement']),
+            data: $deletedPlacement
         );
     }
 
     /**
-     * Export education institute data to excel
+     * Export Placement data to excel
      *
      * @return \Symfony\Component\HttpFoundation\BinaryFileResponse
      */
     public function export(): BinaryFileResponse
     {
-        return Excel::download(new EducationInstituteExport, 'education-institute.xlsx');
+        return Excel::download(new PlacementExport, 'placement.xlsx');
     }
 }
