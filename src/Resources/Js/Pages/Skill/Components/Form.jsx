@@ -9,9 +9,11 @@ const schema = z.object({
     'skill_group_id': z.string().nonempty(),
     'name': z.string().nonempty()
 });
-
+import { useSkillGroupStore } from '../../SkillGroup/State/useSkillGroupStore';
+import { Skeleton } from "@/components/ui/skeleton"
+import SelectSearch from "@/components/SelectSearch";
 const Form = ({ id, onSubmit, initialData = {}, parent }) => {
-
+    const { fetch, datas = [], loading } = useSkillGroupStore();
     const {
         register,
         handleSubmit,
@@ -23,6 +25,7 @@ const Form = ({ id, onSubmit, initialData = {}, parent }) => {
     });
 
     useEffect(() => {
+        fetch();
         reset(initialData.data);
     }, [id, reset, initialData]);
 
@@ -38,24 +41,14 @@ const Form = ({ id, onSubmit, initialData = {}, parent }) => {
                     <label className='block text-sm font-bold mb-2' htmlFor='skill_group_id'>
                         Skill Group
                     </label>
-                    <Select
-                        onValueChange={(value) => setValue('skill_group_id', value)} // Set the value on selection
-                        defaultValue={initialData.data?.skill_group_id || ''}
-                    >
-                        <SelectTrigger className='input input-bordered w-full'>
-                            <SelectValue placeholder="Select a Skill Group" />
-                        </SelectTrigger>
-                        <SelectContent>
-                            <SelectGroup>
-                                <SelectLabel>Skill Group</SelectLabel>
-                                {parent.map((r) => (
-                                    <SelectItem key={r.id} value={r.id}>
-                                        {r.name}
-                                    </SelectItem>
-                                ))}
-                            </SelectGroup>
-                        </SelectContent>
-                    </Select>
+                    {loading ? <Skeleton className="h-4 w-[250px]" /> : <SelectSearch
+                        data={datas.data || []}
+                        initialValue={initialData.data?.skill_group_id || ''}
+                        onChange={(value) => setValue('skill_group_id', value)}
+                        value='id'
+                        label='name'
+                        placeholder='Skill Group'
+                    />}
                     {errors.skill_group_id && (
                         <p className='text-red-500 text-xs italic'>
                             {errors.skill_group_id.message}

@@ -7,21 +7,19 @@ import {
     CardTitle,
 } from "@/components/ui/card"
 import { Head } from '@inertiajs/react'
-import { useRegionStore } from '../Region/State/useRegionStore';
 import { useToast } from "@/hooks/use-toast";
+
 const Input = ({ id }) => {
     const { show, detail, handleInsert, handleUpdate } = useCityStore();
-    const { datas = [], loading, fetch } = useRegionStore(); // Ensure datas is an array
-    const [loadings, setLoadings] = useState(true);
+    const [loading, setLoading] = useState(true);
     const { toast } = useToast();
 
     useEffect(() => {
-        fetch(); // Fetch regions
         if (id) {
-            setLoadings(true);
-            show(id).then(() => setLoadings(false)); // Fetch city details if id is provided
+            setLoading(true);
+            show(id).then(() => setLoading(false)); // Fetch city details if id is provided
         } else {
-            setLoadings(false); // Set loadings to false when no id is provided
+            setLoading(false); // Set loadings to false when no id is provided
         }
     }, [id]);
 
@@ -53,7 +51,7 @@ const Input = ({ id }) => {
         }
     };
 
-    if (loadings || loading) { // Check for loading states
+    if (loading) { // Check for loading states
         return <div>Loading...</div>;
     }
 
@@ -64,7 +62,7 @@ const Input = ({ id }) => {
                 <CardTitle>City {id ? 'Update' : 'Create'}</CardTitle>
                 <CardDescription>{id ? 'Update' : 'Create'} City</CardDescription>
             </CardHeader>
-            <Form id={id} onSubmit={onSubmit} initialData={detail} region={datas.data || []} /> {/* Ensure region is an array */}
+            <Form id={id} onSubmit={onSubmit} initialData={detail} /> {/* Ensure region is an array */}
         </>
     );
 };

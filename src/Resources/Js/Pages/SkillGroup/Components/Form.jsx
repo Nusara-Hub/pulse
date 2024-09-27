@@ -6,12 +6,15 @@ import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Select, SelectTrigger, SelectContent, SelectItem, SelectValue, SelectGroup, SelectLabel } from "@/components/ui/select";
 const schema = z.object({
-    'parent_id': z.string(),
+    'parent_id': z.string().nullable().optional(),
     'name': z.string().nonempty()
 });
+import { useSkillGroupStore } from '../State/useSkillGroupStore';
+import { Skeleton } from "@/components/ui/skeleton"
+import SelectSearch from "@/components/SelectSearch";
 
-const Form = ({ id, onSubmit, initialData = {}, parent }) => {
-
+const Form = ({ id, onSubmit, initialData = {} }) => {
+    const { fetch, datas = [], loading } = useSkillGroupStore();
     const {
         register,
         handleSubmit,
@@ -23,6 +26,7 @@ const Form = ({ id, onSubmit, initialData = {}, parent }) => {
     });
 
     useEffect(() => {
+        fetch();
         reset(initialData.data);
     }, [id, reset, initialData]);
 
@@ -38,24 +42,14 @@ const Form = ({ id, onSubmit, initialData = {}, parent }) => {
                     <label className='block text-sm font-bold mb-2' htmlFor='parent_id'>
                         Skill Parent
                     </label>
-                    <Select
-                        onValueChange={(value) => setValue('parent_id', value)} // Set the value on selection
-                        defaultValue={initialData.data?.parent_id || ''}
-                    >
-                        <SelectTrigger className='input input-bordered w-full'>
-                            <SelectValue placeholder="Select a Skill Parent" />
-                        </SelectTrigger>
-                        <SelectContent>
-                            <SelectGroup>
-                                <SelectLabel>Skill Parent</SelectLabel>
-                                {parent.map((r) => (
-                                    <SelectItem key={r.id} value={r.id}>
-                                        {r.name}
-                                    </SelectItem>
-                                ))}
-                            </SelectGroup>
-                        </SelectContent>
-                    </Select>
+                    {loading ? <Skeleton className="h-4 w-[250px]" /> : <SelectSearch
+                        data={datas.data || []}
+                        initialValue={initialData.data?.parent_id || ''} // Use empty string for default value
+                        onChange={(value) => setValue('parent_id', value === '' ? null : value)} // Set null when no value is selected
+                        value='id'
+                        label='name'
+                        placeholder='Skill Parent'
+                    />}
                     {errors.parent_id && (
                         <p className='text-red-500 text-xs italic'>
                             {errors.parent_id.message}
