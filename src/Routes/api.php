@@ -19,7 +19,23 @@ use Nusara\Pulse\Http\Controllers\Api\Companies\JobLevelApiController;
             use Nusara\Pulse\Http\Controllers\Api\Employee\MutationApiController;
             use Nusara\Pulse\Http\Controllers\Api\Attendance\AbsentReasonApiController;
             use Nusara\Pulse\Http\Controllers\Api\Attendance\ShiftmentApiController;
+            use Nusara\Pulse\Http\Controllers\Api\Attendance\AttendanceApiController;
+            use Nusara\Pulse\Http\Controllers\Api\Overtime\OvertimeApiController;
+            use Nusara\Pulse\Http\Controllers\Api\Leave\ReasonApiController;
+            use Nusara\Pulse\Http\Controllers\Api\Leave\LeaveApiController;
+            use Nusara\Pulse\Http\Controllers\Api\Payroll\SalaryComponentApiController;
+            use Nusara\Pulse\Http\Controllers\Api\Payroll\SalaryBenefitApiController;
+            use Nusara\Pulse\Http\Controllers\Api\Payroll\SalaryBenefitHistoryApiController;
+            use Nusara\Pulse\Http\Controllers\Api\Payroll\SalaryAllowanceApiController;
             //useRoutes
+            
+            
+            
+            
+            
+            
+            
+            
             
             
             
@@ -188,7 +204,95 @@ Route::group(['prefix' => 'pulse', 'as' => 'pulse.'], function () {
                 Route::delete('/{id}', [ShiftmentApiController::class, 'delete'])->name('delete');
             });
 
+            
+            Route::group(['prefix' => 'attendance', 'as' => 'attendance.'], function () {
+                Route::get('/', [AttendanceApiController::class, 'index'])->name('index');
+                Route::get('/export', [AttendanceApiController::class, 'export'])->name('export');
+                Route::get('/{id}', [AttendanceApiController::class, 'show'])->name('show');
+                Route::post('/', [AttendanceApiController::class, 'store'])->name('store');
+                Route::put('/{id}', [AttendanceApiController::class, 'update'])->name('update');
+                Route::delete('/{id}', [AttendanceApiController::class, 'delete'])->name('delete');
+            });
+
+            
+            Route::group(['prefix' => 'overtime', 'as' => 'overtime.'], function () {
+                Route::get('/', [OvertimeApiController::class, 'index'])->name('index');
+                Route::get('/export', [OvertimeApiController::class, 'export'])->name('export');
+                Route::get('/{id}', [OvertimeApiController::class, 'show'])->name('show');
+                Route::post('/', [OvertimeApiController::class, 'store'])->name('store');
+                Route::put('/{id}', [OvertimeApiController::class, 'update'])->name('update');
+                Route::delete('/{id}', [OvertimeApiController::class, 'delete'])->name('delete');
+            });
+
+            
+            Route::group(['prefix' => 'reason', 'as' => 'reason.'], function () {
+                Route::get('/', [ReasonApiController::class, 'index'])->name('index');
+                Route::get('/export', [ReasonApiController::class, 'export'])->name('export');
+                Route::get('/{id}', [ReasonApiController::class, 'show'])->name('show');
+                Route::post('/', [ReasonApiController::class, 'store'])->name('store');
+                Route::put('/{id}', [ReasonApiController::class, 'update'])->name('update');
+                Route::delete('/{id}', [ReasonApiController::class, 'delete'])->name('delete');
+            });
+
+            
+            Route::group(['prefix' => 'leave', 'as' => 'leave.'], function () {
+                Route::get('/', [LeaveApiController::class, 'index'])->name('index');
+                Route::get('/export', [LeaveApiController::class, 'export'])->name('export');
+                Route::get('/{id}', [LeaveApiController::class, 'show'])->name('show');
+                Route::post('/', [LeaveApiController::class, 'store'])->name('store');
+                Route::put('/{id}', [LeaveApiController::class, 'update'])->name('update');
+                Route::delete('/{id}', [LeaveApiController::class, 'delete'])->name('delete');
+            });
+
+            
+            Route::group(['prefix' => 'salary-component', 'as' => 'salary-component.'], function () {
+                Route::get('/', [SalaryComponentApiController::class, 'index'])->name('index');
+                Route::get('/export', [SalaryComponentApiController::class, 'export'])->name('export');
+                Route::get('/{id}', [SalaryComponentApiController::class, 'show'])->name('show');
+                Route::post('/', [SalaryComponentApiController::class, 'store'])->name('store');
+                Route::put('/{id}', [SalaryComponentApiController::class, 'update'])->name('update');
+                Route::delete('/{id}', [SalaryComponentApiController::class, 'delete'])->name('delete');
+            });
+
+            
+            Route::group(['prefix' => 'salary-benefit', 'as' => 'salary-benefit.'], function () {
+                Route::get('/', [SalaryBenefitApiController::class, 'index'])->name('index');
+                Route::get('/export', [SalaryBenefitApiController::class, 'export'])->name('export');
+                Route::get('/{id}', [SalaryBenefitApiController::class, 'show'])->name('show');
+                Route::post('/', [SalaryBenefitApiController::class, 'store'])->name('store');
+                Route::put('/{id}', [SalaryBenefitApiController::class, 'update'])->name('update');
+                Route::delete('/{id}', [SalaryBenefitApiController::class, 'delete'])->name('delete');
+            });
+
+            
+            Route::group(['prefix' => 'salary-benefit-history', 'as' => 'salary-benefit-history.'], function () {
+                Route::get('/', [SalaryBenefitHistoryApiController::class, 'index'])->name('index');
+                Route::get('/export', [SalaryBenefitHistoryApiController::class, 'export'])->name('export');
+                Route::get('/{id}', [SalaryBenefitHistoryApiController::class, 'show'])->name('show');
+                Route::post('/', [SalaryBenefitHistoryApiController::class, 'store'])->name('store');
+                Route::put('/{id}', [SalaryBenefitHistoryApiController::class, 'update'])->name('update');
+                Route::delete('/{id}', [SalaryBenefitHistoryApiController::class, 'delete'])->name('delete');
+            });
+
+            
+            Route::group(['prefix' => 'salary-allowance', 'as' => 'salary-allowance.'], function () {
+                Route::get('/', [SalaryAllowanceApiController::class, 'index'])->name('index');
+                Route::get('/export', [SalaryAllowanceApiController::class, 'export'])->name('export');
+                Route::get('/{id}', [SalaryAllowanceApiController::class, 'show'])->name('show');
+                Route::post('/', [SalaryAllowanceApiController::class, 'store'])->name('store');
+                Route::put('/{id}', [SalaryAllowanceApiController::class, 'update'])->name('update');
+                Route::delete('/{id}', [SalaryAllowanceApiController::class, 'delete'])->name('delete');
+            });
+
             //replaceRoute
+        
+        
+        
+        
+        
+        
+        
+        
         
         
         

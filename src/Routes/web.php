@@ -10,7 +10,9 @@ use Nusara\Pulse\Http\Controllers\Master\RegionController;
 use Nusara\Pulse\Http\Controllers\Master\CityController;
             use Nusara\Pulse\Http\Controllers\Master\SkillGroupController;
             use Nusara\Pulse\Http\Controllers\Master\SkillController;
+            use Nusara\Pulse\Http\Controllers\Master\HolidayController;
             //useController
+        
         
         
         
@@ -58,7 +60,14 @@ Route::group(['prefix' => 'pulse', 'as' => 'pulse.'], function () {
                 Route::get('/create', [SkillController::class, 'create'])->name('create');
                 Route::get('/edit/{id}', [SkillController::class, 'edit'])->name('edit');
             });
+            
+            Route::group(['prefix' => 'holiday', 'as' => 'holiday.'], function () {
+                Route::get('/', [HolidayController::class, 'index'])->name('index');
+                Route::get('/create', [HolidayController::class, 'create'])->name('create');
+                Route::get('/edit/{id}', [HolidayController::class, 'edit'])->name('edit');
+            });
             //replaceRoute
+        
         
         
         
