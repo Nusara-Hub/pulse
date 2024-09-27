@@ -200,35 +200,6 @@ return new class extends Migration
         });
         // End Pulse.Holidays Table
 
-        // Pulse.Companies Table
-        Schema::create('pulse.companies', function (Blueprint $table) {
-            $table->uuid('id')->primary();
-
-            // Columns here
-            $table->string('company_name');
-            $table->string('email');
-            $table->string('tax_number', 50);
-            // End of columns
-
-            $table->string('created_by')->nullable();
-            $table->string('updated_by')->nullable();
-            $table->string('deleted_by')->nullable();
-
-            $table->unsignedBigInteger('created_at')->nullable();
-            $table->unsignedBigInteger('updated_at')->nullable();
-            $table->unsignedBigInteger('deleted_at')->nullable();
-        });
-
-        Schema::table('pulse.companies', function (Blueprint $table) {
-            $table->foreignUuid('parent_id')
-                ->nullable()
-                ->references('id')
-                ->on('pulse.companies')
-                ->onUpdate('cascade')
-                ->onDelete('cascade');
-        });
-        // End Pulse.Companies Table
-
         // Pulse.Job Levels Table
         Schema::create('pulse.job_levels', function (Blueprint $table) {
             $table->uuid('id')->primary();
@@ -326,7 +297,7 @@ return new class extends Migration
 
             $table->foreignUuid('company_id')
                 ->references('id')
-                ->on('pulse.companies')
+                ->on('companies')
                 ->onUpdate('cascade')
                 ->onDelete('cascade');
 
@@ -527,7 +498,7 @@ return new class extends Migration
 
             $table->foreignUuid('company_id')
                 ->references('id')
-                ->on('pulse.companies')
+                ->on('companies')
                 ->onUpdate('cascade')
                 ->onDelete('cascade');
 
@@ -568,14 +539,14 @@ return new class extends Migration
         });
         // End Pulse.Career Histories Table
 
-        // Pulse.Company Address Table
-        Schema::create('pulse.company_address', function (Blueprint $table) {
+        // Company Address Table
+        Schema::create('company_address', function (Blueprint $table) {
             $table->uuid('id')->primary();
 
             // Columns here
             $table->foreignUuid('company_id')
                 ->references('id')
-                ->on('pulse.companies')
+                ->on('companies')
                 ->onUpdate('cascade')
                 ->onDelete('cascade');
 
@@ -608,7 +579,7 @@ return new class extends Migration
             $table->unsignedBigInteger('updated_at')->nullable();
             $table->unsignedBigInteger('deleted_at')->nullable();
         });
-        // End Pulse.Company Address Table
+        // End Company Address Table
 
         // Pulse.Payroll Periods Table
         Schema::create('pulse.payroll_periods', function (Blueprint $table) {
@@ -617,7 +588,7 @@ return new class extends Migration
             // Columns here
             $table->foreignUuid('company_id')
                 ->references('id')
-                ->on('pulse.companies')
+                ->on('companies')
                 ->onUpdate('cascade')
                 ->onDelete('cascade');
 
@@ -789,7 +760,7 @@ return new class extends Migration
 
             $table->foreignUuid('old_company_id')
                 ->references('id')
-                ->on('pulse.companies')
+                ->on('companies')
                 ->onUpdate('cascade')
                 ->onDelete('cascade');
 
@@ -819,7 +790,7 @@ return new class extends Migration
 
             $table->foreignUuid('new_company_id')
                 ->references('id')
-                ->on('pulse.companies')
+                ->on('companies')
                 ->onUpdate('cascade')
                 ->onDelete('cascade');
 
@@ -968,7 +939,7 @@ return new class extends Migration
 
             $table->foreignUuid('company_id')
                 ->references('id')
-                ->on('pulse.companies')
+                ->on('companies')
                 ->onUpdate('cascade')
                 ->onDelete('cascade');
 
@@ -1206,6 +1177,47 @@ return new class extends Migration
             $table->unsignedBigInteger('deleted_at')->nullable();
         });
         // End Pulse.Workshifts Table
+
+        // Pulse.Employee Address Table
+        Schema::create('pulse.employee_address', function (Blueprint $table) {
+            $table->uuid('id')->primary();
+
+            // Columns here
+            $table->foreignUuid('employee_id')
+                ->references('id')
+                ->on('pulse.employees')
+                ->onUpdate('cascade')
+                ->onDelete('cascade');
+
+            $table->foreignUuid('region_id')
+                ->references('id')
+                ->on('pulse.regions')
+                ->onUpdate('cascade')
+                ->onDelete('cascade');
+
+            $table->foreignUuid('city_id')
+                ->references('id')
+                ->on('pulse.cities')
+                ->onUpdate('cascade')
+                ->onDelete('cascade');
+
+            $table->string('address');
+            $table->string('postal_code', 50);
+            $table->string('phone_number', 20);
+            $table->string('fax_number', 50);
+
+            $table->boolean('is_default')->default(false);
+            // End of columns
+
+            $table->string('created_by')->nullable();
+            $table->string('updated_by')->nullable();
+            $table->string('deleted_by')->nullable();
+
+            $table->unsignedBigInteger('created_at')->nullable();
+            $table->unsignedBigInteger('updated_at')->nullable();
+            $table->unsignedBigInteger('deleted_at')->nullable();
+        });
+        // End Pulse.Employee Address Table
     }
 
     /**
@@ -1242,9 +1254,6 @@ return new class extends Migration
         // Pulse.Holidays Table
         Schema::dropIfExists('pulse.holidays');
 
-        // Pulse.Companies Table
-        Schema::dropIfExists('pulse.companies');
-
         // Pulse.Job Levels Table
         Schema::dropIfExists('pulse.job_levels');
 
@@ -1272,8 +1281,8 @@ return new class extends Migration
         // Pulse.Career Histories Table
         Schema::dropIfExists('pulse.career_histories');
 
-        // Pulse.Career Histories Table
-        Schema::dropIfExists('pulse.company_address');
+        // Pulse.Company Address Table
+        Schema::dropIfExists('company_address');
 
         // Pulse.Payroll Periods Table
         Schema::dropIfExists('pulse.payroll_periods');
@@ -1322,5 +1331,8 @@ return new class extends Migration
 
         // Pulse.Workshifts Table
         Schema::dropIfExists('pulse.workshifts');
+
+        // Pulse.Employee Address Table
+        Schema::dropIfExists('pulse.employee_address');
     }
 };
