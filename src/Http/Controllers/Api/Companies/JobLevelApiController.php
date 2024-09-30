@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Nusara\Pulse\Http\Controllers\Api;
+namespace Nusara\Pulse\Http\Controllers\Api\Companies;
 
 use Nusara\Pulse\Http\Controllers\NusaraPulseBaseController;
 use App\Functions\ResponseJson;

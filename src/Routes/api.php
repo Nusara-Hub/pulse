@@ -28,21 +28,21 @@ use Nusara\Pulse\Http\Controllers\Api\Companies\JobLevelApiController;
             use Nusara\Pulse\Http\Controllers\Api\Payroll\SalaryBenefitHistoryApiController;
             use Nusara\Pulse\Http\Controllers\Api\Payroll\SalaryAllowanceApiController;
             //useRoutes
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 Route::group(['prefix' => 'pulse', 'as' => 'pulse.'], function () {
     Route::group(['prefix' => 'education-institute', 'as' => 'institute.'], function () {
@@ -134,7 +134,7 @@ Route::group(['prefix' => 'pulse', 'as' => 'pulse.'], function () {
                 Route::delete('/{id}', [DepartmentApiController::class, 'delete'])->name('delete');
             });
 
-            
+
             Route::group(['prefix' => 'job-level', 'as' => 'job-level.'], function () {
                 Route::get('/', [JobLevelApiController::class, 'index'])->name('index');
                 Route::get('/export', [JobLevelApiController::class, 'export'])->name('export');
@@ -144,7 +144,7 @@ Route::group(['prefix' => 'pulse', 'as' => 'pulse.'], function () {
                 Route::delete('/{id}', [JobLevelApiController::class, 'delete'])->name('delete');
             });
 
-            
+
             Route::group(['prefix' => 'job-title', 'as' => 'job-title.'], function () {
                 Route::get('/', [JobTitleApiController::class, 'index'])->name('index');
                 Route::get('/export', [JobTitleApiController::class, 'export'])->name('export');
@@ -154,7 +154,7 @@ Route::group(['prefix' => 'pulse', 'as' => 'pulse.'], function () {
                 Route::delete('/{id}', [JobTitleApiController::class, 'delete'])->name('delete');
             });
 
-            
+
             Route::group(['prefix' => 'employee', 'as' => 'employee.'], function () {
                 Route::get('/', [EmployeeApiController::class, 'index'])->name('index');
                 Route::get('/export', [EmployeeApiController::class, 'export'])->name('export');
@@ -164,7 +164,7 @@ Route::group(['prefix' => 'pulse', 'as' => 'pulse.'], function () {
                 Route::delete('/{id}', [EmployeeApiController::class, 'delete'])->name('delete');
             });
 
-            
+
             Route::group(['prefix' => 'placement', 'as' => 'placement.'], function () {
                 Route::get('/', [PlacementApiController::class, 'index'])->name('index');
                 Route::get('/export', [PlacementApiController::class, 'export'])->name('export');
@@ -174,7 +174,7 @@ Route::group(['prefix' => 'pulse', 'as' => 'pulse.'], function () {
                 Route::delete('/{id}', [PlacementApiController::class, 'delete'])->name('delete');
             });
 
-            
+
             Route::group(['prefix' => 'mutation', 'as' => 'mutation.'], function () {
                 Route::get('/', [MutationApiController::class, 'index'])->name('index');
                 Route::get('/export', [MutationApiController::class, 'export'])->name('export');
@@ -184,7 +184,7 @@ Route::group(['prefix' => 'pulse', 'as' => 'pulse.'], function () {
                 Route::delete('/{id}', [MutationApiController::class, 'delete'])->name('delete');
             });
 
-            
+
             Route::group(['prefix' => 'absent-reason', 'as' => 'absent-reason.'], function () {
                 Route::get('/', [AbsentReasonApiController::class, 'index'])->name('index');
                 Route::get('/export', [AbsentReasonApiController::class, 'export'])->name('export');
@@ -194,7 +194,7 @@ Route::group(['prefix' => 'pulse', 'as' => 'pulse.'], function () {
                 Route::delete('/{id}', [AbsentReasonApiController::class, 'delete'])->name('delete');
             });
 
-            
+
             Route::group(['prefix' => 'shiftment', 'as' => 'shiftment.'], function () {
                 Route::get('/', [ShiftmentApiController::class, 'index'])->name('index');
                 Route::get('/export', [ShiftmentApiController::class, 'export'])->name('export');
@@ -204,7 +204,7 @@ Route::group(['prefix' => 'pulse', 'as' => 'pulse.'], function () {
                 Route::delete('/{id}', [ShiftmentApiController::class, 'delete'])->name('delete');
             });
 
-            
+
             Route::group(['prefix' => 'attendance', 'as' => 'attendance.'], function () {
                 Route::get('/', [AttendanceApiController::class, 'index'])->name('index');
                 Route::get('/export', [AttendanceApiController::class, 'export'])->name('export');
@@ -214,7 +214,7 @@ Route::group(['prefix' => 'pulse', 'as' => 'pulse.'], function () {
                 Route::delete('/{id}', [AttendanceApiController::class, 'delete'])->name('delete');
             });
 
-            
+
             Route::group(['prefix' => 'overtime', 'as' => 'overtime.'], function () {
                 Route::get('/', [OvertimeApiController::class, 'index'])->name('index');
                 Route::get('/export', [OvertimeApiController::class, 'export'])->name('export');
@@ -224,7 +224,7 @@ Route::group(['prefix' => 'pulse', 'as' => 'pulse.'], function () {
                 Route::delete('/{id}', [OvertimeApiController::class, 'delete'])->name('delete');
             });
 
-            
+
             Route::group(['prefix' => 'reason', 'as' => 'reason.'], function () {
                 Route::get('/', [ReasonApiController::class, 'index'])->name('index');
                 Route::get('/export', [ReasonApiController::class, 'export'])->name('export');
@@ -234,7 +234,7 @@ Route::group(['prefix' => 'pulse', 'as' => 'pulse.'], function () {
                 Route::delete('/{id}', [ReasonApiController::class, 'delete'])->name('delete');
             });
 
-            
+
             Route::group(['prefix' => 'leave', 'as' => 'leave.'], function () {
                 Route::get('/', [LeaveApiController::class, 'index'])->name('index');
                 Route::get('/export', [LeaveApiController::class, 'export'])->name('export');
@@ -244,7 +244,7 @@ Route::group(['prefix' => 'pulse', 'as' => 'pulse.'], function () {
                 Route::delete('/{id}', [LeaveApiController::class, 'delete'])->name('delete');
             });
 
-            
+
             Route::group(['prefix' => 'salary-component', 'as' => 'salary-component.'], function () {
                 Route::get('/', [SalaryComponentApiController::class, 'index'])->name('index');
                 Route::get('/export', [SalaryComponentApiController::class, 'export'])->name('export');
@@ -254,7 +254,7 @@ Route::group(['prefix' => 'pulse', 'as' => 'pulse.'], function () {
                 Route::delete('/{id}', [SalaryComponentApiController::class, 'delete'])->name('delete');
             });
 
-            
+
             Route::group(['prefix' => 'salary-benefit', 'as' => 'salary-benefit.'], function () {
                 Route::get('/', [SalaryBenefitApiController::class, 'index'])->name('index');
                 Route::get('/export', [SalaryBenefitApiController::class, 'export'])->name('export');
@@ -264,7 +264,7 @@ Route::group(['prefix' => 'pulse', 'as' => 'pulse.'], function () {
                 Route::delete('/{id}', [SalaryBenefitApiController::class, 'delete'])->name('delete');
             });
 
-            
+
             Route::group(['prefix' => 'salary-benefit-history', 'as' => 'salary-benefit-history.'], function () {
                 Route::get('/', [SalaryBenefitHistoryApiController::class, 'index'])->name('index');
                 Route::get('/export', [SalaryBenefitHistoryApiController::class, 'export'])->name('export');
@@ -274,7 +274,7 @@ Route::group(['prefix' => 'pulse', 'as' => 'pulse.'], function () {
                 Route::delete('/{id}', [SalaryBenefitHistoryApiController::class, 'delete'])->name('delete');
             });
 
-            
+
             Route::group(['prefix' => 'salary-allowance', 'as' => 'salary-allowance.'], function () {
                 Route::get('/', [SalaryAllowanceApiController::class, 'index'])->name('index');
                 Route::get('/export', [SalaryAllowanceApiController::class, 'export'])->name('export');
@@ -285,21 +285,21 @@ Route::group(['prefix' => 'pulse', 'as' => 'pulse.'], function () {
             });
 
             //replaceRoute
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

@@ -11,7 +11,19 @@ use Nusara\Pulse\Http\Controllers\Master\CityController;
             use Nusara\Pulse\Http\Controllers\Master\SkillGroupController;
             use Nusara\Pulse\Http\Controllers\Master\SkillController;
             use Nusara\Pulse\Http\Controllers\Master\HolidayController;
+            use Nusara\Pulse\Http\Controllers\Master\ContractController;
+            use Nusara\Pulse\Http\Controllers\Companies\DepartmentController;
+            use Nusara\Pulse\Http\Controllers\Companies\JobLevelController;
+            use Nusara\Pulse\Http\Controllers\Companies\JobTitleController;
+            use Nusara\Pulse\Http\Controllers\Employee\EmployeeController;
+            use Nusara\Pulse\Http\Controllers\Employee\PlacementController;
             //useController
+        
+        
+        
+        
+        
+        
         
         
         
@@ -66,7 +78,49 @@ Route::group(['prefix' => 'pulse', 'as' => 'pulse.'], function () {
                 Route::get('/create', [HolidayController::class, 'create'])->name('create');
                 Route::get('/edit/{id}', [HolidayController::class, 'edit'])->name('edit');
             });
+            
+            Route::group(['prefix' => 'contract', 'as' => 'contract.'], function () {
+                Route::get('/', [ContractController::class, 'index'])->name('index');
+                Route::get('/create', [ContractController::class, 'create'])->name('create');
+                Route::get('/edit/{id}', [ContractController::class, 'edit'])->name('edit');
+            });
+            
+            Route::group(['prefix' => 'department', 'as' => 'department.'], function () {
+                Route::get('/', [DepartmentController::class, 'index'])->name('index');
+                Route::get('/create', [DepartmentController::class, 'create'])->name('create');
+                Route::get('/edit/{id}', [DepartmentController::class, 'edit'])->name('edit');
+            });
+            
+            Route::group(['prefix' => 'job-level', 'as' => 'job-level.'], function () {
+                Route::get('/', [JobLevelController::class, 'index'])->name('index');
+                Route::get('/create', [JobLevelController::class, 'create'])->name('create');
+                Route::get('/edit/{id}', [JobLevelController::class, 'edit'])->name('edit');
+            });
+            
+            Route::group(['prefix' => 'job-title', 'as' => 'job-title.'], function () {
+                Route::get('/', [JobTitleController::class, 'index'])->name('index');
+                Route::get('/create', [JobTitleController::class, 'create'])->name('create');
+                Route::get('/edit/{id}', [JobTitleController::class, 'edit'])->name('edit');
+            });
+            
+            Route::group(['prefix' => 'employee', 'as' => 'employee.'], function () {
+                Route::get('/', [EmployeeController::class, 'index'])->name('index');
+                Route::get('/create', [EmployeeController::class, 'create'])->name('create');
+                Route::get('/edit/{id}', [EmployeeController::class, 'edit'])->name('edit');
+            });
+            
+            Route::group(['prefix' => 'placement', 'as' => 'placement.'], function () {
+                Route::get('/', [PlacementController::class, 'index'])->name('index');
+                Route::get('/create', [PlacementController::class, 'create'])->name('create');
+                Route::get('/edit/{id}', [PlacementController::class, 'edit'])->name('edit');
+            });
             //replaceRoute
+        
+        
+        
+        
+        
+        
         
         
         
