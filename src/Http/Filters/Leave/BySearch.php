@@ -20,7 +20,7 @@ final class BySearch
     {
         return $next($builder)
             ->when(request()->has('search'),
-                fn ($q) => $q->where('name', 'ilike', '%'.request()->get('search').'%')
+                fn ($q) => $q->where('reason_id', 'ilike', '%'.request()->get('search').'%')
             );
     }
 }

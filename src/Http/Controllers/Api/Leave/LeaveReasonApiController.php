@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
-namespace Nusara\Pulse\Http\Controllers\Api\Reason;
+namespace Nusara\Pulse\Http\Controllers\Api\Leave;
 
 use Nusara\Pulse\Http\Controllers\NusaraPulseBaseController;
 use App\Functions\ResponseJson;
 use App\Http\Resources\PaginationResource;
 use Illuminate\Http\Response;
-use Nusara\Pulse\Models\Reason;
+use Nusara\Pulse\Models\LeaveReason;
 use Illuminate\Http\Request;
 use Nusara\Pulse\Http\Requests\Reason\CreateRequest;
 use Nusara\Pulse\Http\Requests\Reason\UpdateRequest;
@@ -17,7 +17,7 @@ use Illuminate\Http\JsonResponse;
 use Maatwebsite\Excel\Facades\Excel;
 use Nusara\Pulse\Http\Exports\ReasonExport;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
-class ReasonApiController extends NusaraPulseBaseController
+class LeaveReasonApiController extends NusaraPulseBaseController
 {
     /**
      * Get all education institute data.
@@ -29,8 +29,8 @@ class ReasonApiController extends NusaraPulseBaseController
     {
         $limit = $request->input('limit', 10);
         $page = $request->input('page', 1);
-        $totalData = Reason::count();
-        $reasons = Pipeline::send(Reason::query())
+        $totalData = LeaveReason::count();
+        $reasons = Pipeline::send(LeaveReason::query())
             ->through([
                 \Nusara\Pulse\Http\Filters\Reason\BySearch::class,
             ])
@@ -60,7 +60,7 @@ class ReasonApiController extends NusaraPulseBaseController
      */
     public function show(string $id): JsonResponse
     {
-        $reasons = Reason::findOrFail($id);
+        $reasons = LeaveReason::findOrFail($id);
 
         return ResponseJson::success(
             ok: true,
@@ -78,7 +78,7 @@ class ReasonApiController extends NusaraPulseBaseController
      */
     public function store(CreateRequest $request): JsonResponse
     {
-        $reasons = Reason::create($request->validated());
+        $reasons = LeaveReason::create($request->validated());
 
         return ResponseJson::success(
             ok: true,
@@ -97,7 +97,7 @@ class ReasonApiController extends NusaraPulseBaseController
      */
     public function update(UpdateRequest $request, string $id): JsonResponse
     {
-        $reasons = Reason::findOrFail($id);
+        $reasons = LeaveReason::findOrFail($id);
         $reasons->update($request->validated());
 
         return ResponseJson::success(
@@ -116,7 +116,7 @@ class ReasonApiController extends NusaraPulseBaseController
      */
     public function delete(string $id): JsonResponse
     {
-        $reasons = Reason::findOrFail($id);
+        $reasons = LeaveReason::findOrFail($id);
         $deletedReason = tap($reasons)->delete();
 
         return ResponseJson::success(

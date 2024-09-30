@@ -18,7 +18,7 @@ final class Shiftment extends Model
      *
      * @var string
      */
-    protected $table = 'pulse.Shiftments';
+    protected $table = 'pulse.shiftments';
 
     /**
      * The storage format of the model's date columns.

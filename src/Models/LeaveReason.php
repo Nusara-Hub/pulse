@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 
-final class Reason extends Model
+final class LeaveReason extends Model
 {
     use HasUuids, SoftDeletes, HandleActionExecutedBy;
 

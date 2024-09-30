@@ -18,7 +18,7 @@ final class SalaryBenefitHistory extends Model
      *
      * @var string
      */
-    protected $table = 'pulse.sallary_benefits_histories';
+    protected $table = 'pulse.sallary_benefit_histories';
 
     /**
      * The storage format of the model's date columns.

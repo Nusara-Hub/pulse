@@ -21,7 +21,7 @@ use Nusara\Pulse\Http\Controllers\Api\Companies\JobLevelApiController;
             use Nusara\Pulse\Http\Controllers\Api\Attendance\ShiftmentApiController;
             use Nusara\Pulse\Http\Controllers\Api\Attendance\AttendanceApiController;
             use Nusara\Pulse\Http\Controllers\Api\Overtime\OvertimeApiController;
-            use Nusara\Pulse\Http\Controllers\Api\Leave\ReasonApiController;
+            use Nusara\Pulse\Http\Controllers\Api\Leave\LeaveReasonApiController;
             use Nusara\Pulse\Http\Controllers\Api\Leave\LeaveApiController;
             use Nusara\Pulse\Http\Controllers\Api\Payroll\SalaryComponentApiController;
             use Nusara\Pulse\Http\Controllers\Api\Payroll\SalaryBenefitApiController;
@@ -225,13 +225,13 @@ Route::group(['prefix' => 'pulse', 'as' => 'pulse.'], function () {
             });
 
 
-            Route::group(['prefix' => 'reason', 'as' => 'reason.'], function () {
-                Route::get('/', [ReasonApiController::class, 'index'])->name('index');
-                Route::get('/export', [ReasonApiController::class, 'export'])->name('export');
-                Route::get('/{id}', [ReasonApiController::class, 'show'])->name('show');
-                Route::post('/', [ReasonApiController::class, 'store'])->name('store');
-                Route::put('/{id}', [ReasonApiController::class, 'update'])->name('update');
-                Route::delete('/{id}', [ReasonApiController::class, 'delete'])->name('delete');
+            Route::group(['prefix' => 'leave-reason', 'as' => 'reason.'], function () {
+                Route::get('/', [LeaveReasonApiController::class, 'index'])->name('index');
+                Route::get('/export', [LeaveReasonApiController::class, 'export'])->name('export');
+                Route::get('/{id}', [LeaveReasonApiController::class, 'show'])->name('show');
+                Route::post('/', [LeaveReasonApiController::class, 'store'])->name('store');
+                Route::put('/{id}', [LeaveReasonApiController::class, 'update'])->name('update');
+                Route::delete('/{id}', [LeaveReasonApiController::class, 'delete'])->name('delete');
             });
 
 
