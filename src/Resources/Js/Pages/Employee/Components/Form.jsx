@@ -4,7 +4,7 @@ import { Input } from "@/components/ui/input"
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
-
+import Dropzone from 'shadcn-dropzone';
 const schema = z.object({
     'code': z.string().nonempty(),
     'fullname': z.string().nonempty(),
@@ -31,6 +31,7 @@ const Form = ({ id, onSubmit, initialData = {} }) => {
         register,
         handleSubmit,
         reset,
+        setValue,
         formState: { errors },
     } = useForm({
         resolver: zodResolver(schema),
@@ -212,14 +213,33 @@ const Form = ({ id, onSubmit, initialData = {} }) => {
 
                 <div className='mb-4'>
                     <label className='block text-sm font-bold mb-2' htmlFor='profile_image'>
-                        Profile  Picture
+                        Profile Picture
                     </label>
-                    <Input
-                        type='string'
-                        {...register('profile_image')}
-                        className='input input-bordered w-full'
-                        placeholder='Profile  Picture'
-                    />
+
+                    <Dropzone
+                        onDrop={(files) => {
+                            setValue('profile_image', files);
+                        }}
+                    >
+                        {(dropzone) => (
+                            <div className='h-[100px] items-center justify-center mt-10'>
+                                {
+                                    dropzone.isDragAccept ? (
+                                        <div className='text-sm font-medium'>Drop your files here!</div>
+                                    ) : (
+                                        <div className='flex items-center flex-col gap-1.5 '>
+                                            <div className='flex items-center flex-row gap-0.5 text-sm font-medium'>
+                                                Upload files
+                                            </div>
+                                        </div>
+                                    )
+                                }
+                                <div className='text-xs text-gray-400 font-medium'>
+                                    {dropzone.acceptedFiles.length} files uploaded so far.
+                                </div>
+                            </div>
+                        )}
+                    </Dropzone>
                     {errors.profile_image && (
                         <p className='text-red-500 text-xs italic'>
                             {errors.profile_image.message}
@@ -230,7 +250,7 @@ const Form = ({ id, onSubmit, initialData = {} }) => {
 
                 <div className='mb-4'>
                     <label className='block text-sm font-bold mb-2' htmlFor='employee_status'>
-                        Employee  Status
+                        Employee Status
                     </label>
                     <Input
                         type='string'
