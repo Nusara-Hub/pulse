@@ -11,7 +11,7 @@ const schema = z.object({
 });
 
 const Form = ({ id, onSubmit, initialData = {} }) => {
-    const [selectedDate, setSelectedDate] = useState(initialData.holiday_date || null);
+    const [selectedDate, setSelectedDate] = useState(initialData.data?.holiday_date || null);
 
     const {
         register,

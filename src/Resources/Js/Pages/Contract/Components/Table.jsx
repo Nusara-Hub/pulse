@@ -11,33 +11,42 @@ const Table = ({ title, data, onDelete, pagination, page, setPage, limit, search
         const currentPage = pagination.current_page || 1;
         const limit = pagination.per_page || 10;
         const displayIndex = (currentPage - 1) * limit + (index + 1);
+        const formatDate = (dateString) => {
+            if (!dateString) return ''; // Handle empty or invalid date strings
 
+            const date = new Date(dateString); // Convert to Date object
+            return new Intl.DateTimeFormat('en-GB', {
+                day: 'numeric',
+                month: 'long',
+                year: 'numeric'
+            }).format(date); // Format the date
+        };
         return (
             <>
-               <TableCell>{displayIndex}</TableCell>
-<TableCell>{row.type}</TableCell>
-<TableCell>{row.letter_number}</TableCell>
-<TableCell>{row.subject}</TableCell>
-<TableCell>{row.start_date}</TableCell>
-<TableCell>{row.end_date}</TableCell>
-<TableCell>{row.signed_date}</TableCell>
-<TableCell>{row.used}</TableCell>
+                <TableCell>{displayIndex}</TableCell>
+                <TableCell>{row.type}</TableCell>
+                <TableCell>{row.letter_number}</TableCell>
+                <TableCell>{row.subject}</TableCell>
+                <TableCell>{formatDate(row.start_date)}</TableCell>
+                <TableCell>{formatDate(row.end_date)}</TableCell>
+                <TableCell>{formatDate(row.signed_date)}</TableCell>
+                <TableCell>{row.used ? 'Yes' : 'No'}</TableCell>
 
-            <TableCell className="flex gap-2">
-                <Button
-                    variant="outline"
-                    onClick={() => window.location.href = `/pulse/contract/edit/${row.id}`}
-                >
-                    Edit
-                </Button>
-                <Button
-                    onClick={() => showConfirm(row.id)}
-                    variant="destructive"
-                >
-                    Delete
-                </Button>
-            </TableCell>
-        
+                <TableCell className="flex gap-2">
+                    <Button
+                        variant="outline"
+                        onClick={() => window.location.href = `/pulse/contract/edit/${row.id}`}
+                    >
+                        Edit
+                    </Button>
+                    <Button
+                        onClick={() => showConfirm(row.id)}
+                        variant="destructive"
+                    >
+                        Delete
+                    </Button>
+                </TableCell>
+
             </>
         );
     };

@@ -78,13 +78,22 @@ class ContractApiController extends NusaraPulseBaseController
      */
     public function store(CreateRequest $request): JsonResponse
     {
-        $contracts = Contract::create($request->validated());
+        // Get the validated data
+        $validatedData = $request->validated();
+
+        // Check if tags exist and convert the array to a comma-separated string
+        if (isset($validatedData['tags']) && is_array($validatedData['tags'])) {
+            $validatedData['tags'] = implode(',', $validatedData['tags']);
+        }
+
+        // Create the contract with the updated data
+        $contract = Contract::create($validatedData);
 
         return ResponseJson::success(
             ok: true,
             code: Response::HTTP_OK,
             message: __('app.notification.flash.created', ['prop' => 'Contract']),
-            data: $contracts
+            data: $contract
         );
     }
 
@@ -98,7 +107,13 @@ class ContractApiController extends NusaraPulseBaseController
     public function update(UpdateRequest $request, string $id): JsonResponse
     {
         $contracts = Contract::findOrFail($id);
-        $contracts->update($request->validated());
+        $validatedData = $request->validated();
+
+        // Check if tags exist and convert the array to a comma-separated string
+        if (isset($validatedData['tags']) && is_array($validatedData['tags'])) {
+            $validatedData['tags'] = implode(',', $validatedData['tags']);
+        }
+        $contracts->update($validatedData);
 
         return ResponseJson::success(
             ok: true,

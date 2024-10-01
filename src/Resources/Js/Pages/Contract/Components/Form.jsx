@@ -1,53 +1,108 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Button } from "@/Components/ui/button"
 import { Input } from "@/components/ui/input"
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
-
+import Tags from '@/Components/ui/tags';
+import SelectSearch from "@/components/SelectSearch";
+import { DatePicker } from '@/components/ui/datepicker';
+import { Textarea } from "@/components/ui/textarea"
+const dateRegex = /^\d{4}-\d{2}-\d{2}$/;
 const schema = z.object({
     'type': z.string(),
-'letter_number': z.string(),
-'subject': z.string(),
-'start_date': z.string(),
-'end_date': z.string(),
-'signed_date': z.string(),
-'description': z.string(),
-'tags': z.string()
+    'letter_number': z.string(),
+    'subject': z.string(),
+    'start_date': z.string().refine((val) => dateRegex.test(val), {
+        message: "Invalid date format, must be YYYY-MM-DD"
+    }),
+    'end_date': z.string().refine((val) => dateRegex.test(val), {
+        message: "Invalid date format, must be YYYY-MM-DD"
+    }),
+    'signed_date': z.string().refine((val) => dateRegex.test(val), {
+        message: "Invalid date format, must be YYYY-MM-DD"
+    }),
+    'description': z.string(),
+    'tags': z.array(z.string()).optional()
 });
 
 const Form = ({ id, onSubmit, initialData = {} }) => {
-
+    const [startDate, setStartDate] = useState(initialData.data?.start_date || null);
+    const [endDate, setEndDate] = useState(initialData.data?.end_date || null);
+    const [signedDate, setSignedDate] = useState(initialData.data?.signed_date || null);
+    const dataType = [
+        {
+            name: 'Contract Employee',
+            id: 'Contract Employee'
+        },
+        {
+            name: 'Contract Client',
+            id: 'Contract Client'
+        }
+    ];
     const {
         register,
         handleSubmit,
         reset,
+        setValue,
+        watch,
         formState: { errors },
     } = useForm({
         resolver: zodResolver(schema),
+        defaultValues: {
+            tags: [], // Set default tags as an empty array
+        },
     });
+    const watchedTags = watch('tags', '');
 
     useEffect(() => {
         reset(initialData.data);
+        if (initialData.data.tags) {
+            const tagsArray = initialData.data.tags ? initialData.data.tags.split(',') : [];
+            setValue('tags', tagsArray);
+        }
+        setStartDate(initialData.start_date || null);
+        setEndDate(initialData.end_date || null);
+        setSignedDate(initialData.signed_date || null);
     }, [id, reset, initialData]);
 
     const handleCancel = () => {
         window.location.href = '/pulse/contract';
     };
 
+    const handleStartDate = (date) => {
+        setStartDate(date);
+        console.log(date);
+        setValue('start_date', date);
+    };
+
+    const handleEndDate = (date) => {
+        setEndDate(date);
+        setValue('end_date', date);
+    };
+
+    const handleSignedDate = (date) => {
+        setSignedDate(date);
+        setValue('signed_date', date);
+    };
+
     return (
         <>
             <form className="bg-white rounded-md border mx-4 px-8 pt-6 pb-8 mb-4" onSubmit={handleSubmit(onSubmit)}>
-               
+
                 <div className='mb-4'>
                     <label className='block text-sm font-bold mb-2' htmlFor='type'>
                         Type of  Contract
                     </label>
-                    <Input
-                        type='string'
-                        {...register('type')}
-                        className='input input-bordered w-full'
-                        placeholder='Type of  Contract'
+                    <SelectSearch
+                        data={dataType || []}
+                        initialValue={initialData.data?.type || ''}
+                        onChange={value => {
+                            setValue('type', value);
+                        }}
+                        value='id'
+                        label='name'
+                        placeholder='Type'
                     />
                     {errors.type && (
                         <p className='text-red-500 text-xs italic'>
@@ -55,7 +110,7 @@ const Form = ({ id, onSubmit, initialData = {} }) => {
                         </p>
                     )}
                 </div>
-            
+
 
                 <div className='mb-4'>
                     <label className='block text-sm font-bold mb-2' htmlFor='letter_number'>
@@ -73,7 +128,7 @@ const Form = ({ id, onSubmit, initialData = {} }) => {
                         </p>
                     )}
                 </div>
-            
+
 
                 <div className='mb-4'>
                     <label className='block text-sm font-bold mb-2' htmlFor='subject'>
@@ -91,17 +146,16 @@ const Form = ({ id, onSubmit, initialData = {} }) => {
                         </p>
                     )}
                 </div>
-            
+
 
                 <div className='mb-4'>
                     <label className='block text-sm font-bold mb-2' htmlFor='start_date'>
                         Start  Date
                     </label>
-                    <Input
-                        type='string'
-                        {...register('start_date')}
-                        className='input input-bordered w-full'
-                        placeholder='Start  Date'
+                    <DatePicker
+                        initialDate={startDate}
+                        onSelectDate={handleStartDate}
+                        placeholder="Choose a Start Date"
                     />
                     {errors.start_date && (
                         <p className='text-red-500 text-xs italic'>
@@ -109,17 +163,16 @@ const Form = ({ id, onSubmit, initialData = {} }) => {
                         </p>
                     )}
                 </div>
-            
+
 
                 <div className='mb-4'>
                     <label className='block text-sm font-bold mb-2' htmlFor='end_date'>
                         End  Date
                     </label>
-                    <Input
-                        type='string'
-                        {...register('end_date')}
-                        className='input input-bordered w-full'
-                        placeholder='End  Date'
+                    <DatePicker
+                        initialDate={endDate}
+                        onSelectDate={handleEndDate}
+                        placeholder="Choose a End Date"
                     />
                     {errors.end_date && (
                         <p className='text-red-500 text-xs italic'>
@@ -127,17 +180,16 @@ const Form = ({ id, onSubmit, initialData = {} }) => {
                         </p>
                     )}
                 </div>
-            
+
 
                 <div className='mb-4'>
                     <label className='block text-sm font-bold mb-2' htmlFor='signed_date'>
                         Signed  Date
                     </label>
-                    <Input
-                        type='string'
-                        {...register('signed_date')}
-                        className='input input-bordered w-full'
-                        placeholder='Signed  Date'
+                    <DatePicker
+                        initialDate={signedDate}
+                        onSelectDate={handleSignedDate}
+                        placeholder="Choose a Signed Date"
                     />
                     {errors.signed_date && (
                         <p className='text-red-500 text-xs italic'>
@@ -145,43 +197,35 @@ const Form = ({ id, onSubmit, initialData = {} }) => {
                         </p>
                     )}
                 </div>
-            
+
 
                 <div className='mb-4'>
                     <label className='block text-sm font-bold mb-2' htmlFor='description'>
                         Description
                     </label>
-                    <Input
-                        type='string'
-                        {...register('description')}
+                    <Textarea {...register('description')}
                         className='input input-bordered w-full'
-                        placeholder='Description'
-                    />
+                        placeholder='Description' />
                     {errors.description && (
                         <p className='text-red-500 text-xs italic'>
                             {errors.description.message}
                         </p>
                     )}
                 </div>
-            
+
 
                 <div className='mb-4'>
                     <label className='block text-sm font-bold mb-2' htmlFor='tags'>
                         Tags
                     </label>
-                    <Input
-                        type='string'
-                        {...register('tags')}
-                        className='input input-bordered w-full'
-                        placeholder='Tags'
-                    />
+                    <Tags setValue={setValue} watch={watch} />
                     {errors.tags && (
                         <p className='text-red-500 text-xs italic'>
                             {errors.tags.message}
                         </p>
                     )}
                 </div>
-            
+
                 <div className="flex gap-2">
                     <Button type="button" variant="secondary" onClick={handleCancel}>
                         Cancel
