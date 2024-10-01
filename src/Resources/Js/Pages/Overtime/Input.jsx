@@ -7,8 +7,10 @@ import {
     CardTitle,
 } from "@/components/ui/card"
 import { Head } from '@inertiajs/react'
+import { useToast } from "@/hooks/use-toast";
 const Input = ({ id }) => {
     const { show, detail, handleInsert, handleUpdate } = useOvertimeStore();
+    const { toast } = useToast();
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {

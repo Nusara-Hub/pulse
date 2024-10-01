@@ -7,8 +7,10 @@ import {
     CardTitle,
 } from "@/components/ui/card"
 import { Head } from '@inertiajs/react'
+import { useToast } from "@/hooks/use-toast";
 const Input = ({ id, title, type }) => {
     const { show, detail, handleInsert, handleUpdate } = useSalaryAllowanceStore();
+    const { toast } = useToast();
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
