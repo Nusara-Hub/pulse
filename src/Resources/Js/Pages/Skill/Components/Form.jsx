@@ -36,42 +36,43 @@ const Form = ({ id, onSubmit, initialData = {}, parent }) => {
     return (
         <>
             <form className="bg-white rounded-md border mx-4 px-8 pt-6 pb-8 mb-4" onSubmit={handleSubmit(onSubmit)}>
+                <div className="grid grid-cols-2 gap-4 mb-4">
+                    <div className='mb-4'>
+                        <label className='block text-sm font-bold mb-2' htmlFor='skill_group_id'>
+                            Skill Group
+                        </label>
+                        {loading ? <Skeleton className="h-4 w-[250px]" /> : <SelectSearch
+                            data={datas.data || []}
+                            initialValue={initialData.data?.skill_group_id || ''}
+                            onChange={(value) => setValue('skill_group_id', value)}
+                            value='id'
+                            label='name'
+                            placeholder='Skill Group'
+                        />}
+                        {errors.skill_group_id && (
+                            <p className='text-red-500 text-xs italic'>
+                                {errors.skill_group_id.message}
+                            </p>
+                        )}
+                    </div>
 
-                <div className='mb-4'>
-                    <label className='block text-sm font-bold mb-2' htmlFor='skill_group_id'>
-                        Skill Group
-                    </label>
-                    {loading ? <Skeleton className="h-4 w-[250px]" /> : <SelectSearch
-                        data={datas.data || []}
-                        initialValue={initialData.data?.skill_group_id || ''}
-                        onChange={(value) => setValue('skill_group_id', value)}
-                        value='id'
-                        label='name'
-                        placeholder='Skill Group'
-                    />}
-                    {errors.skill_group_id && (
-                        <p className='text-red-500 text-xs italic'>
-                            {errors.skill_group_id.message}
-                        </p>
-                    )}
-                </div>
 
-
-                <div className='mb-4'>
-                    <label className='block text-sm font-bold mb-2' htmlFor='name'>
-                        Skill Name
-                    </label>
-                    <Input
-                        type='string'
-                        {...register('name')}
-                        className='input input-bordered w-full'
-                        placeholder='name'
-                    />
-                    {errors.name && (
-                        <p className='text-red-500 text-xs italic'>
-                            {errors.name.message}
-                        </p>
-                    )}
+                    <div className='mb-4'>
+                        <label className='block text-sm font-bold mb-2' htmlFor='name'>
+                            Skill Name
+                        </label>
+                        <Input
+                            type='string'
+                            {...register('name')}
+                            className='input input-bordered w-full'
+                            placeholder='name'
+                        />
+                        {errors.name && (
+                            <p className='text-red-500 text-xs italic'>
+                                {errors.name.message}
+                            </p>
+                        )}
+                    </div>
                 </div>
 
                 <div className="flex gap-2">

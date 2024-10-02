@@ -33,39 +33,40 @@ const Form = ({ id, onSubmit, initialData = {} }) => {
         <>
             <form className="bg-white rounded-md border mx-4 px-8 pt-6 pb-8 mb-4" onSubmit={handleSubmit(onSubmit)}>
 
-                <div className='mb-4'>
-                    <label className='block text-sm font-bold mb-2' htmlFor='short_name'>
-                        Short Name
-                    </label>
-                    <Input
-                        type='string'
-                        {...register('short_name')}
-                        className='input input-bordered w-full'
-                        placeholder='Short Name'
-                    />
-                    {errors.short_name && (
-                        <p className='text-red-500 text-xs italic'>
-                            {errors.short_name.message}
-                        </p>
-                    )}
-                </div>
+                <div className="grid grid-cols-2 gap-4 mb-4">
+                    <div>
+                        <label className='block text-sm font-bold mb-2' htmlFor='short_name'>
+                            Short Name
+                        </label>
+                        <Input
+                            type='string'
+                            {...register('short_name')}
+                            className='input input-bordered w-full'
+                            placeholder='Short Name'
+                        />
+                        {errors.short_name && (
+                            <p className='text-red-500 text-xs italic'>
+                                {errors.short_name.message}
+                            </p>
+                        )}
+                    </div>
 
-
-                <div className='mb-4'>
-                    <label className='block text-sm font-bold mb-2' htmlFor='name'>
-                        Name
-                    </label>
-                    <Input
-                        type='string'
-                        {...register('name')}
-                        className='input input-bordered w-full'
-                        placeholder='Name'
-                    />
-                    {errors.name && (
-                        <p className='text-red-500 text-xs italic'>
-                            {errors.name.message}
-                        </p>
-                    )}
+                    <div>
+                        <label className='block text-sm font-bold mb-2' htmlFor='name'>
+                            Name
+                        </label>
+                        <Input
+                            type='string'
+                            {...register('name')}
+                            className='input input-bordered w-full'
+                            placeholder='Name'
+                        />
+                        {errors.name && (
+                            <p className='text-red-500 text-xs italic'>
+                                {errors.name.message}
+                            </p>
+                        )}
+                    </div>
                 </div>
 
                 <div className="flex gap-2">

@@ -1,13 +1,14 @@
 import React, { useEffect, useState } from 'react';
-import { Button } from "@/Components/ui/button"
-import { Input } from "@/components/ui/input"
+import { Button } from "@/Components/ui/button";
+import { Input } from "@/components/ui/input";
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import Tags from '@/Components/ui/tags';
 import SelectSearch from "@/components/SelectSearch";
 import { DatePicker } from '@/components/ui/datepicker';
-import { Textarea } from "@/components/ui/textarea"
+import { Textarea } from "@/components/ui/textarea";
+
 const dateRegex = /^\d{4}-\d{2}-\d{2}$/;
 const schema = z.object({
     'type': z.string(),
@@ -30,16 +31,12 @@ const Form = ({ id, onSubmit, initialData = {} }) => {
     const [startDate, setStartDate] = useState(initialData.data?.start_date || null);
     const [endDate, setEndDate] = useState(initialData.data?.end_date || null);
     const [signedDate, setSignedDate] = useState(initialData.data?.signed_date || null);
+
     const dataType = [
-        {
-            name: 'Contract Employee',
-            id: 'Contract Employee'
-        },
-        {
-            name: 'Contract Client',
-            id: 'Contract Client'
-        }
+        { name: 'Contract Employee', id: 'Contract Employee' },
+        { name: 'Contract Client', id: 'Contract Client' }
     ];
+
     const {
         register,
         handleSubmit,
@@ -53,17 +50,16 @@ const Form = ({ id, onSubmit, initialData = {} }) => {
             tags: [], // Set default tags as an empty array
         },
     });
-    const watchedTags = watch('tags', '');
 
     useEffect(() => {
         reset(initialData.data);
-        if (initialData.data.tags) {
+        if (initialData.data?.tags) {
             const tagsArray = initialData.data.tags ? initialData.data.tags.split(',') : [];
             setValue('tags', tagsArray);
         }
-        setStartDate(initialData.start_date || null);
-        setEndDate(initialData.end_date || null);
-        setSignedDate(initialData.signed_date || null);
+        setStartDate(initialData.data?.start_date || null);
+        setEndDate(initialData.data?.end_date || null);
+        setSignedDate(initialData.data?.signed_date || null);
     }, [id, reset, initialData]);
 
     const handleCancel = () => {
@@ -72,7 +68,6 @@ const Form = ({ id, onSubmit, initialData = {} }) => {
 
     const handleStartDate = (date) => {
         setStartDate(date);
-        console.log(date);
         setValue('start_date', date);
     };
 
@@ -90,129 +85,131 @@ const Form = ({ id, onSubmit, initialData = {} }) => {
         <>
             <form className="bg-white rounded-md border mx-4 px-8 pt-6 pb-8 mb-4" onSubmit={handleSubmit(onSubmit)}>
 
-                <div className='mb-4'>
-                    <label className='block text-sm font-bold mb-2' htmlFor='type'>
-                        Type of  Contract
-                    </label>
-                    <SelectSearch
-                        data={dataType || []}
-                        initialValue={initialData.data?.type || ''}
-                        onChange={value => {
-                            setValue('type', value);
-                        }}
-                        value='id'
-                        label='name'
-                        placeholder='Type'
-                    />
-                    {errors.type && (
-                        <p className='text-red-500 text-xs italic'>
-                            {errors.type.message}
-                        </p>
-                    )}
+                <div className="grid grid-cols-2 gap-4 mb-4">
+                    {/* Grid 1 */}
+                    <div>
+                        <div className='mb-4'>
+                            <label className='block text-sm font-bold mb-2' htmlFor='type'>
+                                Type of Contract
+                            </label>
+                            <SelectSearch
+                                data={dataType || []}
+                                initialValue={initialData.data?.type || ''}
+                                onChange={value => setValue('type', value)}
+                                value='id'
+                                label='name'
+                                placeholder='Type'
+                            />
+                            {errors.type && (
+                                <p className='text-red-500 text-xs italic'>
+                                    {errors.type.message}
+                                </p>
+                            )}
+                        </div>
+
+                        <div className='mb-4'>
+                            <label className='block text-sm font-bold mb-2' htmlFor='letter_number'>
+                                No. Contract
+                            </label>
+                            <Input
+                                type='string'
+                                {...register('letter_number')}
+                                className='input input-bordered w-full'
+                                placeholder='No. Contract'
+                            />
+                            {errors.letter_number && (
+                                <p className='text-red-500 text-xs italic'>
+                                    {errors.letter_number.message}
+                                </p>
+                            )}
+                        </div>
+
+                        <div className='mb-4'>
+                            <label className='block text-sm font-bold mb-2' htmlFor='subject'>
+                                Subject
+                            </label>
+                            <Input
+                                type='string'
+                                {...register('subject')}
+                                className='input input-bordered w-full'
+                                placeholder='Subject'
+                            />
+                            {errors.subject && (
+                                <p className='text-red-500 text-xs italic'>
+                                    {errors.subject.message}
+                                </p>
+                            )}
+                        </div>
+                    </div>
+
+                    {/* Grid 2 */}
+                    <div>
+                        <div className='mb-4'>
+                            <label className='block text-sm font-bold mb-2' htmlFor='start_date'>
+                                Start Date
+                            </label>
+                            <DatePicker
+                                initialDate={startDate}
+                                onSelectDate={handleStartDate}
+                                placeholder="Choose a Start Date"
+                            />
+                            {errors.start_date && (
+                                <p className='text-red-500 text-xs italic'>
+                                    {errors.start_date.message}
+                                </p>
+                            )}
+                        </div>
+
+                        <div className='mb-4'>
+                            <label className='block text-sm font-bold mb-2' htmlFor='end_date'>
+                                End Date
+                            </label>
+                            <DatePicker
+                                initialDate={endDate}
+                                onSelectDate={handleEndDate}
+                                placeholder="Choose an End Date"
+                            />
+                            {errors.end_date && (
+                                <p className='text-red-500 text-xs italic'>
+                                    {errors.end_date.message}
+                                </p>
+                            )}
+                        </div>
+
+                        <div className='mb-4'>
+                            <label className='block text-sm font-bold mb-2' htmlFor='signed_date'>
+                                Signed Date
+                            </label>
+                            <DatePicker
+                                initialDate={signedDate}
+                                onSelectDate={handleSignedDate}
+                                placeholder="Choose a Signed Date"
+                            />
+                            {errors.signed_date && (
+                                <p className='text-red-500 text-xs italic'>
+                                    {errors.signed_date.message}
+                                </p>
+                            )}
+                        </div>
+                    </div>
                 </div>
 
-
-                <div className='mb-4'>
-                    <label className='block text-sm font-bold mb-2' htmlFor='letter_number'>
-                        No.  Contract
-                    </label>
-                    <Input
-                        type='string'
-                        {...register('letter_number')}
-                        className='input input-bordered w-full'
-                        placeholder='No.  Contract'
-                    />
-                    {errors.letter_number && (
-                        <p className='text-red-500 text-xs italic'>
-                            {errors.letter_number.message}
-                        </p>
-                    )}
-                </div>
-
-
-                <div className='mb-4'>
-                    <label className='block text-sm font-bold mb-2' htmlFor='subject'>
-                        Subject
-                    </label>
-                    <Input
-                        type='string'
-                        {...register('subject')}
-                        className='input input-bordered w-full'
-                        placeholder='Subject'
-                    />
-                    {errors.subject && (
-                        <p className='text-red-500 text-xs italic'>
-                            {errors.subject.message}
-                        </p>
-                    )}
-                </div>
-
-
-                <div className='mb-4'>
-                    <label className='block text-sm font-bold mb-2' htmlFor='start_date'>
-                        Start  Date
-                    </label>
-                    <DatePicker
-                        initialDate={startDate}
-                        onSelectDate={handleStartDate}
-                        placeholder="Choose a Start Date"
-                    />
-                    {errors.start_date && (
-                        <p className='text-red-500 text-xs italic'>
-                            {errors.start_date.message}
-                        </p>
-                    )}
-                </div>
-
-
-                <div className='mb-4'>
-                    <label className='block text-sm font-bold mb-2' htmlFor='end_date'>
-                        End  Date
-                    </label>
-                    <DatePicker
-                        initialDate={endDate}
-                        onSelectDate={handleEndDate}
-                        placeholder="Choose a End Date"
-                    />
-                    {errors.end_date && (
-                        <p className='text-red-500 text-xs italic'>
-                            {errors.end_date.message}
-                        </p>
-                    )}
-                </div>
-
-
-                <div className='mb-4'>
-                    <label className='block text-sm font-bold mb-2' htmlFor='signed_date'>
-                        Signed  Date
-                    </label>
-                    <DatePicker
-                        initialDate={signedDate}
-                        onSelectDate={handleSignedDate}
-                        placeholder="Choose a Signed Date"
-                    />
-                    {errors.signed_date && (
-                        <p className='text-red-500 text-xs italic'>
-                            {errors.signed_date.message}
-                        </p>
-                    )}
-                </div>
-
-
+                {/* Description and Tags */}
                 <div className='mb-4'>
                     <label className='block text-sm font-bold mb-2' htmlFor='description'>
                         Description
                     </label>
-                    <Textarea {...register('description')}
+                    <Textarea
+                        {...register('description')}
                         className='input input-bordered w-full'
-                        placeholder='Description' />
+                        placeholder='Description'
+                    />
                     {errors.description && (
                         <p className='text-red-500 text-xs italic'>
                             {errors.description.message}
                         </p>
                     )}
                 </div>
-
 
                 <div className='mb-4'>
                     <label className='block text-sm font-bold mb-2' htmlFor='tags'>

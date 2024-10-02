@@ -55,41 +55,42 @@ const Form = ({ id, onSubmit, initialData = {}, region }) => {
                         </p>
                     )}
                 </div>
+                <div className="grid grid-cols-2 gap-4 mb-4">
+                    <div className='mb-4'>
+                        <label className='block text-sm font-bold mb-2' htmlFor='code'>
+                            City Code
+                        </label>
+                        <Input
+                            type='string'
+                            {...register('code')}
+                            defaultValue={initialData.data?.code || ''}
+                            className='input input-bordered w-full'
+                            placeholder='code'
+                        />
+                        {errors.code && (
+                            <p className='text-red-500 text-xs italic'>
+                                {errors.code.message}
+                            </p>
+                        )}
+                    </div>
 
-                <div className='mb-4'>
-                    <label className='block text-sm font-bold mb-2' htmlFor='code'>
-                        City Code
-                    </label>
-                    <Input
-                        type='string'
-                        {...register('code')}
-                        defaultValue={initialData.data?.code || ''}
-                        className='input input-bordered w-full'
-                        placeholder='code'
-                    />
-                    {errors.code && (
-                        <p className='text-red-500 text-xs italic'>
-                            {errors.code.message}
-                        </p>
-                    )}
-                </div>
-
-                <div className='mb-4'>
-                    <label className='block text-sm font-bold mb-2' htmlFor='name'>
-                        City Name
-                    </label>
-                    <Input
-                        type='string'
-                        {...register('name')}
-                        defaultValue={initialData.data?.name || ''}
-                        className='input input-bordered w-full'
-                        placeholder='name'
-                    />
-                    {errors.name && (
-                        <p className='text-red-500 text-xs italic'>
-                            {errors.name.message}
-                        </p>
-                    )}
+                    <div className='mb-4'>
+                        <label className='block text-sm font-bold mb-2' htmlFor='name'>
+                            City Name
+                        </label>
+                        <Input
+                            type='string'
+                            {...register('name')}
+                            defaultValue={initialData.data?.name || ''}
+                            className='input input-bordered w-full'
+                            placeholder='name'
+                        />
+                        {errors.name && (
+                            <p className='text-red-500 text-xs italic'>
+                                {errors.name.message}
+                            </p>
+                        )}
+                    </div>
                 </div>
 
                 <div className="flex gap-2">

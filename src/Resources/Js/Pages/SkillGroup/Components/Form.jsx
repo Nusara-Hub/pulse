@@ -37,42 +37,43 @@ const Form = ({ id, onSubmit, initialData = {} }) => {
     return (
         <>
             <form className="bg-white rounded-md border mx-4 px-8 pt-6 pb-8 mb-4" onSubmit={handleSubmit(onSubmit)}>
+                <div className="grid grid-cols-2 gap-4 mb-4">
+                    <div className='mb-4'>
+                        <label className='block text-sm font-bold mb-2' htmlFor='parent_id'>
+                            Skill Parent
+                        </label>
+                        {loading ? <Skeleton className="h-4 w-[250px]" /> : <SelectSearch
+                            data={datas.data || []}
+                            initialValue={initialData.data?.parent_id || ''} // Use empty string for default value
+                            onChange={(value) => setValue('parent_id', value === '' ? null : value)} // Set null when no value is selected
+                            value='id'
+                            label='name'
+                            placeholder='Skill Parent'
+                        />}
+                        {errors.parent_id && (
+                            <p className='text-red-500 text-xs italic'>
+                                {errors.parent_id.message}
+                            </p>
+                        )}
+                    </div>
 
-                <div className='mb-4'>
-                    <label className='block text-sm font-bold mb-2' htmlFor='parent_id'>
-                        Skill Parent
-                    </label>
-                    {loading ? <Skeleton className="h-4 w-[250px]" /> : <SelectSearch
-                        data={datas.data || []}
-                        initialValue={initialData.data?.parent_id || ''} // Use empty string for default value
-                        onChange={(value) => setValue('parent_id', value === '' ? null : value)} // Set null when no value is selected
-                        value='id'
-                        label='name'
-                        placeholder='Skill Parent'
-                    />}
-                    {errors.parent_id && (
-                        <p className='text-red-500 text-xs italic'>
-                            {errors.parent_id.message}
-                        </p>
-                    )}
-                </div>
 
-
-                <div className='mb-4'>
-                    <label className='block text-sm font-bold mb-2' htmlFor='name'>
-                        Name
-                    </label>
-                    <Input
-                        type='string'
-                        {...register('name')}
-                        className='input input-bordered w-full'
-                        placeholder='name'
-                    />
-                    {errors.name && (
-                        <p className='text-red-500 text-xs italic'>
-                            {errors.name.message}
-                        </p>
-                    )}
+                    <div className='mb-4'>
+                        <label className='block text-sm font-bold mb-2' htmlFor='name'>
+                            Name
+                        </label>
+                        <Input
+                            type='string'
+                            {...register('name')}
+                            className='input input-bordered w-full'
+                            placeholder='name'
+                        />
+                        {errors.name && (
+                            <p className='text-red-500 text-xs italic'>
+                                {errors.name.message}
+                            </p>
+                        )}
+                    </div>
                 </div>
 
                 <div className="flex gap-2">
