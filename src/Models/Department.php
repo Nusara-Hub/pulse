@@ -47,4 +47,9 @@ final class Department extends Model
             'deleted_at' => 'datetime:U',
         ];
     }
+
+    public function parent()
+    {
+        return $this->belongsTo(Department::class, 'parent_id');
+    }
 }

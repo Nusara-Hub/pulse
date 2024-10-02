@@ -6,23 +6,27 @@ import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 
 const schema = z.object({
-    'parent_id': z.string(),
-'code': z.string().nonempty(),
-'name': z.string().nonempty()
+    'parent_id': z.string().optional(),
+    'code': z.string().nonempty(),
+    'name': z.string().nonempty()
 });
-
+import { useDepartmentStore } from '../State/useDepartmentStore';
+import { Skeleton } from "@/components/ui/skeleton"
+import SelectSearch from "@/components/SelectSearch";
 const Form = ({ id, onSubmit, initialData = {} }) => {
-
+    const { fetch, datas = [], loading } = useDepartmentStore();
     const {
         register,
         handleSubmit,
         reset,
+        setValue,
         formState: { errors },
     } = useForm({
         resolver: zodResolver(schema),
     });
 
     useEffect(() => {
+        fetch();
         reset(initialData.data);
     }, [id, reset, initialData]);
 
@@ -33,60 +37,63 @@ const Form = ({ id, onSubmit, initialData = {} }) => {
     return (
         <>
             <form className="bg-white rounded-md border mx-4 px-8 pt-6 pb-8 mb-4" onSubmit={handleSubmit(onSubmit)}>
-               
+
                 <div className='mb-4'>
                     <label className='block text-sm font-bold mb-2' htmlFor='parent_id'>
                         Parent  Department
                     </label>
-                    <Input
-                        type='string'
-                        {...register('parent_id')}
-                        className='input input-bordered w-full'
-                        placeholder='Parent  Department'
-                    />
+                    {loading ? <Skeleton className="h-4 w-[250px]" /> : <SelectSearch
+                        data={datas.data || []}
+                        initialValue={initialData.data?.parent_id || ''}
+                        onChange={(value) => setValue('parent_id', value === '' ? null : value)}
+                        value='id'
+                        label='name'
+                        placeholder='Parent Department'
+                    />}
                     {errors.parent_id && (
                         <p className='text-red-500 text-xs italic'>
                             {errors.parent_id.message}
                         </p>
                     )}
                 </div>
-            
 
-                <div className='mb-4'>
-                    <label className='block text-sm font-bold mb-2' htmlFor='code'>
-                        Department  Code
-                    </label>
-                    <Input
-                        type='string'
-                        {...register('code')}
-                        className='input input-bordered w-full'
-                        placeholder='Department  Code'
-                    />
-                    {errors.code && (
-                        <p className='text-red-500 text-xs italic'>
-                            {errors.code.message}
-                        </p>
-                    )}
-                </div>
-            
+                <div className="grid grid-cols-2 gap-4 mb-4">
+                    <div className='mb-4'>
+                        <label className='block text-sm font-bold mb-2' htmlFor='code'>
+                            Department  Code
+                        </label>
+                        <Input
+                            type='string'
+                            {...register('code')}
+                            className='input input-bordered w-full'
+                            placeholder='Department  Code'
+                        />
+                        {errors.code && (
+                            <p className='text-red-500 text-xs italic'>
+                                {errors.code.message}
+                            </p>
+                        )}
+                    </div>
 
-                <div className='mb-4'>
-                    <label className='block text-sm font-bold mb-2' htmlFor='name'>
-                        Department  Name
-                    </label>
-                    <Input
-                        type='string'
-                        {...register('name')}
-                        className='input input-bordered w-full'
-                        placeholder='Department  Name'
-                    />
-                    {errors.name && (
-                        <p className='text-red-500 text-xs italic'>
-                            {errors.name.message}
-                        </p>
-                    )}
+
+                    <div className='mb-4'>
+                        <label className='block text-sm font-bold mb-2' htmlFor='name'>
+                            Department  Name
+                        </label>
+                        <Input
+                            type='string'
+                            {...register('name')}
+                            className='input input-bordered w-full'
+                            placeholder='Department  Name'
+                        />
+                        {errors.name && (
+                            <p className='text-red-500 text-xs italic'>
+                                {errors.name.message}
+                            </p>
+                        )}
+                    </div>
                 </div>
-            
+
                 <div className="flex gap-2">
                     <Button type="button" variant="secondary" onClick={handleCancel}>
                         Cancel

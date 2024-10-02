@@ -30,7 +30,7 @@ class DepartmentApiController extends NusaraPulseBaseController
         $limit = $request->input('limit', 10);
         $page = $request->input('page', 1);
         $totalData = Department::count();
-        $departments = Pipeline::send(Department::query())
+        $departments = Pipeline::send(Department::query()->with(['parent']))
             ->through([
                 \Nusara\Pulse\Http\Filters\Department\BySearch::class,
             ])
