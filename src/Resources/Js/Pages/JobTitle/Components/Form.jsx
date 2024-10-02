@@ -4,7 +4,9 @@ import { Input } from "@/components/ui/input"
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
-
+import { useJobLevelStore } from '../../JobLevel/State/useJobLevelStore';
+import { Skeleton } from "@/components/ui/skeleton"
+import SelectSearch from "@/components/SelectSearch";
 const schema = z.object({
     'job_level_id': z.string().nonempty(),
     'code': z.string().nonempty(),
@@ -12,17 +14,19 @@ const schema = z.object({
 });
 
 const Form = ({ id, onSubmit, initialData = {} }) => {
-
+    const { fetch, datas = [], loading } = useJobLevelStore();
     const {
         register,
         handleSubmit,
         reset,
+        setValue,
         formState: { errors },
     } = useForm({
         resolver: zodResolver(schema),
     });
 
     useEffect(() => {
+        fetch();
         reset(initialData.data);
     }, [id, reset, initialData]);
 
@@ -38,12 +42,14 @@ const Form = ({ id, onSubmit, initialData = {} }) => {
                     <label className='block text-sm font-bold mb-2' htmlFor='job_level_id'>
                         Job  Level
                     </label>
-                    <Input
-                        type='string'
-                        {...register('job_level_id')}
-                        className='input input-bordered w-full'
-                        placeholder='Job  Level'
-                    />
+                    {loading ? <Skeleton className="h-4 w-[250px]" /> : <SelectSearch
+                        data={datas.data || []}
+                        initialValue={initialData.data?.job_level_id || ''}
+                        onChange={(value) => setValue('job_level_id', value)}
+                        value='id'
+                        label='name'
+                        placeholder='Job Level'
+                    />}
                     {errors.job_level_id && (
                         <p className='text-red-500 text-xs italic'>
                             {errors.job_level_id.message}
@@ -51,40 +57,41 @@ const Form = ({ id, onSubmit, initialData = {} }) => {
                     )}
                 </div>
 
+                <div className="grid grid-cols-2 gap-4 mb-4">
+                    <div className='mb-4'>
+                        <label className='block text-sm font-bold mb-2' htmlFor='code'>
+                            Position  Code
+                        </label>
+                        <Input
+                            type='string'
+                            {...register('code')}
+                            className='input input-bordered w-full'
+                            placeholder='Position  Code'
+                        />
+                        {errors.code && (
+                            <p className='text-red-500 text-xs italic'>
+                                {errors.code.message}
+                            </p>
+                        )}
+                    </div>
 
-                <div className='mb-4'>
-                    <label className='block text-sm font-bold mb-2' htmlFor='code'>
-                        Position  Code
-                    </label>
-                    <Input
-                        type='string'
-                        {...register('code')}
-                        className='input input-bordered w-full'
-                        placeholder='Position  Code'
-                    />
-                    {errors.code && (
-                        <p className='text-red-500 text-xs italic'>
-                            {errors.code.message}
-                        </p>
-                    )}
-                </div>
 
-
-                <div className='mb-4'>
-                    <label className='block text-sm font-bold mb-2' htmlFor='name'>
-                        Position  Name
-                    </label>
-                    <Input
-                        type='string'
-                        {...register('name')}
-                        className='input input-bordered w-full'
-                        placeholder='Position  Name'
-                    />
-                    {errors.name && (
-                        <p className='text-red-500 text-xs italic'>
-                            {errors.name.message}
-                        </p>
-                    )}
+                    <div className='mb-4'>
+                        <label className='block text-sm font-bold mb-2' htmlFor='name'>
+                            Position  Name
+                        </label>
+                        <Input
+                            type='string'
+                            {...register('name')}
+                            className='input input-bordered w-full'
+                            placeholder='Position  Name'
+                        />
+                        {errors.name && (
+                            <p className='text-red-500 text-xs italic'>
+                                {errors.name.message}
+                            </p>
+                        )}
+                    </div>
                 </div>
 
                 <div className="flex gap-2">

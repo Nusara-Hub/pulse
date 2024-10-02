@@ -47,4 +47,9 @@ final class JobLevel extends Model
             'deleted_at' => 'datetime:U',
         ];
     }
+
+    public function parent()
+    {
+        return $this->belongsTo(JobLevel::class, 'parent_id');
+    }
 }

@@ -30,7 +30,7 @@ class JobTitleApiController extends NusaraPulseBaseController
         $limit = $request->input('limit', 10);
         $page = $request->input('page', 1);
         $totalData = JobTitle::count();
-        $jobtitles = Pipeline::send(JobTitle::query())
+        $jobtitles = Pipeline::send(JobTitle::query()->with('joblevel'))
             ->through([
                 \Nusara\Pulse\Http\Filters\JobTitle\BySearch::class,
             ])

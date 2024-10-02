@@ -14,26 +14,26 @@ const Table = ({ title, data, onDelete, pagination, page, setPage, limit, search
 
         return (
             <>
-               <TableCell>{displayIndex}</TableCell>
-<TableCell>{row.joblevel?.name??""}</TableCell>
-<TableCell>{row.code}</TableCell>
-<TableCell>{row.name}</TableCell>
+                <TableCell>{displayIndex}</TableCell>
+                <TableCell>{row.joblevel?.name ?? ""}</TableCell>
+                <TableCell>{row.code}</TableCell>
+                <TableCell>{row.name}</TableCell>
 
-            <TableCell className="flex gap-2">
-                <Button
-                    variant="outline"
-                    onClick={() => window.location.href = `/pulse/job-title/edit/${row.id}`}
-                >
-                    Edit
-                </Button>
-                <Button
-                    onClick={() => showConfirm(row.id)}
-                    variant="destructive"
-                >
-                    Delete
-                </Button>
-            </TableCell>
-        
+                <TableCell className="flex gap-2">
+                    <Button
+                        variant="outline"
+                        onClick={() => window.location.href = `/pulse/job-title/edit/${row.id}`}
+                    >
+                        Edit
+                    </Button>
+                    <Button
+                        onClick={() => showConfirm(row.id)}
+                        variant="destructive"
+                    >
+                        Delete
+                    </Button>
+                </TableCell>
+
             </>
         );
     };

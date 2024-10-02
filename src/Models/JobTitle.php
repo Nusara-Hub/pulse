@@ -47,4 +47,9 @@ final class JobTitle extends Model
             'deleted_at' => 'datetime:U',
         ];
     }
+
+    public function joblevel()
+    {
+        return $this->belongsTo(JobLevel::class, 'job_level_id');
+    }
 }
