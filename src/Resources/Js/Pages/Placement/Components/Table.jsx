@@ -14,30 +14,30 @@ const Table = ({ title, data, onDelete, pagination, page, setPage, limit, search
 
         return (
             <>
-               <TableCell>{displayIndex}</TableCell>
-<TableCell>{row.employee?.fullname??""}</TableCell>
-<TableCell>{row.department?.name??""}</TableCell>
-<TableCell>{row.joblevel?.name??""}</TableCell>
-<TableCell>{row.jobtitle?.name??""}</TableCell>
-<TableCell>{row.supervisor?.fullname??""}</TableCell>
-<TableCell>{row.contract?.letter_number}</TableCell>
-<TableCell>{row.is_active}</TableCell>
+                <TableCell>{displayIndex}</TableCell>
+                <TableCell>{row.employee?.fullname ?? ""}</TableCell>
+                <TableCell>{row.department?.name ?? ""}</TableCell>
+                <TableCell>{row.joblevel?.name ?? ""}</TableCell>
+                <TableCell>{row.jobtitle?.name ?? ""}</TableCell>
+                <TableCell>{row.supervisor?.fullname ?? ""}</TableCell>
+                <TableCell>{row.contract?.letter_number}</TableCell>
+                <TableCell>{row.is_active == true ? "Active" : "Non Active"}</TableCell>
 
-            <TableCell className="flex gap-2">
-                <Button
-                    variant="outline"
-                    onClick={() => window.location.href = `/pulse/placement/edit/${row.id}`}
-                >
-                    Edit
-                </Button>
-                <Button
-                    onClick={() => showConfirm(row.id)}
-                    variant="destructive"
-                >
-                    Delete
-                </Button>
-            </TableCell>
-        
+                <TableCell className="flex gap-2">
+                    <Button
+                        variant="outline"
+                        onClick={() => window.location.href = `/pulse/placement/edit/${row.id}`}
+                    >
+                        Edit
+                    </Button>
+                    <Button
+                        onClick={() => showConfirm(row.id)}
+                        variant="destructive"
+                    >
+                        Delete
+                    </Button>
+                </TableCell>
+
             </>
         );
     };

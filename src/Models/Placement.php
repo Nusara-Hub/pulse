@@ -47,4 +47,36 @@ final class Placement extends Model
             'deleted_at' => 'datetime:U',
         ];
     }
+
+    public function department()
+    {
+        return $this->belongsTo(Department::class, 'department_id');
+    }
+
+    //join joblevel
+    public function joblevel()
+    {
+        return $this->belongsTo(JobLevel::class, 'job_level_id');
+    }
+
+    //join jobtitle
+    public function jobtitle()
+    {
+        return $this->belongsTo(JobTitle::class, 'job_title_id');
+    }
+
+    public function employee()
+    {
+        return $this->belongsTo(Employee::class, 'employee_id');
+    }
+
+    public function supervisor()
+    {
+        return $this->belongsTo(Employee::class, 'supervisor_id');
+    }
+
+    public function contract()
+    {
+        return $this->belongsTo(Contract::class, 'contract_id');
+    }
 }

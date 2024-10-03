@@ -30,7 +30,7 @@ class PlacementApiController extends NusaraPulseBaseController
         $limit = $request->input('limit', 10);
         $page = $request->input('page', 1);
         $totalData = Placement::count();
-        $placements = Pipeline::send(Placement::query())
+        $placements = Pipeline::send(Placement::query()->with(['department','joblevel','jobtitle','employee','supervisor','contract']))
             ->through([
                 \Nusara\Pulse\Http\Filters\Placement\BySearch::class,
             ])
