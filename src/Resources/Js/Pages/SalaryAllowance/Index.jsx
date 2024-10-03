@@ -57,7 +57,7 @@ const Index = (props) => {
                     type={`${props.type}`}
                     title={`${props.title}`}
                 />
-            )};
+            )}
         </>
 
     );

@@ -6,7 +6,7 @@ import {
 } from "@/components/ui/table"
 
 const Table = ({ title, data, onDelete, pagination, page, setPage, limit, search, handleSearchChange, handleLimitChange, handleNextPage, handlePreviousPage, handleExport }) => {
-    const header = ['No', 'Type', 'Employee', 'New Company', 'New Department', 'New Job Level', 'New Job Title', 'Contract', 'Action'];;
+    const header = ['No', 'Type', 'Employee', 'New Company', 'New Department', 'New Job Level', 'New Job Title', 'Contract', 'Action'];
     const renderBody = (row, index, showConfirm, pagination) => {
         const currentPage = pagination.current_page || 1;
         const limit = pagination.per_page || 10;
@@ -14,30 +14,30 @@ const Table = ({ title, data, onDelete, pagination, page, setPage, limit, search
 
         return (
             <>
-               <TableCell>{displayIndex}</TableCell>
-<TableCell>{row.type}</TableCell>
-<TableCell>{row.employee?.fullname??""}</TableCell>
-<TableCell>{row.company?.name??""}</TableCell>
-<TableCell>{row.department?.name??""}</TableCell>
-<TableCell>{row.joblevel?.name??""}</TableCell>
-<TableCell>{row.jobtitle?.name??""}</TableCell>
-<TableCell>{row.contract?.letter_number??""}</TableCell>
+                <TableCell>{displayIndex}</TableCell>
+                <TableCell>{row.type}</TableCell>
+                <TableCell>{row.employee?.fullname ?? ""}</TableCell>
+                <TableCell>{row.company?.name ?? ""}</TableCell>
+                <TableCell>{row.department?.name ?? ""}</TableCell>
+                <TableCell>{row.joblevel?.name ?? ""}</TableCell>
+                <TableCell>{row.jobtitle?.name ?? ""}</TableCell>
+                <TableCell>{row.contract?.letter_number ?? ""}</TableCell>
 
-            <TableCell className="flex gap-2">
-                <Button
-                    variant="outline"
-                    onClick={() => window.location.href = `/pulse/mutation/edit/${row.id}`}
-                >
-                    Edit
-                </Button>
-                <Button
-                    onClick={() => showConfirm(row.id)}
-                    variant="destructive"
-                >
-                    Delete
-                </Button>
-            </TableCell>
-        
+                <TableCell className="flex gap-2">
+                    <Button
+                        variant="outline"
+                        onClick={() => window.location.href = `/pulse/mutation/edit/${row.id}`}
+                    >
+                        Edit
+                    </Button>
+                    <Button
+                        onClick={() => showConfirm(row.id)}
+                        variant="destructive"
+                    >
+                        Delete
+                    </Button>
+                </TableCell>
+
             </>
         );
     };

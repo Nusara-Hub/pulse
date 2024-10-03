@@ -55,7 +55,7 @@ const Index = () => {
                     handlePreviousPage={handlePreviousPage}
                     handleExport={handleExport}
                 />
-            )};
+            )}
         </>
 
     );
