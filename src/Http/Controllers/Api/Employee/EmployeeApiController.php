@@ -30,7 +30,7 @@ class EmployeeApiController extends NusaraPulseBaseController
         $limit = $request->input('limit', 10);
         $page = $request->input('page', 1);
         $totalData = Employee::count();
-        $employees = Pipeline::send(Employee::query())
+        $employees = Pipeline::send(Employee::query()->with(["department","jobtitle","joblevel"]))
             ->through([
                 \Nusara\Pulse\Http\Filters\Employee\BySearch::class,
             ])
@@ -78,7 +78,20 @@ class EmployeeApiController extends NusaraPulseBaseController
      */
     public function store(CreateRequest $request): JsonResponse
     {
-        $employees = Employee::create($request->validated());
+
+        $validated = $request->validated();
+
+    // Check if the request contains a file
+    if ($request->hasFile('profile_image')) {
+        // Store the file in the 'profile_images' directory and get the file path
+        $filePath = $request->file('profile_image')->store('profile_images', 'public');
+
+        // Save the file path to the validated data
+        $validated['profile_image'] = $filePath;
+    }
+
+
+        $employees = Employee::create($validated);
 
         return ResponseJson::success(
             ok: true,
@@ -98,7 +111,16 @@ class EmployeeApiController extends NusaraPulseBaseController
     public function update(UpdateRequest $request, string $id): JsonResponse
     {
         $employees = Employee::findOrFail($id);
-        $employees->update($request->validated());
+        $validated = $request->validated();
+         // Check if the request contains a file
+        if ($request->hasFile('profile_image')) {
+            // Store the file in the 'profile_images' directory and get the file path
+            $filePath = $request->file('profile_image')->store('profile_images', 'public');
+
+            // Save the file path to the validated data
+            $validated['profile_image'] = $filePath;
+        }
+        $employees->update($validated);
 
         return ResponseJson::success(
             ok: true,

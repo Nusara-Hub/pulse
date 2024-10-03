@@ -28,8 +28,9 @@ final class CreateRequest extends FormRequest
     public function rules(): array
     {
          return [
-    'user_id' => ['required', 'max:255'],
+    'user_id' => ['max:255'],
     'contract_id' => ['required'],
+    'email' => ['required'],
     'company_id' => ['nullable'],
     'department_id' => ['required'],
     'job_level_id' => ['required'],
@@ -44,12 +45,14 @@ final class CreateRequest extends FormRequest
     'martial_status' => ['nullable'],
     'email' => ['nullable'],
     'employee_status' => ['required'],
-    'profile_image' => ['nullable'],
+    'profile_image' => ['nullable','image', 'mimes:jpeg,png,jpg,gif', 'max:2048'],
     'risk_ratio' => ['nullable'],
     'date_of_birth' => ['nullable'],
     'resign_date' => ['nullable'],
     'join_date' => ['required'],
     'leave_balance' => ['nullable'],
+    'education_institute_id' => ['nullable'],
+    'education_title_id' => ['nullable'],
 ];
     }
 }

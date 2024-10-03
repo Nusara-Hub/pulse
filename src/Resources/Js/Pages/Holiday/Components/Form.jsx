@@ -5,8 +5,11 @@ import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { DatePicker } from '@/components/ui/datepicker';
+const dateRegex = /^\d{4}-\d{2}-\d{2}$/;
 const schema = z.object({
-    'holiday_date': z.string().nonempty(),
+    'holiday_date': z.string().refine((val) => dateRegex.test(val), {
+        message: "Invalid date format, must be YYYY-MM-DD"
+    }),
     'name': z.string().nonempty()
 });
 
@@ -25,7 +28,7 @@ const Form = ({ id, onSubmit, initialData = {} }) => {
 
     useEffect(() => {
         reset(initialData.data);
-        setSelectedDate(initialData.holiday_date || null);
+        setSelectedDate(initialData.data?.holiday_date || null);
     }, [id, reset, initialData]);
 
     const handleCancel = () => {
@@ -34,7 +37,7 @@ const Form = ({ id, onSubmit, initialData = {} }) => {
 
     const handleDateSelect = (date) => {
         setSelectedDate(date);
-        setValue('holiday_date', date ? date.toISOString().split('T')[0] : '');
+        setValue('holiday_date', date);
     };
 
 

@@ -43,7 +43,12 @@ export async function createData(data) {
 export async function updateData(id, data) {
     if (data) {
         try {
-            const response = await axios.put(`/api/pulse/employee/${id}`, data);
+            const config = {
+                headers: {
+                    'Content-Type': 'multipart/form-data', // Ensure the correct content type for form data
+                },
+            };
+            const response = await axios.post(`/api/pulse/employee/${id}`, data, config);
             return response.data;
         } catch (error) {
             console.error('Failed to update data', error);

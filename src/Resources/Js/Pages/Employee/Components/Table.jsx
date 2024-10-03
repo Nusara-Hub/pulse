@@ -14,31 +14,31 @@ const Table = ({ title, data, onDelete, pagination, page, setPage, limit, search
 
         return (
             <>
-               <TableCell>{displayIndex}</TableCell>
-<TableCell>{row.code}</TableCell>
-<TableCell>{row.fullname}</TableCell>
-<TableCell>{row.gender}</TableCell>
-<TableCell>{row.email}</TableCell>
-<TableCell>{row.department?.name??""}</TableCell>
-<TableCell>{row.joblevel?.name??""}</TableCell>
-<TableCell>{row.jobtitle?.name??""}</TableCell>
-<TableCell>{row.employee_status}</TableCell>
+                <TableCell>{displayIndex}</TableCell>
+                <TableCell>{row.code}</TableCell>
+                <TableCell>{row.fullname}</TableCell>
+                <TableCell>{row.gender}</TableCell>
+                <TableCell>{row.email}</TableCell>
+                <TableCell>{row.department?.name ?? ""}</TableCell>
+                <TableCell>{row.joblevel?.name ?? ""}</TableCell>
+                <TableCell>{row.jobtitle?.name ?? ""}</TableCell>
+                <TableCell>{row.employee_status}</TableCell>
 
-            <TableCell className="flex gap-2">
-                <Button
-                    variant="outline"
-                    onClick={() => window.location.href = `/pulse/employee/edit/${row.id}`}
-                >
-                    Edit
-                </Button>
-                <Button
-                    onClick={() => showConfirm(row.id)}
-                    variant="destructive"
-                >
-                    Delete
-                </Button>
-            </TableCell>
-        
+                <TableCell className="flex gap-2">
+                    <Button
+                        variant="outline"
+                        onClick={() => window.location.href = `/pulse/employee/edit/${row.id}`}
+                    >
+                        Edit
+                    </Button>
+                    <Button
+                        onClick={() => showConfirm(row.id)}
+                        variant="destructive"
+                    >
+                        Delete
+                    </Button>
+                </TableCell>
+
             </>
         );
     };

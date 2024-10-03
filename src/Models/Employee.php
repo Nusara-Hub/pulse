@@ -47,4 +47,22 @@ final class Employee extends Model
             'deleted_at' => 'datetime:U',
         ];
     }
+
+    //join department
+    public function department()
+    {
+        return $this->belongsTo(Department::class, 'department_id');
+    }
+
+    //join joblevel
+    public function joblevel()
+    {
+        return $this->belongsTo(JobLevel::class, 'job_level_id');
+    }
+
+    //join jobtitle
+    public function jobtitle()
+    {
+        return $this->belongsTo(JobTitle::class, 'job_title_id');
+    }
 }
