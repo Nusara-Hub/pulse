@@ -29,7 +29,7 @@ final class CreateRequest extends FormRequest
     {
          return [
     'employee_id' => ['required'],
-    'shipment_id' => ['required'],
+    'shiftment_id' => ['required'],
     'overtime_date' => ['required'],
     'start_hour' => ['required'],
     'end_hour' => ['required'],

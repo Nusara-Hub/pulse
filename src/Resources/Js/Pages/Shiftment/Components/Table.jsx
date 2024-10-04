@@ -14,27 +14,27 @@ const Table = ({ title, data, onDelete, pagination, page, setPage, limit, search
 
         return (
             <>
-               <TableCell>{displayIndex}</TableCell>
-<TableCell>{row.code}</TableCell>
-<TableCell>{row.name}</TableCell>
-<TableCell>{row.start_hour}</TableCell>
-<TableCell>{row.end_hour}</TableCell>
+                <TableCell>{displayIndex}</TableCell>
+                <TableCell>{row.code}</TableCell>
+                <TableCell>{row.name}</TableCell>
+                <TableCell>{row.start_hour}</TableCell>
+                <TableCell>{row.end_hour}</TableCell>
 
-            <TableCell className="flex gap-2">
-                <Button
-                    variant="outline"
-                    onClick={() => window.location.href = `/pulse/shiftment/edit/${row.id}`}
-                >
-                    Edit
-                </Button>
-                <Button
-                    onClick={() => showConfirm(row.id)}
-                    variant="destructive"
-                >
-                    Delete
-                </Button>
-            </TableCell>
-        
+                <TableCell className="flex gap-2">
+                    <Button
+                        variant="outline"
+                        onClick={() => window.location.href = `/pulse/shiftment/edit/${row.id}`}
+                    >
+                        Edit
+                    </Button>
+                    <Button
+                        onClick={() => showConfirm(row.id)}
+                        variant="destructive"
+                    >
+                        Delete
+                    </Button>
+                </TableCell>
+
             </>
         );
     };

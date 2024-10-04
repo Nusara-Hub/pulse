@@ -23,6 +23,7 @@ const Input = ({ id }) => {
     }, [id]);
 
     const onSubmit = async (data) => {
+        data.type = "Absent";
         try {
             if (id) {
                 await handleUpdate(id, data);

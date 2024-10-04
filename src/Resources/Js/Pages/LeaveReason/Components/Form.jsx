@@ -6,9 +6,9 @@ import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 
 const schema = z.object({
-    'type': z.string().nonempty(),
-'code': z.string().nonempty(),
-'name': z.string().nonempty()
+    'type': z.string().optional(),
+    'code': z.string().nonempty(),
+    'name': z.string().nonempty()
 });
 
 const Form = ({ id, onSubmit, initialData = {} }) => {
@@ -17,6 +17,7 @@ const Form = ({ id, onSubmit, initialData = {} }) => {
         register,
         handleSubmit,
         reset,
+        watch,
         formState: { errors },
     } = useForm({
         resolver: zodResolver(schema),
@@ -33,16 +34,19 @@ const Form = ({ id, onSubmit, initialData = {} }) => {
     return (
         <>
             <form className="bg-white rounded-md border mx-4 px-8 pt-6 pb-8 mb-4" onSubmit={handleSubmit(onSubmit)}>
-               
+
                 <div className='mb-4'>
                     <label className='block text-sm font-bold mb-2' htmlFor='type'>
                         Reason  Type
                     </label>
                     <Input
                         type='string'
+                        disabled='true'
+                        value={watch('type') || 'Leave'}
+                        defaultValue="Leave"
                         {...register('type')}
                         className='input input-bordered w-full'
-                        placeholder='Reason  Type'
+                        placeholder='Reason Type'
                     />
                     {errors.type && (
                         <p className='text-red-500 text-xs italic'>
@@ -50,43 +54,43 @@ const Form = ({ id, onSubmit, initialData = {} }) => {
                         </p>
                     )}
                 </div>
-            
 
-                <div className='mb-4'>
-                    <label className='block text-sm font-bold mb-2' htmlFor='code'>
-                        Reason  Code
-                    </label>
-                    <Input
-                        type='string'
-                        {...register('code')}
-                        className='input input-bordered w-full'
-                        placeholder='Reason  Code'
-                    />
-                    {errors.code && (
-                        <p className='text-red-500 text-xs italic'>
-                            {errors.code.message}
-                        </p>
-                    )}
-                </div>
-            
+                <div className="grid grid-cols-2 gap-4 mb-4">
+                    <div className='mb-4'>
+                        <label className='block text-sm font-bold mb-2' htmlFor='code'>
+                            Reason  Code
+                        </label>
+                        <Input
+                            type='string'
+                            {...register('code')}
+                            className='input input-bordered w-full'
+                            placeholder='Reason  Code'
+                        />
+                        {errors.code && (
+                            <p className='text-red-500 text-xs italic'>
+                                {errors.code.message}
+                            </p>
+                        )}
+                    </div>
 
-                <div className='mb-4'>
-                    <label className='block text-sm font-bold mb-2' htmlFor='name'>
-                        Reason
-                    </label>
-                    <Input
-                        type='string'
-                        {...register('name')}
-                        className='input input-bordered w-full'
-                        placeholder='Reason'
-                    />
-                    {errors.name && (
-                        <p className='text-red-500 text-xs italic'>
-                            {errors.name.message}
-                        </p>
-                    )}
+
+                    <div className='mb-4'>
+                        <label className='block text-sm font-bold mb-2' htmlFor='name'>
+                            Reason
+                        </label>
+                        <Input
+                            type='string'
+                            {...register('name')}
+                            className='input input-bordered w-full'
+                            placeholder='Reason'
+                        />
+                        {errors.name && (
+                            <p className='text-red-500 text-xs italic'>
+                                {errors.name.message}
+                            </p>
+                        )}
+                    </div>
                 </div>
-            
                 <div className="flex gap-2">
                     <Button type="button" variant="secondary" onClick={handleCancel}>
                         Cancel

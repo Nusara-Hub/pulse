@@ -30,7 +30,7 @@ class AttendanceApiController extends NusaraPulseBaseController
         $limit = $request->input('limit', 10);
         $page = $request->input('page', 1);
         $totalData = Attendance::count();
-        $attendances = Pipeline::send(Attendance::query())
+        $attendances = Pipeline::send(Attendance::query()->with(["employee","shiftment","reason"]))
             ->through([
                 \Nusara\Pulse\Http\Filters\Attendance\BySearch::class,
             ])

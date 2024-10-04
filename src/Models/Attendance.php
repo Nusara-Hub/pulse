@@ -47,4 +47,19 @@ final class Attendance extends Model
             'deleted_at' => 'datetime:U',
         ];
     }
+
+    public function employee()
+    {
+        return $this->belongsTo(Employee::class, 'employee_id');
+    }
+
+    public function shiftment()
+    {
+        return $this->belongsTo(Shiftment::class, 'shiftment_id');
+    }
+
+    public function reason()
+    {
+        return $this->belongsTo(AbsentReason::class, 'reason_id');
+    }
 }

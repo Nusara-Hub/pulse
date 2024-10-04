@@ -6,9 +6,9 @@ import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 
 const schema = z.object({
-    'type': z.string().nonempty(),
-'code': z.string().nonempty(),
-'reason': z.string().nonempty()
+    'type': z.string().optional(),
+    'code': z.string().nonempty(),
+    'reason': z.string().nonempty()
 });
 
 const Form = ({ id, onSubmit, initialData = {} }) => {
@@ -17,12 +17,15 @@ const Form = ({ id, onSubmit, initialData = {} }) => {
         register,
         handleSubmit,
         reset,
+        setValue,
+        watch,
         formState: { errors },
     } = useForm({
         resolver: zodResolver(schema),
     });
 
     useEffect(() => {
+        setValue('type', 'Absent');
         reset(initialData.data);
     }, [id, reset, initialData]);
 
@@ -33,13 +36,16 @@ const Form = ({ id, onSubmit, initialData = {} }) => {
     return (
         <>
             <form className="bg-white rounded-md border mx-4 px-8 pt-6 pb-8 mb-4" onSubmit={handleSubmit(onSubmit)}>
-               
+
                 <div className='mb-4'>
                     <label className='block text-sm font-bold mb-2' htmlFor='type'>
                         Type  Reason
                     </label>
                     <Input
                         type='string'
+                        disabled='true'
+                        value={watch('type') || 'Absent'}
+                        defaultValue="Absent"
                         {...register('type')}
                         className='input input-bordered w-full'
                         placeholder='Type  Reason'
@@ -50,43 +56,44 @@ const Form = ({ id, onSubmit, initialData = {} }) => {
                         </p>
                     )}
                 </div>
-            
 
-                <div className='mb-4'>
-                    <label className='block text-sm font-bold mb-2' htmlFor='code'>
-                        Reason  Code
-                    </label>
-                    <Input
-                        type='string'
-                        {...register('code')}
-                        className='input input-bordered w-full'
-                        placeholder='Reason  Code'
-                    />
-                    {errors.code && (
-                        <p className='text-red-500 text-xs italic'>
-                            {errors.code.message}
-                        </p>
-                    )}
-                </div>
-            
+                <div className="grid grid-cols-2 gap-4 mb-4">
+                    <div className='mb-4'>
+                        <label className='block text-sm font-bold mb-2' htmlFor='code'>
+                            Reason  Code
+                        </label>
+                        <Input
+                            type='string'
+                            {...register('code')}
+                            className='input input-bordered w-full'
+                            placeholder='Reason  Code'
+                        />
+                        {errors.code && (
+                            <p className='text-red-500 text-xs italic'>
+                                {errors.code.message}
+                            </p>
+                        )}
+                    </div>
 
-                <div className='mb-4'>
-                    <label className='block text-sm font-bold mb-2' htmlFor='reason'>
-                        Reason  Name
-                    </label>
-                    <Input
-                        type='string'
-                        {...register('reason')}
-                        className='input input-bordered w-full'
-                        placeholder='Reason  Name'
-                    />
-                    {errors.reason && (
-                        <p className='text-red-500 text-xs italic'>
-                            {errors.reason.message}
-                        </p>
-                    )}
+
+                    <div className='mb-4'>
+                        <label className='block text-sm font-bold mb-2' htmlFor='reason'>
+                            Reason  Name
+                        </label>
+                        <Input
+                            type='string'
+                            {...register('reason')}
+                            className='input input-bordered w-full'
+                            placeholder='Reason  Name'
+                        />
+                        {errors.reason && (
+                            <p className='text-red-500 text-xs italic'>
+                                {errors.reason.message}
+                            </p>
+                        )}
+                    </div>
                 </div>
-            
+
                 <div className="flex gap-2">
                     <Button type="button" variant="secondary" onClick={handleCancel}>
                         Cancel

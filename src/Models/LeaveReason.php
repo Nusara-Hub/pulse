@@ -47,4 +47,5 @@ final class LeaveReason extends Model
             'deleted_at' => 'datetime:U',
         ];
     }
+
 }

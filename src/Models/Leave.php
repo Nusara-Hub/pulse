@@ -47,4 +47,14 @@ final class Leave extends Model
             'deleted_at' => 'datetime:U',
         ];
     }
+
+    public function employee()
+    {
+        return $this->belongsTo(Employee::class, 'employee_id');
+    }
+
+    public function reason()
+    {
+        return $this->belongsTo(LeaveReason::class, 'reason_id');
+    }
 }

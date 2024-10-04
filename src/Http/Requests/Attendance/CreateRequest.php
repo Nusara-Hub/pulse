@@ -27,14 +27,14 @@ final class CreateRequest extends FormRequest
      */
     public function rules(): array
     {
-         return [
-    'employee_id' => ['required'],
-    'reason_id' => ['required'],
-    'shiftment_id' => ['required'],
-    'attendance_date' => ['required'],
-    'description' => ['nullable'],
-    'check_in' => ['nullable'],
-    'check_out' => ['nullable'],
-];
+        return [
+            'employee_id' => ['required', 'string'],  // Required and must be a string
+            'reason_id' => ['nullable', 'string', 'required_if:is_absent,true'], // Conditionally required if absent
+            'shiftment_id' => ['required', 'string'], // Required and must be a string
+            'attendance_date' => ['required', 'date'], // Required and must be a valid date
+            'description' => ['nullable', 'string'],  // Nullable string
+            'check_in' => ['nullable', 'string', 'required_if:is_absent,false'], // Conditionally required if not absent
+            'check_out' => ['nullable', 'string', 'required_if:is_absent,false'], // Conditionally required if not absent
+        ];
     }
 }

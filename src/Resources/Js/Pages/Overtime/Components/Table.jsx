@@ -14,28 +14,28 @@ const Table = ({ title, data, onDelete, pagination, page, setPage, limit, search
 
         return (
             <>
-               <TableCell>{displayIndex}</TableCell>
-<TableCell>{row.employee?.fullname??""}</TableCell>
-<TableCell>{row.shiftment?.name??""}</TableCell>
-<TableCell>{row.overtime_date}</TableCell>
-<TableCell>{row.start_hour}</TableCell>
-<TableCell>{row.end_hour}</TableCell>
+                <TableCell>{displayIndex}</TableCell>
+                <TableCell>{row.employee?.fullname ?? ""}</TableCell>
+                <TableCell>{row.shiftment ? row.shiftment.name + ", " + row.shiftment.start_hour + "-" + row.shiftment.end_hour : ""}</TableCell>
+                <TableCell>{row.overtime_date}</TableCell>
+                <TableCell>{row.start_hour}</TableCell>
+                <TableCell>{row.end_hour}</TableCell>
 
-            <TableCell className="flex gap-2">
-                <Button
-                    variant="outline"
-                    onClick={() => window.location.href = `/pulse/overtime/edit/${row.id}`}
-                >
-                    Edit
-                </Button>
-                <Button
-                    onClick={() => showConfirm(row.id)}
-                    variant="destructive"
-                >
-                    Delete
-                </Button>
-            </TableCell>
-        
+                <TableCell className="flex gap-2">
+                    <Button
+                        variant="outline"
+                        onClick={() => window.location.href = `/pulse/overtime/edit/${row.id}`}
+                    >
+                        Edit
+                    </Button>
+                    <Button
+                        onClick={() => showConfirm(row.id)}
+                        variant="destructive"
+                    >
+                        Delete
+                    </Button>
+                </TableCell>
+
             </>
         );
     };

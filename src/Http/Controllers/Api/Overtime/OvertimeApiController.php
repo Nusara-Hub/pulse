@@ -30,7 +30,7 @@ class OvertimeApiController extends NusaraPulseBaseController
         $limit = $request->input('limit', 10);
         $page = $request->input('page', 1);
         $totalData = Overtime::count();
-        $overtimes = Pipeline::send(Overtime::query())
+        $overtimes = Pipeline::send(Overtime::query()->with(['employee','shiftment']))
             ->through([
                 \Nusara\Pulse\Http\Filters\Overtime\BySearch::class,
             ])
