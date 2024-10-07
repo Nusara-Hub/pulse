@@ -19,11 +19,11 @@ export const useSalaryComponentStore = create((set, get) => ({
     error: null,
 
     // Actions
-    fetch: async () => {
+    fetch: async (fixed = null) => {
         const { page, limit, search } = get();
         set({ loading: true });
         try {
-            const data = await getData(page, limit, search);
+            const data = await getData(page, limit, search, fixed);
             set({
                 datas: data,
                 pagination: data.pagination,

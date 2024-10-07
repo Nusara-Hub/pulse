@@ -33,6 +33,7 @@ class SalaryComponentApiController extends NusaraPulseBaseController
         $salarycomponents = Pipeline::send(SalaryComponent::query())
             ->through([
                 \Nusara\Pulse\Http\Filters\SalaryComponent\BySearch::class,
+                \Nusara\Pulse\Http\Filters\SalaryComponent\ByFixed::class,
             ])
             ->thenReturn();
         $totalFiltered = $salarycomponents->count();

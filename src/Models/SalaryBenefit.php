@@ -47,4 +47,14 @@ final class SalaryBenefit extends Model
             'deleted_at' => 'datetime:U',
         ];
     }
+
+    public function employee()
+    {
+        return $this->belongsTo(Employee::class, 'employee_id');
+    }
+
+    public function component()
+    {
+        return $this->belongsTo(SalaryComponent::class, 'sallary_component_id');
+    }
 }

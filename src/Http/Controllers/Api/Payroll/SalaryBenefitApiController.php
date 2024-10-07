@@ -30,7 +30,7 @@ class SalaryBenefitApiController extends NusaraPulseBaseController
         $limit = $request->input('limit', 10);
         $page = $request->input('page', 1);
         $totalData = SalaryBenefit::count();
-        $salarybenefits = Pipeline::send(SalaryBenefit::query())
+        $salarybenefits = Pipeline::send(SalaryBenefit::query()->with(['employee','component']))
             ->through([
                 \Nusara\Pulse\Http\Filters\SalaryBenefit\BySearch::class,
             ])

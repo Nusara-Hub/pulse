@@ -1,12 +1,13 @@
 import axios from 'axios';
 
-export async function getData(page, limit, search) {
+export async function getData(page, limit, search, fixed) {
     try {
         const response = await axios.get('/api/pulse/salary-component', {
             params: {
                 page: page,
                 limit: limit,
-                search: search
+                search: search,
+                fixed: fixed
             }
         });
         console.log(response.data);
